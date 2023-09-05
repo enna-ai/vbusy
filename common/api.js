@@ -32,7 +32,6 @@ class TaskAPI {
             priority: taskPriority,
             dueDate: taskDueDate,
         };
-        console.log("data", data);
 
         return this.makeRequest("post", "tasks", data);
     }

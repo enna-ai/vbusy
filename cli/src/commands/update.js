@@ -1,144 +1,58 @@
 import { Command } from "commander";
-import { input, select } from "@inquirer/prompts";
-import inquirer from "inquirer";
-import { isValidDate } from "../helpers/validate.js";
+import { getAllTasks, promptUpdateChoice, promptDueDate, promptNewTask, promptPriorityChoice } from "../helpers/index.js";
 import TaskAPI from "../../../common/api.js";
 
 const updateCommand = new Command("update")
     .description("Update a task")
     .action(async () => {
         try {
-            const tasks = await TaskAPI.getTasks();
-            if (tasks.length === 0) {
-                console.log("You haven't made any tasks.");
-                return;
-            }
+            const selectedTask = await getAllTasks("update");
 
-            const taskOptions = tasks.map((task) => ({
-                name: task.task,
-                value: task._id,
-                message: "Task to update",
-            }));
+            const updateChoice = await promptUpdateChoice();
 
-            const { selectTask } = await inquirer.prompt({
-                type: "list",
-                name: "selectTask",
-                message: "Select a task to update:",
-                choices: taskOptions,
-            });
-
-            const updateOptions = await select({
-                message: "Select an update option",
-                choices: [
-                    {
-                        name: "Task",
-                        value: "task",
-                        description: "Edit tasks name",
-                    },
-                    {
-                        name: "Due Date",
-                        value: "dueDate",
-                        description: "Update tasks due date",
-                    },
-                    {
-                        name: "Priority",
-                        value: "priority",
-                        description: "Update tasks priority level",
-                    },
-                    {
-                        name: "Completion",
-                        value: "completed",
-                        description: "Mark task as complete or incomplete",
-                    },
-                ],
-            });
-
-            switch (updateOptions) {
+            switch (updateChoice) {
                 case "task":
-                    const taskName = await input({
-                        message: "Enter new task name:",
-                        validate: (value) => {
-                            if (!value) {
-                                return "Please provide a new task name!";
-                            }
-
-                            return true;
-                        }
-                    });
-
-                    const editedTask = await TaskAPI.updateTask(selectTask, taskName);
-                    if (editedTask) {
-                        console.log(`Successfully edited tasks name to '${taskName}'`);
+                    const taskName = await promptNewTask();
+                    
+                    const updateTaskName = await TaskAPI.updateTask(selectedTask, taskName);
+                    if (updateTaskName) {
+                        console.log(`Successfully updated task name to '${taskName}'`);
                     } else {
-                        console.log("An error occured trying to edit task.");
+                        console.log("An error occured trying to update task.");
                     }
                     break;
                 case "priority":
-                    const priorityChoice = await select({
-                        message: "Select a task priority",
-                        choices: [
-                            {
-                                name: "low",
-                                value: "low",
-                                description: "Task is of low priority",
-                            },
-                            {
-                                name: "medium",
-                                value: "medium",
-                                description: "Task is of medium priority",
-                            },
-                            {
-                                name: "high",
-                                value: "high",
-                                description: "Task is of high priority",
-                            }
-                        ]
-                    });
+                    const taskPriority = await promptPriorityChoice();
 
-                    const editedPriority = await TaskAPI.updateTaskPriority(selectTask, priorityChoice);
-                    if (editedPriority) {
-                        console.log(`Successfully edited tasks priority to ${priorityChoice}`);
+                    const updateTaskPriority = await TaskAPI.updateTaskPriority(selectedTask, taskPriority);
+                    if (updateTaskPriority) {
+                        console.log(`Successfully edited tasks priority level to ${taskPriority}`);
                     } else {
-                        console.log("An error occured trying to edit task.");
+                        console.log("An error occured trying to update task.");
                     }
                     break;
                 case "dueDate":
-                    let taskDate;
-                    
-                    await input({
-                        message: "Enter a due date (YYYY-MM-DD):",
-                        validate: async (value) => {
-                            if (!value) {
-                                taskDate = null;
-                                return true;
-                            }
+                    const taskDueDate = await promptDueDate();
 
-                            const validateDate = await isValidDate(value);
-                            if (!validateDate) {
-                                return "Please provide a valid date format! (YYYY-MM-DD)";
-                            }
-
-                            taskDate = value;
-                            return true;
-                        }
-                    });
-
-                    const editedDate = await TaskAPI.updateTaskDueDate(selectTask, taskDate);
-                    if (editedDate) {
-                        console.log(`Successfully edited tasks due date to ${taskDate}`);
+                    const updateTaskDate = await TaskAPI.updateTaskDueDate(selectedTask, taskDueDate);
+                    if (updateTaskDate) {
+                        console.log(`Successfully edited tasks due date to ${taskDueDate ? taskDueDate : "no date"}`);
                     } else {
                         console.log("An error occured trying to update task.");
                     }
                     break;
                 case "completed":
-                    const editedComplete = await TaskAPI.completeTask(selectTask);
-                    if (editedComplete) {
-                        console.log(`Successfully marked task as ${editedComplete ? "complete" : "incomplete"}`);
+                    const toggleComplete = await TaskAPI.completeTask(selectedTask);
+                    if (toggleComplete) {
+                        console.log(`Successfully marked task as '${toggleComplete ? "complete" : "incomplete"}'`);
                     } else {
-                        console.log("An error occured trying to edit task.");
+                        console.log("An error occured trying to update task.");
                     }
                     break;
-            };
+                default:
+                    console.log("Invalid choice.");
+                    return;
+            }
         } catch (error) {
             console.error(error.message);
         }
