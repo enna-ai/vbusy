@@ -1,15 +1,11 @@
 import { Command } from "commander";
 import TaskAPI from "../../../common/api.js";
 
-const createCommand = new Command("list")
+const listCommand = new Command("list")
     .description("Get all tasks")
     .action(async () => {
         try {
             const tasks = await TaskAPI.getTasks();
-            // const taskList = tasks.map((task) => ({
-            //     name: `${task.task}`,
-            //     value: task._id,
-            // }));
 
             if (tasks.length === 0) {
                 console.log("You haven't made any tasks.");
@@ -25,4 +21,4 @@ const createCommand = new Command("list")
         }
     });
 
-export default createCommand;
+export default listCommand;

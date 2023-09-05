@@ -127,7 +127,7 @@ export const updateTaskDueDate = async (req, res) => {
     try {
         const { error, value } = updateTaskDueSchema.validate({
             taskId: req.params.taskId,
-            dueDate: req.body.dueDate,
+            // dueDate: req.body.dueDate,
         });
 
         if (error) {
@@ -135,12 +135,11 @@ export const updateTaskDueDate = async (req, res) => {
         }
 
         const id = value.taskId;
-        // eslint-disable-next-line prefer-destructuring
-        const dueDate = value.dueDate;
+        const { dueDate } = req.body;
 
-        const updateTaskDate = await Task.findOneAndUpdate(
+        const updateTaskDate = await Task.findByIdAndUpdate(
             { _id: id },
-            { dueDate: dueDate || null },
+            { dueDate },
         );
 
         if (!updateTaskDate) {

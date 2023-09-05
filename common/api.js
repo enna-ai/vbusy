@@ -58,7 +58,7 @@ class TaskAPI {
     }
 
     async completeTask(taskId) {
-        return this.makeRequest("put", `task/${taskId}/complete`);
+        return this.makeRequest("put", `tasks/${taskId}/complete`);
     }
 
     async updateTaskDueDate(taskId, date) {
@@ -66,7 +66,7 @@ class TaskAPI {
             dueDate: date,
         };
 
-        return this.makeRequest("put", `task/${taskId}/due`, data);
+        return this.makeRequest("put", `tasks/${taskId}/due`, data);
     }
 
     async updateTaskPriority(taskId, taskPriority) {
@@ -74,7 +74,7 @@ class TaskAPI {
             priority: taskPriority,
         };
 
-        return this.makeRequest("put", `task/${taskId}/priority`, data);
+        return this.makeRequest("put", `tasks/${taskId}/priority`, data);
     }
 };
 
