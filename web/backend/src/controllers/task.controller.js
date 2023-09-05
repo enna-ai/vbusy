@@ -3,15 +3,20 @@ import { getTaskSchema, createTaskSchema, updateTaskSchema, completeTaskSchema, 
 
 export const createTask = async (req, res) => {
     try {
-        const { error, value } = createTaskSchema.validate(req.body);
+        const { error, value } = createTaskSchema.validate({
+            task: req.body.task,
+            priority: req.body.priority,
+            dueDate: req.body.dueDate,
+        });
         if (error) {
             return res.status(400).json({ error: error.details[0].message });
         }
 
-        const newTask = await Task.create({ task: value.task });
+        const { task, priority, dueDate } = value;
+        const newTask = await Task.create({ task, priority, dueDate });
         await newTask.save();
 
-        return res.status(201).json(newTask);
+        return res.status(200).json(newTask);
     } catch (error) {
         return res.status(500).json(error.message);
     }

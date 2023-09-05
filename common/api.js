@@ -26,9 +26,11 @@ class TaskAPI {
         }
     }
 
-    async createTask(newTask) {
+    async createTask(newTask, taskPriority, taskDueDate) {
         const data = {
             task: newTask,
+            priority: taskPriority,
+            dueDate: taskDueDate,
         };
 
         return this.makeRequest("post", "tasks", data);
