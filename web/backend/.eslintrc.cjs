@@ -22,9 +22,11 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
-    "prettier/prettier": "error",
-    "singleQuote": true,
-    "trailingComma": "none",
-    "semi": true,
+    "import/extensions": ["off", "never"],
+    "quotes": ["warn", "double"],
+    "semi": ["warn", "always"],
+    "no-console": ["error", {
+      allow: ["log", "warn", "error"]
+    }]
   },
 };

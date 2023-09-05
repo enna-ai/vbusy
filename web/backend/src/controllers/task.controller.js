@@ -75,7 +75,6 @@ export const updateTask = async (req, res) => {
 
         const id = value.taskId;
         const body = value.task;
-        console.log("Validator", body);
 
         const editTask = await Task.findOneAndUpdate(
             { _id: id },
@@ -127,11 +126,12 @@ export const updateTaskDueDate = async (req, res) => {
         }
 
         const id = value.taskId;
+        // eslint-disable-next-line prefer-destructuring
         const dueDate = value.dueDate;
 
         const updateTaskDate = await Task.findOneAndUpdate(
             { _id: id },
-            { dueDate: dueDate ? dueDate : null },
+            { dueDate: dueDate || null },
         );
 
         if (!updateTaskDate) {
@@ -157,14 +157,15 @@ export const updateTaskPriority = async (req, res) => {
         }
 
         const id = value.taskId;
+        // eslint-disable-next-line prefer-destructuring
         const priority = value.priority;
 
-        const updateTaskPriority = await Task.findOneAndUpdate(
+        const updatePriority = await Task.findOneAndUpdate(
             { _id: id },
-            { priority: priority ? priority : null },
+            { priority: priority || null },
         );
 
-        if (!updateTaskPriority) {
+        if (!updatePriority) {
             return res.status(400).json("Task not found.");
         }
 

@@ -6,8 +6,9 @@ export const notFound = (req, res, next) => {
     next(error);
 };
 
-export const castErrorHandler = (err, req, res, next) => {
+export const castErrorHandler = (err, req, res) => {
     let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+    // eslint-disable-next-line prefer-destructuring
     let message = err.message;
 
     if (err.name === "CastError" && err.kind === "ObjectId") {

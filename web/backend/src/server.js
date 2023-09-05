@@ -3,7 +3,7 @@ import process from "node:process";
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { connectMongo } from "./database/connect.js";
+import connectMongo from "./database/connect.js";
 import { castErrorHandler, notFound } from "./middleware/error.js";
 import routes from "./routes/task.route.js";
 
