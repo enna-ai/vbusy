@@ -1,5 +1,5 @@
 import Task from "../database/models/task.model.js";
-import { getTaskSchema, createTaskSchema, updateTaskSchema, completeTaskSchema } from "../validators/task.js";
+import { getTaskSchema, createTaskSchema, updateTaskSchema, completeTaskSchema, updateTaskDueSchema, updateTaskPrioritySchema } from "../validators/task.js";
 
 export const createTask = async (req, res) => {
     try {
@@ -110,6 +110,66 @@ export const completeTask = async (req, res) => {
         );
 
         return res.status(200).json(task);
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+};
+
+export const updateTaskDueDate = async (req, res) => {
+    try {
+        const { error, value } = updateTaskDueSchema.validate({
+            taskId: req.params.taskId,
+            dueDate: req.body.dueDate,
+        });
+
+        if (error) {
+            return res.status(400).json({ error: error.details[0].message });
+        }
+
+        const id = value.taskId;
+        const dueDate = value.dueDate;
+
+        const updateTaskDate = await Task.findOneAndUpdate(
+            { _id: id },
+            { dueDate: dueDate ? dueDate : null },
+        );
+
+        if (!updateTaskDate) {
+            return res.status(404).json("Task not found");
+        }
+
+        const updatedTask = await Task.findById(id);
+        return res.status(200).json(updatedTask);
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+};
+
+export const updateTaskPriority = async (req, res) => {
+    try {
+        const { error, value } = updateTaskPrioritySchema.validate({
+            taskId: req.params.taskId,
+            priority: req.body.priority,
+        });
+
+        if (error) {
+            return res.status(400).json({ error: error.details[0].message });
+        }
+
+        const id = value.taskId;
+        const priority = value.priority;
+
+        const updateTaskPriority = await Task.findOneAndUpdate(
+            { _id: id },
+            { priority: priority ? priority : null },
+        );
+
+        if (!updateTaskPriority) {
+            return res.status(400).json("Task not found.");
+        }
+
+        const updatedTask = await Task.findById(id);
+        return res.status(200).json(updatedTask);
     } catch (error) {
         return res.status(500).json(error.message);
     }

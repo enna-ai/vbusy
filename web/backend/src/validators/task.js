@@ -16,3 +16,13 @@ export const updateTaskSchema = Joi.object({
 export const completeTaskSchema = Joi.object({
     taskId: Joi.string().required(),
 });
+
+export const updateTaskPrioritySchema = Joi.object({
+    taskId: Joi.string().required(),
+    priority: Joi.string(),
+});
+
+export const updateTaskDueSchema = Joi.object({
+    taskId: Joi.string().required(),
+    dueDate: Joi.date().iso(),
+});
