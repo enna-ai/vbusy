@@ -6,14 +6,18 @@ export const createTask = async (req, res) => {
         const { error, value } = createTaskSchema.validate({
             task: req.body.task,
             priority: req.body.priority,
-            dueDate: req.body.dueDate,
         });
         if (error) {
             return res.status(400).json({ error: error.details[0].message });
         }
 
-        const { task, priority, dueDate } = value;
-        const newTask = await Task.create({ task, priority, dueDate });
+        const date = req.body.dueDate;
+        const { task, priority } = value;
+        const newTask = await Task.create({
+            task,
+            priority,
+            dueDate: date || null
+        });
         await newTask.save();
 
         return res.status(200).json(newTask);

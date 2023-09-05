@@ -40,13 +40,24 @@ const createCommand = new Command("create")
             });
 
             let taskDate;
-            const taskDueDateInput = await input({ message: "Enter due date (YYYY-MM-DD):" });
-            const taskDueDate = await isValidDate(taskDueDateInput);
-            if (taskDueDate) {
-                taskDate = taskDueDate[0];
-            } else {
-                taskDate = null;
-            }
+            await input({
+                message: "Enter a due date (YYYY-MM-DD):",
+                validate: async (value) => {
+                    if (!value) {
+                        taskDate = null;
+                        return true;
+                    }
+
+                    const validateDate = await isValidDate(value);
+                    if (!validateDate) {
+                        return "Please provide a valid date format! (YYYY-MM-DD)";
+                    }
+
+                    taskDate = value;
+                    return true;
+                }
+            });
+
 
             const newTask = await TaskAPI.createTask(taskName, priorityChoice, taskDate);
             if (newTask) {

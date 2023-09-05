@@ -3,7 +3,6 @@ import Joi from "joi";
 export const createTaskSchema = Joi.object({
     task: Joi.string().required(),
     priority: Joi.string().valid("low", "medium", "high"),
-    dueDate: Joi.date().iso().valid(null),
 });
 
 export const getTaskSchema = Joi.object({
