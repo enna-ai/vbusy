@@ -1,7 +1,12 @@
 import { input, select } from "@inquirer/prompts";
 import inquirer from "inquirer";
+import day from "dayjs";
 import { isValidDate } from "./validate.js";
 import TaskAPI from "../../../common/api.js";
+
+export const formatDueDate = (date) => {
+    return day(date).format("ddd MMM DD");
+};
 
 export const promptNewTask = async () => {
     const taskName = await input({
