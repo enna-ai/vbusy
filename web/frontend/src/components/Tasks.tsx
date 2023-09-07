@@ -57,6 +57,17 @@ export const Tasks: React.FC<{}> = () => {
         }
     };
 
+    const handlePurgeTasks = async () => {
+        try {
+            await TaskAPI.purgeTasks();
+
+            const updatedTaskList = await TaskAPI.getTasks();
+            setData(updatedTaskList);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <React.Fragment>
             <TaskForm tasks={taskList} />
@@ -65,6 +76,7 @@ export const Tasks: React.FC<{}> = () => {
                 <button onClick={() => filterTasks("All")}>All {data.length}</button>
                 <button onClick={() => filterTasks("Completed")}>Completed {data.filter(task => task.completed === true).length}</button>
                 <button onClick={() => filterTasks("Archived")}>Archived {data.filter(task => task.archived === true).length}</button>
+                <button onClick={handlePurgeTasks}>Purge Tasks</button>
             </div>
 
             <ul>

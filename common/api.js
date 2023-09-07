@@ -74,6 +74,14 @@ class TaskAPI {
 
         return this.makeRequest("put", `tasks/${taskId}/priority`, data);
     }
+
+    async archiveTask(taskId) {
+        return this.makeRequest("put", `task/${taskId}/archive`);
+    }
+
+    async purgeTasks() {
+        return this.makeRequest("delete", `tasks/purge`);
+    }
 };
 
 export default new TaskAPI();

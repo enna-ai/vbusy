@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BsFillTrash3Fill, BsPencilFill, BsCalendar, BsThermometerLow } from "react-icons/bs";
+import { BsFillTrash3Fill, BsPencilFill, BsCalendar, BsThermometerLow, BsFillArchiveFill } from "react-icons/bs";
 import { TiTick } from "react-icons/ti";
 import day from "dayjs";
 import { Task } from "../interfaces/task";
@@ -15,6 +15,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
     const [edit, setEdit] = useState(task.task);
     const [isEditing, setIsEditing] = useState(false);
     const [completed, setCompleted] = useState(task.completed);
+    const [archived, setArchived] = useState(task.archived);
     const [taskPriority, setTaskPriority] = useState(task.priority);
     const [taskDate, setTaskDate] = useState(task.dueDate);
 
@@ -61,6 +62,19 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
             console.error(error);
         }
     };
+
+    const handleArchive = async () => {
+        try {
+            const archivedTask = !archived;
+            setArchived(archivedTask);
+
+            await TaskAPI.archiveTask(task._id);
+
+            onUpdate({ ...task, archived: archivedTask });
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const formatDueDate = (date: Date) => {
         return day(date).format("ddd MMM DD");
@@ -117,6 +131,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
                         </span>
                         <button onClick={handleDelete}><BsFillTrash3Fill /></button>
                         <button onClick={() => setIsEditing(true)}><BsPencilFill /></button>
+                        <button onClick={handleArchive}><BsFillArchiveFill /></button>
                     </div>
                 )}
             </li>
