@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { TaskForm } from "./TaskForm";
-import { TaskItem } from "./taskItem";
+import { TaskItem } from "./TaskItem";
 import { Task } from "@/interfaces/task";
 import TaskAPI from "../../../../common/api";
 
