@@ -1,10 +1,11 @@
 import { Command } from "commander";
 import chalk from "chalk";
 import Table from "cli-table";
-import { getAllTasks, formatDueDate } from "../helpers/helpers.js";
-import TaskAPI from "../../../common/api.js";
+import { getAllTasks, formatDueDate } from "../../helpers/helpers.js";
+import TaskAPI from "../../../../common/api.js";
 
-const viewCommand = new Command("view")
+const viewCommand = new Command()
+    .name("view")
     .description("Preview a task")
     .action(async () => {
         try {

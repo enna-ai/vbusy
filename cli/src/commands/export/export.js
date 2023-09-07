@@ -1,10 +1,11 @@
 import fs from "fs/promises";
 import path from "path";
 import { Command } from "commander";
-import { getAllTasks } from "../helpers/helpers.js";
-import TaskAPI from "../../../common/api.js";
+import { getAllTasks } from "../../helpers/helpers.js";
+import TaskAPI from "../../../../common/api.js";
 
-const exportCommand = new Command("export")
+const exportCommand = new Command()
+    .name("export")
     .description("Export and save a task into a json file")
     .option("-d --directory <dir>", "Specify the export directory")
     .action(async (options) => {

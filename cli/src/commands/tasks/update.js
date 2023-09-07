@@ -1,8 +1,9 @@
 import { Command } from "commander";
-import { getAllTasks, promptUpdateChoice, promptDueDate, promptNewTask, promptPriorityChoice } from "../helpers/index.js";
-import TaskAPI from "../../../common/api.js";
+import { getAllTasks, promptUpdateChoice, promptDueDate, promptNewTask, promptPriorityChoice } from "../../helpers/index.js";
+import TaskAPI from "../../../../common/api.js";
 
-const updateCommand = new Command("update")
+const updateCommand = new Command()
+    .name("update")
     .description("Update a task")
     .action(async () => {
         try {

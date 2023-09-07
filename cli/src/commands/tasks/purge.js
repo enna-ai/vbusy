@@ -1,8 +1,9 @@
 import { Command } from "commander";
 import { confirm } from "@inquirer/prompts";
-import TaskAPI from "../../../common/api.js";
+import TaskAPI from "../../../../common/api.js";
 
-const purgeCommand = new Command("purge")
+const purgeCommand = new Command()
+    .name("purge")
     .description("Purge all tasks")
     .action(async () => {
         try {

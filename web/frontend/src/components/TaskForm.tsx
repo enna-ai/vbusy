@@ -54,7 +54,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ tasks }) => {
                         <option value="medium">Medium</option>
                         <option value="high">High</option>
                     </Field>
-                    <Field type="date" id="dueDate" name="dueDate" />
+                    <Field type="date" id="dueDate" name="dueDate" min={new Date().toISOString().split("T")[0]} />
                     <button type="submit">+</button>
                 </Form>
             </Formik>

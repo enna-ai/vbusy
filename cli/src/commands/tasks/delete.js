@@ -1,9 +1,10 @@
 import { Command } from "commander";
 import { confirm } from "@inquirer/prompts";
-import { getAllTasks } from "../helpers/helpers.js";
-import TaskAPI from "../../../common/api.js";
+import { getAllTasks } from "../../helpers/helpers.js";
+import TaskAPI from "../../../../common/api.js";
 
-const deleteCommand = new Command("delete")
+const deleteCommand = new Command()
+    .name("delete")
     .description("Delete a task")
     .action(async () => {
         try {

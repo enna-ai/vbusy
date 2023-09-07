@@ -1,10 +1,11 @@
 import { Command } from "commander";
 import chalk from "chalk";
 import Table from "cli-table";
-import { formatDueDate } from "../helpers/helpers.js";
-import TaskAPI from "../../../common/api.js";
+import { formatDueDate } from "../../helpers/helpers.js";
+import TaskAPI from "../../../../common/api.js";
 
-const listCommand = new Command("list")
+const listCommand = new Command()
+    .name("list")
     .description("Get all tasks")
     .action(async () => {
         try {

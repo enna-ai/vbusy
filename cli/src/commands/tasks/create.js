@@ -1,7 +1,8 @@
 import { Command } from "commander";
-import { createNewTask } from "../helpers/index.js";
+import { createNewTask } from "../../helpers/index.js";
 
-const createCommand = new Command("create")
+const createCommand = new Command()
+    .name("create")
     .description("Create a task")
     .action(async () => {
         try {

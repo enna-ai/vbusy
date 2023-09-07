@@ -1,8 +1,9 @@
 import { Command } from "commander";
-import { getAllTasks } from "../helpers/helpers.js";
-import TaskAPI from "../../../common/api.js";
+import { getAllTasks } from "../../helpers/helpers.js";
+import TaskAPI from "../../../../common/api.js";
 
-const unarchiveCommand = new Command("unarchive")
+const unarchiveCommand = new Command()
+    .name("unarchive")
     .description("Archive a task")
     .action(async () => {
         try {

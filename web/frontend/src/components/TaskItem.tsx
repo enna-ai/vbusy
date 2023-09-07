@@ -103,6 +103,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
                                 type="date"
                                 id="dueDate"
                                 name="dueDate"
+                                min={new Date().toISOString().split("T")[0]}
                                 value={isEditing ? (task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : "") : ""}
                                 onChange={(e) => setTaskDate(e.target.value ? day(e.target.value).toDate() : null)}
                             />
