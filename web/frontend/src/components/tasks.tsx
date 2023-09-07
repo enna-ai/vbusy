@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { TaskItem } from "./taskItem";
+import { TaskForm } from "./TaskForm";
+import { TaskItem } from "./TaskItem";
 import { Task } from "@/interfaces/task";
 import TaskAPI from "../../../../common/api";
 
-const Tasks = () => {
+export const Tasks: React.FC<{}> = () => {
     const [data, setData] = useState<Task[]>([]);
 
     useEffect(() => {
@@ -20,14 +21,25 @@ const Tasks = () => {
 
         fetchData();
     }, []);
+
+    const taskList = (newTask: Task) => {
+        setData((prev) => [...prev, newTask]);
+    };
+
+    const deleteTask = (taskId: string) => {
+        setData((prev) => prev.filter((task) => task._id !== taskId));
+    };
+
     return (
         <React.Fragment>
+            <TaskForm tasks={taskList} />
             <ul>
                 {
                     data.map((task, index) => (
                         <TaskItem
                             key={index}
                             task={task}
+                            onDelete={deleteTask}
                         />
                     ))
                 }
@@ -35,5 +47,3 @@ const Tasks = () => {
         </React.Fragment>
     )
 };
-
-export default Tasks;
