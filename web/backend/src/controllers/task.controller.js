@@ -111,13 +111,17 @@ export const completeTask = async (req, res) => {
 
         const id = value.taskId;
 
-        const toggle = await Task.findById(id);
-        const task = await Task.findOneAndUpdate(
+        const task = await Task.findById(id);
+        if (!task) {
+            return res.status(404).json("Task not found");
+        }
+
+        const toggle = await Task.findOneAndUpdate(
             { _id: id },
-            { completed: !toggle.completed },
+            { completed: !task.completed },
         );
 
-        return res.status(200).json(task);
+        return res.status(200).json(toggle);
     } catch (error) {
         return res.status(500).json(error.message);
     }
@@ -179,6 +183,40 @@ export const updateTaskPriority = async (req, res) => {
 
         const updatedTask = await Task.findById(id);
         return res.status(200).json(updatedTask);
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+};
+
+export const archiveTask = async (req, res) => {
+    try {
+        const { error, value } = getTaskSchema.validate(req.params);
+        if (error) {
+            return res.status(400).json({ error: error.details[0].message });
+        }
+
+        const id = value.taskId;
+        const task = await Task.findById(id);
+        if (!task) {
+            return res.status(404).json("Task not found");
+        }
+
+        const taskToArchive = await Task.findOneAndUpdate(
+            { _id: id },
+            { archived: !task.archived },
+        );
+
+        return res.status(200).json(taskToArchive);
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+};
+
+export const purgeTasks = async (req, res) => {
+    try {
+        await Task.deleteMany({});
+
+        return res.status(200).json("All tasks have been purged.");
     } catch (error) {
         return res.status(500).json(error.message);
     }
