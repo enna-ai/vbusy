@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 
 const Task = new Schema({
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     task: { type: String, required: true },
     completed: { type: Boolean, default: false },
     archived: { type: Boolean, default: false },
