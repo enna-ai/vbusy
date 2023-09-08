@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import chalk from "chalk";
 import Table from "cli-table";
+import day from "dayjs";
 import { formatDueDate } from "../../helpers/helpers.js";
 import TaskAPI from "../../../../common/api.js";
 
@@ -34,6 +35,27 @@ const listCommand = new Command()
                 const completed = task.completed ? chalk.green("[✔]") : "[ ]";
                 const dueDate = task.dueDate ? formatDueDate(task.dueDate) : " ";
                 const taskId = chalk.cyan(count++);
+                const taskName = task.archived ? chalk.gray(`[archived] ${task.task}`) : task.task;
+
+                const currentDate = day();
+                let dueDateMsg = dueDate;
+
+                if (task.dueDate) {
+                    const dueDateValue = day(task.dueDate);
+                    const daysUntilDue = dueDateValue.diff(currentDate, "day");
+
+                    if (daysUntilDue === 0) {
+                        if (task.completed) {
+                            dueDateMsg = chalk.red("Today");
+                        } else {
+                            dueDateMsg = chalk.yellow("Today");
+                        }
+                    } else if (daysUntilDue === 1) {
+                        dueDateMsg = chalk.yellow("Tomorrow");
+                    } else if (daysUntilDue < 0) {
+                        dueDateMsg = chalk.red(dueDate);
+                    }
+                }
 
                 const priority = {
                     low: chalk.cyan("low"),
@@ -41,7 +63,7 @@ const listCommand = new Command()
                     high: chalk.red("high"),
                 }[task.priority] || chalk.gray("N/A");
 
-                table.push([taskId, completed, dueDate, priority, task.task]);
+                table.push([taskId, completed, dueDateMsg, priority, taskName]);
             }
 
             console.log(table.toString());

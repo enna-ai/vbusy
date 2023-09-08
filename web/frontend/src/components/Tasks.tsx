@@ -24,11 +24,25 @@ export const Tasks: React.FC<{}> = () => {
     }, []);
 
     useEffect(() => {
-        setFilter(data);
+        const filterAll = data.filter((task) => task.archived === false);
+        setFilter(filterAll);
     }, [data]);
 
     const taskList = (newTask: Task) => {
         setData((prev) => [...prev, newTask]);
+    };
+
+    const filterTasks = (status: string) => {
+        if (status === "All") {
+            const filterAll = data.filter((task) => task.archived === false);
+            setFilter(filterAll);
+        } else if (status === "Completed") {
+            const completedTasks = data.filter((task) => task.completed === true);
+            setFilter(completedTasks);
+        } else if (status === "Archived") {
+            const archivedTasks = data.filter((task) => task.archived === true);
+            setFilter(archivedTasks);
+        }
     };
 
     const deleteTask = (taskId: string) => {
@@ -45,19 +59,7 @@ export const Tasks: React.FC<{}> = () => {
         }
     };
 
-    const filterTasks = (status: string) => {
-        if (status === "All") {
-            setFilter(data);
-        } else if (status === "Completed") {
-            const completedTasks = data.filter((task) => task.completed === true);
-            setFilter(completedTasks);
-        } else if (status === "Archived") {
-            const archivedTasks = data.filter((task) => task.archived === true);
-            setFilter(archivedTasks);
-        }
-    };
-
-    const handlePurgeTasks = async () => {
+    const purgeTasks = async () => {
         try {
             await TaskAPI.purgeTasks();
 
@@ -73,10 +75,10 @@ export const Tasks: React.FC<{}> = () => {
             <TaskForm tasks={taskList} />
 
             <div>
-                <button onClick={() => filterTasks("All")}>All {data.length}</button>
+                <button onClick={() => filterTasks("All")}>All {data.filter(task => !task.archived).length}</button>
                 <button onClick={() => filterTasks("Completed")}>Completed {data.filter(task => task.completed === true).length}</button>
                 <button onClick={() => filterTasks("Archived")}>Archived {data.filter(task => task.archived === true).length}</button>
-                <button onClick={handlePurgeTasks}>Purge Tasks</button>
+                <button onClick={purgeTasks}>Purge Tasks</button>
             </div>
 
             <ul>

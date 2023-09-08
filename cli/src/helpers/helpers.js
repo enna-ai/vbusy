@@ -42,11 +42,6 @@ export const promptUpdateChoice = async () => {
                 value: "priority",
                 description: "Update tasks priority level",
             },
-            {
-                name: "Completion",
-                value: "completed",
-                description: "Mark task as complete or incomplete",
-            },
         ],
     });
 

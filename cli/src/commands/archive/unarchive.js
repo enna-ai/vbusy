@@ -4,7 +4,7 @@ import TaskAPI from "../../../../common/api.js";
 
 const unarchiveCommand = new Command()
     .name("unarchive")
-    .description("Archive a task")
+    .description("Unarchive a task")
     .action(async () => {
         try {
             const selectedTask = await getAllTasks("unarchive");

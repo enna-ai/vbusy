@@ -29,6 +29,8 @@ export const TaskForm: React.FC<TaskFormProps> = ({ tasks }) => {
             tasks(newTask);
 
             values.task = "";
+            values.dueDate = "";
+            values.priority = "";
         } catch (error) {
             console.error(error);
         }
