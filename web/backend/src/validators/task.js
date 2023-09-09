@@ -25,5 +25,4 @@ export const updateTaskPrioritySchema = Joi.object({
 
 export const updateTaskDueSchema = Joi.object({
     taskId: Joi.string().required(),
-    // dueDate: Joi.date().iso(),
 });

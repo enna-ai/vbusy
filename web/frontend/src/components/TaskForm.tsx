@@ -3,7 +3,7 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import TaskAPI from "../../../../common/api";
+import { TaskAPI } from "../../../../common/src/index";
 import { Task } from "../interfaces/task";
 
 interface FormValues {

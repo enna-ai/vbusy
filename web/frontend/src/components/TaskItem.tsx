@@ -3,7 +3,7 @@ import { BsFillTrash3Fill, BsPencilFill, BsCalendar, BsThermometerLow, BsFillArc
 import { TiTick } from "react-icons/ti";
 import day from "dayjs";
 import { Task } from "../interfaces/task";
-import TaskAPI from "../../../../common/api";
+import { TaskAPI } from "../../../../common/src/index";
 
 interface TaskItemProps {
     task: Task;
@@ -52,10 +52,11 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
 
     const handleCompleted = async () => {
         try {
+            const token = localStorage.getItem("token");
             const completedTask = !completed;
             setCompleted(completedTask);
 
-            await TaskAPI.completeTask(task._id);
+            await TaskAPI.completeTask(task._id, token);
 
             onUpdate({ ...task, completed: completedTask });
         } catch (error) {

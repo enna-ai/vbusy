@@ -2,10 +2,10 @@
   "name": "common",
   "version": "1.0.0",
   "description": "",
-  "main": "api.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node api.js"
+    "start": "node ."
   },
   "keywords": [],
   "author": "",

@@ -4,45 +4,53 @@ import React, { useState, useEffect } from "react";
 import { TaskForm } from "./TaskForm";
 import { TaskItem } from "./TaskItem";
 import { Task } from "@/interfaces/task";
-import TaskAPI from "../../../../common/api";
+import { FILTER_ALL, FILTER_ARCHIVED, FILTER_COMPLETED } from "@/utils/consts";
+import { UserAPI, TaskAPI } from "../../../../common/src/index";
 
 export const Tasks: React.FC<{}> = () => {
     const [data, setData] = useState<Task[]>([]);
     const [filter, setFilter] = useState<Task[]>(data);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const getUserData = async () => {
             try {
-                const taskData = await TaskAPI.getTasks();
-                setData(taskData);
+                const token = localStorage.getItem("token");
+
+                const { tasks: profileTasks } = await UserAPI.getUserProfile(token);
+                const filteredTasks = profileTasks.filter((task: any) => !task.archived);
+
+                setData(profileTasks);
+                setFilter(filteredTasks);
             } catch (error) {
-                console.error("Error fetching data:", error);
+                console.error("Error fetching user profile", error);
             }
-        };
+        }
 
-        fetchData();
+        getUserData();
     }, []);
-
-    useEffect(() => {
-        const filterAll = data.filter((task) => task.archived === false);
-        setFilter(filterAll);
-    }, [data]);
 
     const taskList = (newTask: Task) => {
         setData((prev) => [...prev, newTask]);
     };
 
     const filterTasks = (status: string) => {
-        if (status === "All") {
-            const filterAll = data.filter((task) => task.archived === false);
-            setFilter(filterAll);
-        } else if (status === "Completed") {
-            const completedTasks = data.filter((task) => task.completed === true);
-            setFilter(completedTasks);
-        } else if (status === "Archived") {
-            const archivedTasks = data.filter((task) => task.archived === true);
-            setFilter(archivedTasks);
+        let filteredTasks: Task[] = [];
+
+        switch (status) {
+            case FILTER_ALL:
+                filteredTasks = data.filter((task) => !task.archived);
+                break;
+            case FILTER_COMPLETED:
+                filteredTasks = data.filter((task) => task.completed);
+                break;
+            case FILTER_ARCHIVED:
+                filteredTasks = data.filter((task) => task.archived);
+                break;
+            default:
+                filteredTasks = data;
         }
+
+        setFilter(filteredTasks);
     };
 
     const deleteTask = (taskId: string) => {
@@ -73,7 +81,6 @@ export const Tasks: React.FC<{}> = () => {
     return (
         <React.Fragment>
             <TaskForm tasks={taskList} />
-
             <div>
                 <button onClick={() => filterTasks("All")}>All {data.filter(task => !task.archived).length}</button>
                 <button onClick={() => filterTasks("Completed")}>Completed {data.filter(task => task.completed === true).length}</button>
@@ -83,9 +90,9 @@ export const Tasks: React.FC<{}> = () => {
 
             <ul>
                 {
-                    filter.map((task, index) => (
+                    filter.map((task) => (
                         <TaskItem
-                            key={index}
+                            key={task._id}
                             task={task}
                             onDelete={deleteTask}
                             onUpdate={updateTask}
