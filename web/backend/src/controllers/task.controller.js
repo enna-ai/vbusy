@@ -1,8 +1,11 @@
+/* eslint-disable no-underscore-dangle */
+import asyncHandler from "express-async-handler";
 import Task from "../database/models/task.model.js";
 import { getTaskSchema, createTaskSchema, updateTaskSchema, completeTaskSchema, updateTaskDueSchema, updateTaskPrioritySchema } from "../validators/task.js";
 
-export const createTask = async (req, res) => {
+export const createTask = asyncHandler(async (req, res) => {
     try {
+        console.log(req.user);
         const { error, value } = createTaskSchema.validate({
             task: req.body.task,
             priority: req.body.priority,
@@ -13,30 +16,32 @@ export const createTask = async (req, res) => {
 
         const date = req.body.dueDate;
         const { task, priority } = value;
-        const newTask = await Task.create({
+
+        const newTask = new Task({
+            user: req.user._id,
             task,
             priority,
-            dueDate: date || null
+            dueDate: date || null,
         });
-        await newTask.save();
 
-        return res.status(200).json(newTask);
+        const saveTask = await newTask.save();
+
+        return res.status(200).json(saveTask);
     } catch (error) {
         return res.status(500).json(error.message);
     }
-};
+});
 
-export const getTasks = async (req, res) => {
+export const getTasks = asyncHandler(async (req, res) => {
     try {
-        const tasks = await Task.find({});
-
+        const tasks = await Task.find({ user: req.user._id });
         return res.status(200).json(tasks);
     } catch (error) {
         return res.status(500).json(error.message);
     }
-};
+});
 
-export const getTask = async (req, res) => {
+export const getTask = asyncHandler(async (req, res) => {
     try {
         const { error, value } = getTaskSchema.validate(req.params);
         if (error) {
@@ -52,9 +57,9 @@ export const getTask = async (req, res) => {
     } catch (error) {
         return res.status(500).json(error.message);
     }
-};
+});
 
-export const deleteTask = async (req, res) => {
+export const deleteTask = asyncHandler(async (req, res) => {
     try {
         const { error, value } = getTaskSchema.validate(req.params);
         if (error) {
@@ -70,9 +75,9 @@ export const deleteTask = async (req, res) => {
     } catch (error) {
         return res.status(500).json(error.message);
     }
-};
+});
 
-export const updateTask = async (req, res) => {
+export const updateTask = asyncHandler(async (req, res) => {
     try {
         const { error, value } = updateTaskSchema.validate({
             taskId: req.params.taskId,
@@ -99,9 +104,9 @@ export const updateTask = async (req, res) => {
     } catch (error) {
         return res.status(500).json(error.message);
     }
-};
+});
 
-export const completeTask = async (req, res) => {
+export const completeTask = asyncHandler(async (req, res) => {
     try {
         const { error, value } = completeTaskSchema.validate(req.params);
 
@@ -125,13 +130,12 @@ export const completeTask = async (req, res) => {
     } catch (error) {
         return res.status(500).json(error.message);
     }
-};
+});
 
-export const updateTaskDueDate = async (req, res) => {
+export const updateTaskDueDate = asyncHandler(async (req, res) => {
     try {
         const { error, value } = updateTaskDueSchema.validate({
             taskId: req.params.taskId,
-            // dueDate: req.body.dueDate,
         });
 
         if (error) {
@@ -155,9 +159,9 @@ export const updateTaskDueDate = async (req, res) => {
     } catch (error) {
         return res.status(500).json(error.message);
     }
-};
+});
 
-export const updateTaskPriority = async (req, res) => {
+export const updateTaskPriority = asyncHandler(async (req, res) => {
     try {
         const { error, value } = updateTaskPrioritySchema.validate({
             taskId: req.params.taskId,
@@ -168,9 +172,7 @@ export const updateTaskPriority = async (req, res) => {
             return res.status(400).json({ error: error.details[0].message });
         }
 
-        const id = value.taskId;
-        // eslint-disable-next-line prefer-destructuring
-        const priority = value.priority;
+        const { id, priority } = value;
 
         const updatePriority = await Task.findOneAndUpdate(
             { _id: id },
@@ -186,9 +188,9 @@ export const updateTaskPriority = async (req, res) => {
     } catch (error) {
         return res.status(500).json(error.message);
     }
-};
+});
 
-export const archiveTask = async (req, res) => {
+export const archiveTask = asyncHandler(async (req, res) => {
     try {
         const { error, value } = getTaskSchema.validate(req.params);
         if (error) {
@@ -210,14 +212,14 @@ export const archiveTask = async (req, res) => {
     } catch (error) {
         return res.status(500).json(error.message);
     }
-};
+});
 
-export const purgeTasks = async (req, res) => {
+export const purgeTasks = asyncHandler(async (req, res) => {
     try {
-        await Task.deleteMany({});
+        await Task.deleteMany({ user: req.user._id });
 
         return res.status(200).json("All tasks have been purged.");
     } catch (error) {
         return res.status(500).json(error.message);
     }
-};
+});

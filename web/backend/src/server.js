@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 import connectMongo from "./database/connect.js";
 import { castErrorHandler, notFound } from "./middleware/error.js";
 import taskRoutes from "./routes/task.route.js";
-import userRoutes from "./routes/user.routes.js";
+import userRoutes from "./routes/user.route.js";
 
 const port = process.env.PORT || 8080;
 const app = express();
