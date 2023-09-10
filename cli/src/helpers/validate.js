@@ -9,8 +9,8 @@ export const isValidDate = async (date) => {
     return dateInput;
 };
 
-export const isValidEmail = async (input) => {
-    const emailInput = await input.match(emailRegex);
+export const isValidEmail = (input) => {
+    const emailInput = emailRegex.test(input);
     if (!emailInput) {
         return false;
     }

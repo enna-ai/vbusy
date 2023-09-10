@@ -80,3 +80,29 @@ export const getUserProfile = asyncHandler(async (req, res) => {
         console.error(error);
     }
 });
+
+export const updateUserProfile = asyncHandler(async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        if (user) {
+            user.username = req.body.username || user.username;
+            user.email = req.body.email || user.email;
+
+            if (req.body.password) {
+                user.password = req.body.password;
+            }
+
+            const updatedUser = await user.save();
+
+            res.json({
+                _id: updatedUser._id,
+                username: updatedUser.username,
+                email: updatedUser.email,
+            });
+        } else {
+            res.status(404).send({ error: "User not found." });
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});

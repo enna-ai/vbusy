@@ -7,7 +7,6 @@ import { input, select } from "@inquirer/prompts";
 import inquirer from "inquirer";
 import moment from "moment";
 import { handleLogout, handleLogin } from "./auth.js";
-import { emailRegex } from "./regex.js";
 import { isValidDate, isValidEmail } from "./validate.js";
 import { TaskAPI, UserAPI } from "../../../common/src/index.js";
 
@@ -111,7 +110,6 @@ export const promptMainMenu = async () => {
             }
 
             console.log(table.toString());
-
             break;
         case "settings":
             console.log("settings page");
