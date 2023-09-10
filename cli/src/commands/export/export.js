@@ -1,8 +1,9 @@
 import fs from "fs/promises";
 import path from "path";
 import { Command } from "commander";
+import keytar from "keytar";
 import { getAllTasks } from "../../helpers/helpers.js";
-import TaskAPI from "../../../../common/api.js";
+import { TaskAPI } from "../../../../common/src/index.js";
 
 const exportCommand = new Command()
     .name("export")
@@ -10,8 +11,9 @@ const exportCommand = new Command()
     .option("-d --directory <dir>", "Specify the export directory")
     .action(async (options) => {
         try {
+            const token = await keytar.getPassword("tasks", "token");
             const selectedTask = await getAllTasks("export");
-            const task = await TaskAPI.getTask(selectedTask);
+            const task = await TaskAPI.getTask(selectedTask, token);
             if (!task) {
                 console.log("Task not found.");
                 return;

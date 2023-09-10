@@ -1,9 +1,10 @@
 import { Command } from "commander";
 import chalk from "chalk";
 import Table from "cli-table";
+import keytar from "keytar";
 import day from "dayjs";
 import { formatDueDate } from "../../helpers/helpers.js";
-import TaskAPI from "../../../../common/api.js";
+import { TaskAPI } from "../../../../common/src/index.js";
 
 const listCommand = new Command()
     .name("list")
@@ -12,7 +13,8 @@ const listCommand = new Command()
         try {
             let count = 1;
 
-            const tasks = await TaskAPI.getTasks();
+            const token = await keytar.getPassword("tasks", "token");
+            const tasks = await TaskAPI.getTasks(token);
 
             if (tasks.length === 0) {
                 console.log(":-( You haven't made any tasks.");
@@ -66,6 +68,7 @@ const listCommand = new Command()
                 table.push([taskId, completed, dueDateMsg, priority, taskName]);
             }
 
+            console.log("\n<(￣▽￣)> Task List");
             console.log(table.toString());
         } catch (error) {
             console.error(error.message);

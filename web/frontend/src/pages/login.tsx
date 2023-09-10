@@ -17,7 +17,7 @@ const SignInPage: React.FC = () => {
         try {
             const response = await axios.post("http://localhost:4000/api/v1/users/login", credentials);
             localStorage.setItem("token", response.data.token);
-            localStorage.setItem("userInfo", JSON.stringify(response.data));
+            localStorage.setItem("userId", response.data._id);
             router.push("/profile");
         } catch (error) {
             console.error(error);

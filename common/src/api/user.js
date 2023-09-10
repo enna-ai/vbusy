@@ -33,6 +33,23 @@ class UserAPI {
 
         return this.makeRequest("get", "profile", null, headers);
     }
+
+    async login(email, password) {
+        const credentials = {
+            email,
+            password,
+        };
+
+        return this.makeRequest("post", "login", credentials);
+    }
+
+    async logout() {
+        return this.makeRequest("post", "logout")
+    }
+
+    async register() {
+        return this.makeRequest("post", "register");
+    }
 };
 
 export default new UserAPI();

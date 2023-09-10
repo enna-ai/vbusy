@@ -37,7 +37,7 @@ class TaskAPI {
             dueDate: taskDueDate,
         };
 
-        return this.makeRequest("post", "tasks", data, null, headers);
+        return this.makeRequest("post", "tasks", data, headers);
     }
 
     async getTasks(token) {
@@ -53,7 +53,7 @@ class TaskAPI {
             Authorization: `Bearer ${token}`,
         };
 
-        return this.makeRequest("get", `task/${taskId}`, null, headers);
+        return this.makeRequest("get", `tasks/${taskId}`, null, headers);
     }
 
     async deleteTask(taskId, token) {
@@ -61,7 +61,7 @@ class TaskAPI {
             Authorization: `Bearer ${token}`,
         };
         
-        return this.makeRequest("delete", `task/${taskId}`, null, headers);
+        return this.makeRequest("delete", `tasks/${taskId}`, null, headers);
     }
 
     async updateTask(taskId, content, token) {
@@ -73,7 +73,7 @@ class TaskAPI {
             task: content,
         };
 
-        return this.makeRequest("put", `task/${taskId}`, data, headers);
+        return this.makeRequest("patch", `tasks/${taskId}`, data, headers);
     }
 
     async completeTask(taskId, token) {
@@ -113,15 +113,15 @@ class TaskAPI {
             Authorization: `Bearer ${token}`,
         };
 
-        return this.makeRequest("put", `task/${taskId}/archive`, null, headers);
+        return this.makeRequest("put", `tasks/${taskId}/archive`, null, headers);
     }
 
-    async purgeTasks(token) {
+    async purgeTasks(userId, token) {
         const headers = {
             Authorization: `Bearer ${token}`,
         };
 
-        return this.makeRequest("delete", `tasks/purge`, null, headers);
+        return this.makeRequest("delete", `tasks/${userId}/purge`, null, headers);
     }
 };
 

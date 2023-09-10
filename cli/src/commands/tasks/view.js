@@ -1,16 +1,18 @@
 import { Command } from "commander";
 import chalk from "chalk";
 import Table from "cli-table";
+import keytar from "keytar";
 import { getAllTasks, formatDueDate } from "../../helpers/helpers.js";
-import TaskAPI from "../../../../common/api.js";
+import { TaskAPI } from "../../../../common/src/index.js";
 
 const viewCommand = new Command()
     .name("view")
     .description("Preview a task")
     .action(async () => {
         try {
+            const token = await keytar.getPassword("tasks", "token");
             const selectedTask = await getAllTasks("view");
-            const tasks = await TaskAPI.getTask(selectedTask);
+            const tasks = await TaskAPI.getTask(selectedTask, token);
             const table = new Table({
                 head: [chalk.cyan("Completed"), chalk.cyan("Task"), chalk.cyan("Priority"), chalk.cyan("Due")],
                 colWidths: [10, 30, 8, 14],

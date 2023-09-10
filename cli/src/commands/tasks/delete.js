@@ -1,7 +1,8 @@
 import { Command } from "commander";
+import keytar from "keytar";
 import { confirm } from "@inquirer/prompts";
 import { getAllTasks } from "../../helpers/helpers.js";
-import TaskAPI from "../../../../common/api.js";
+import { TaskAPI } from "../../../../common/src/index.js";
 
 const deleteCommand = new Command()
     .name("delete")
@@ -12,7 +13,8 @@ const deleteCommand = new Command()
 
             const confirmed = await confirm({ message: "Are you sure you want to delete this task?" });
             if (confirmed) {
-                const taskToDelete = await TaskAPI.deleteTask(selectedTask);
+                const token = await keytar.getPassword("tasks", "token");
+                const taskToDelete = await TaskAPI.deleteTask(selectedTask, token);
                 if (taskToDelete) {
                     console.log("Successfully deleted task!");
                 } else {

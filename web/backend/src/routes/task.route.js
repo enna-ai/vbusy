@@ -20,7 +20,7 @@ router.get("/", protect, getTasks);
 router.get("/:taskId", protect, getTask);
 router.patch("/:taskId", protect, updateTask);
 router.delete("/:taskId", protect, deleteTask);
-router.delete("/purge", protect, purgeTasks);
+router.delete("/:userId/purge", protect, purgeTasks);
 
 router.put("/:taskId/complete", protect, completeTask);
 router.put("/:taskId/archive", protect, archiveTask);

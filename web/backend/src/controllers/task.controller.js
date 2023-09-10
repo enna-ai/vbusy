@@ -172,10 +172,10 @@ export const updateTaskPriority = asyncHandler(async (req, res) => {
             return res.status(400).json({ error: error.details[0].message });
         }
 
-        const { id, priority } = value;
+        const { taskId, priority } = value;
 
         const updatePriority = await Task.findOneAndUpdate(
-            { _id: id },
+            { _id: taskId },
             { priority: priority || null },
         );
 
@@ -183,7 +183,7 @@ export const updateTaskPriority = asyncHandler(async (req, res) => {
             return res.status(400).json("Task not found.");
         }
 
-        const updatedTask = await Task.findById(id);
+        const updatedTask = await Task.findById(taskId);
         return res.status(200).json(updatedTask);
     } catch (error) {
         return res.status(500).json(error.message);

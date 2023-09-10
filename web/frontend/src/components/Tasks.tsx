@@ -11,26 +11,27 @@ export const Tasks: React.FC<{}> = () => {
     const [data, setData] = useState<Task[]>([]);
     const [filter, setFilter] = useState<Task[]>(data);
 
-    useEffect(() => {
-        const getUserData = async () => {
-            try {
-                const token = localStorage.getItem("token");
+    const fetchData = async () => {
+        try {
+            const token = localStorage.getItem("token");
 
-                const { tasks: profileTasks } = await UserAPI.getUserProfile(token);
-                const filteredTasks = profileTasks.filter((task: any) => !task.archived);
+            const { tasks: profileTasks } = await UserAPI.getUserProfile(token);
+            const filteredTasks = profileTasks.filter((task: any) => !task.archived);
 
-                setData(profileTasks);
-                setFilter(filteredTasks);
-            } catch (error) {
-                console.error("Error fetching user profile", error);
-            }
+            setData(profileTasks);
+            setFilter(filteredTasks);
+        } catch (error) {
+            console.error("Error fetching user profile", error);
         }
+    }
 
-        getUserData();
+    useEffect(() => {
+        fetchData();
     }, []);
 
     const taskList = (newTask: Task) => {
         setData((prev) => [...prev, newTask]);
+        fetchData();
     };
 
     const filterTasks = (status: string) => {
@@ -55,6 +56,7 @@ export const Tasks: React.FC<{}> = () => {
 
     const deleteTask = (taskId: string) => {
         setData((prev) => prev.filter((task) => task._id !== taskId));
+        fetchData();
     };
 
     const updateTask = (updatedTask: Task) => {
@@ -64,15 +66,19 @@ export const Tasks: React.FC<{}> = () => {
             updatedData[updatedTaskIndex] = updatedTask;
 
             setData(updatedData);
+            fetchData();
         }
     };
 
     const purgeTasks = async () => {
         try {
-            await TaskAPI.purgeTasks();
+            const userId = localStorage.getItem("userId");
+            const token = localStorage.getItem("token");
+            await TaskAPI.purgeTasks(userId, token);
 
-            const updatedTaskList = await TaskAPI.getTasks();
+            const updatedTaskList = await TaskAPI.getTasks(token);
             setData(updatedTaskList);
+            fetchData();
         } catch (error) {
             console.error(error);
         }

@@ -21,7 +21,8 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
 
     const handleDelete = async () => {
         try {
-            await TaskAPI.deleteTask(task._id);
+            const token = localStorage.getItem("token");
+            await TaskAPI.deleteTask(task._id, token);
             onDelete(task._id);
         } catch (error) {
             console.error(error);
@@ -31,16 +32,19 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
     const handleUpdate = async () => {
         try {
             if (task.priority !== taskPriority) {
-                const updatedPriority = await TaskAPI.updateTaskPriority(task._id, taskPriority);
+                const token = localStorage.getItem("token");
+                const updatedPriority = await TaskAPI.updateTaskPriority(task._id, taskPriority, token);
                 setTaskPriority(updatedPriority.priority);
             }
 
             if (task.dueDate !== taskDate) {
-                const updatedDueDate = await TaskAPI.updateTaskDueDate(task._id, taskDate);
+                const token = localStorage.getItem("token");
+                const updatedDueDate = await TaskAPI.updateTaskDueDate(task._id, taskDate, token);
                 setTaskDate(updatedDueDate.dueDate);
             }
 
-            const updatedTask = await TaskAPI.updateTask(task._id, edit);
+            const token = localStorage.getItem("token");
+            const updatedTask = await TaskAPI.updateTask(task._id, edit, token);
             setEdit(updatedTask.task);
 
             setIsEditing(false);
@@ -66,12 +70,13 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
 
     const handleArchive = async () => {
         try {
+            const token = localStorage.getItem("token");
             const archivedTask = !archived;
-            setArchived(archivedTask);
-
-            await TaskAPI.archiveTask(task._id);
 
             onUpdate({ ...task, archived: archivedTask });
+            setArchived(archivedTask);
+
+            await TaskAPI.archiveTask(task._id, token);
         } catch (error) {
             console.error(error);
         }
@@ -83,7 +88,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
 
     return (
         <React.Fragment>
-            <li className={completed ? "completed" : ""}>
+            <li>
                 {isEditing ? (
                     <div>
                         <input
@@ -120,7 +125,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
                                 onChange={handleCompleted}
                             />
                         </label>
-                        <p>{edit}</p>
+                        <p className={completed ? "completed" : ""}>{edit}</p>
                         <span>
                             <BsCalendar />
                             {task.dueDate && (

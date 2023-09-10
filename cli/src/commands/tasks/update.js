@@ -1,12 +1,14 @@
 import { Command } from "commander";
+import keytar from "keytar";
 import { getAllTasks, promptUpdateChoice, promptDueDate, promptNewTask, promptPriorityChoice } from "../../helpers/index.js";
-import TaskAPI from "../../../../common/api.js";
+import { TaskAPI } from "../../../../common/src/index.js";
 
 const updateCommand = new Command()
     .name("update")
     .description("Update a task")
     .action(async () => {
         try {
+            const token = await keytar.getPassword("tasks", "token");
             const selectedTask = await getAllTasks("update");
 
             const updateChoice = await promptUpdateChoice();
@@ -15,7 +17,7 @@ const updateCommand = new Command()
                 case "task":
                     const taskName = await promptNewTask();
                     
-                    const updateTaskName = await TaskAPI.updateTask(selectedTask, taskName);
+                    const updateTaskName = await TaskAPI.updateTask(selectedTask, taskName, token);
                     if (updateTaskName) {
                         console.log(`Successfully updated task name to '${taskName}'`);
                     } else {
@@ -25,7 +27,7 @@ const updateCommand = new Command()
                 case "priority":
                     const taskPriority = await promptPriorityChoice();
 
-                    const updateTaskPriority = await TaskAPI.updateTaskPriority(selectedTask, taskPriority);
+                    const updateTaskPriority = await TaskAPI.updateTaskPriority(selectedTask, taskPriority, token);
                     if (updateTaskPriority) {
                         console.log(`Successfully edited tasks priority level to ${taskPriority}`);
                     } else {
@@ -35,17 +37,9 @@ const updateCommand = new Command()
                 case "dueDate":
                     const taskDueDate = await promptDueDate();
 
-                    const updateTaskDate = await TaskAPI.updateTaskDueDate(selectedTask, taskDueDate);
+                    const updateTaskDate = await TaskAPI.updateTaskDueDate(selectedTask, taskDueDate, token);
                     if (updateTaskDate) {
                         console.log(`Successfully edited tasks due date to ${taskDueDate ? taskDueDate : "no date"}`);
-                    } else {
-                        console.log("An error occured trying to update task.");
-                    }
-                    break;
-                case "completed":
-                    const toggleComplete = await TaskAPI.completeTask(selectedTask);
-                    if (toggleComplete) {
-                        console.log(`Successfully marked task as '${toggleComplete ? "complete" : "incomplete"}'`);
                     } else {
                         console.log("An error occured trying to update task.");
                     }

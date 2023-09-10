@@ -25,7 +25,8 @@ export const TaskForm: React.FC<TaskFormProps> = ({ tasks }) => {
 
     const handleNewTask = async (values: FormValues) => {
         try {
-            const newTask = await TaskAPI.createTask(values.task, values.priority, values.dueDate);
+            const token = localStorage.getItem("token");
+            const newTask = await TaskAPI.createTask(values.task, values.priority, values.dueDate, token);
             tasks(newTask);
 
             values.task = "";

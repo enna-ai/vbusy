@@ -1,8 +1,77 @@
+import keytar from "keytar";
+import clear from "clear";
 import { input, select } from "@inquirer/prompts";
 import inquirer from "inquirer";
 import day from "dayjs";
+import { emailRegex } from "./regex.js";
 import { isValidDate } from "./validate.js";
-import TaskAPI from "../../../common/api.js";
+import { TaskAPI, UserAPI } from "../../../common/src/index.js";
+
+export const isAuthenticated = async () => {
+    const token = await keytar.getPassword("tasks", "token");
+    return !!token;
+};
+
+export const promptLogin = () => {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "email",
+            message: "Enter your email:",
+            validate: (value) => {
+                if (!value) {
+                    return "Please provide an email!";
+                }
+
+                const validateEmail = emailRegex.test(value);
+                return validateEmail || "Please enter a valid email address!";
+            }
+        },
+        {
+            type: "password",
+            name: "password",
+            message: "Enter your password:",
+            mask: "•",
+        }
+    ]).then(async (credentials) => {
+        try {
+            const { email, password } = credentials;
+            
+            const response = await UserAPI.login(email, password);
+            const userId = response._id;
+            const token = response.token;
+
+            await keytar.setPassword("users", "userId", userId);
+            await keytar.setPassword("tasks", "token", token);
+
+            promptMainMenu();
+        } catch (error) {
+            console.error(error);
+        }
+    });
+};
+
+export const promptMainMenu = async () => {
+    clear();
+
+    const { choice } = await inquirer.prompt({
+        type: "list",
+        name: "choice",
+        message: "Command Navigation",
+        choices: [
+            "Log Out",
+        ],
+    });
+
+    return choice;
+};
+
+export const getUserProfile = async () => {
+    const token = await keytar.getPassword("tasks", "token");
+    const data = await UserAPI.getUserProfile(token);
+
+    return data;
+};
 
 export const formatDueDate = (date) => {
     return day(date).format("ddd MMM DD");
@@ -94,7 +163,8 @@ export const promptDueDate = async () => {
 };
 
 export const getAllTasks = async (action) => {
-    const tasks = await TaskAPI.getTasks();
+    const token = await keytar.getPassword("tasks", "token");
+    const tasks = await TaskAPI.getTasks(token);
     if (tasks.length === 0) {
         console.log("You haven't made any tasks.");
         return;
@@ -116,11 +186,12 @@ export const getAllTasks = async (action) => {
 };
 
 export const createNewTask = async () => {
+    const token = await keytar.getPassword("tasks", "token");
     const taskName = await promptNewTask();
     const priorityChoice = await promptPriorityChoice();
     const taskDueDate = await promptDueDate();
 
-    const newTask = await TaskAPI.createTask(taskName, priorityChoice, taskDueDate);
+    const newTask = await TaskAPI.createTask(taskName, priorityChoice, taskDueDate, token);
     return {
         data: newTask,
         name: taskName,
