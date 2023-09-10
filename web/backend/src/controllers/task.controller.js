@@ -11,7 +11,7 @@ export const createTask = asyncHandler(async (req, res) => {
             priority: req.body.priority,
         });
         if (error) {
-            return res.status(400).json({ error: error.details[0].message });
+            return res.status(400).send({ error: error.details[0].message });
         }
 
         const date = req.body.dueDate;
@@ -28,7 +28,7 @@ export const createTask = asyncHandler(async (req, res) => {
 
         return res.status(200).json(saveTask);
     } catch (error) {
-        return res.status(500).json(error.message);
+        return res.status(500).send({ error: error.message });
     }
 });
 
@@ -37,7 +37,7 @@ export const getTasks = asyncHandler(async (req, res) => {
         const tasks = await Task.find({ user: req.user._id });
         return res.status(200).json(tasks);
     } catch (error) {
-        return res.status(500).json(error.message);
+        return res.status(500).send({ error: error.message });
     }
 });
 
@@ -45,17 +45,17 @@ export const getTask = asyncHandler(async (req, res) => {
     try {
         const { error, value } = getTaskSchema.validate(req.params);
         if (error) {
-            return res.status(400).json({ error: error.details[0].message });
+            return res.status(400).send({ error: error.details[0].message });
         }
 
         const task = await Task.findById(value.taskId);
         if (!task) {
-            return res.status(404).json("Task not found");
+            return res.status(404).send({ error: "Task not found" });
         }
 
         return res.status(200).json(task);
     } catch (error) {
-        return res.status(500).json(error.message);
+        return res.status(500).send({ error: error.message });
     }
 });
 
@@ -63,17 +63,17 @@ export const deleteTask = asyncHandler(async (req, res) => {
     try {
         const { error, value } = getTaskSchema.validate(req.params);
         if (error) {
-            return res.status(400).json({ error: error.details[0].message });
+            return res.status(400).send({ error: error.details[0].message });
         }
 
         const task = await Task.findByIdAndDelete(value.taskId);
         if (!task) {
-            return res.status(404).json("Task not found");
+            return res.status(404).send({ error: "Task not found" });
         }
 
-        return res.status(200).json("Successfully deleted task.");
+        return res.status(200);
     } catch (error) {
-        return res.status(500).json(error.message);
+        return res.status(500).send({ error: error.message });
     }
 });
 
@@ -84,7 +84,7 @@ export const updateTask = asyncHandler(async (req, res) => {
             task: req.body.task,
         });
         if (error) {
-            return res.status(400).json({ error: error.details[0].message });
+            return res.status(400).send({ error: error.details[0].message });
         }
 
         const id = value.taskId;
@@ -96,13 +96,13 @@ export const updateTask = asyncHandler(async (req, res) => {
         );
 
         if (!editTask) {
-            return res.status(404).json("Task not found");
+            return res.status(404).send({ error: "Task not found" });
         }
 
         const updatedTask = await Task.findById(id);
         return res.status(200).json(updatedTask);
     } catch (error) {
-        return res.status(500).json(error.message);
+        return res.status(500).send({ error: error.message });
     }
 });
 
@@ -111,14 +111,14 @@ export const completeTask = asyncHandler(async (req, res) => {
         const { error, value } = completeTaskSchema.validate(req.params);
 
         if (error) {
-            return res.status(400).json({ error: error.details[0].message });
+            return res.status(400).send({ error: error.details[0].message });
         }
 
         const id = value.taskId;
 
         const task = await Task.findById(id);
         if (!task) {
-            return res.status(404).json("Task not found");
+            return res.status(404).send({ error: "Task not found" });
         }
 
         const toggle = await Task.findOneAndUpdate(
@@ -128,7 +128,7 @@ export const completeTask = asyncHandler(async (req, res) => {
 
         return res.status(200).json(toggle);
     } catch (error) {
-        return res.status(500).json(error.message);
+        return res.status(500).send({ error: error.message });
     }
 });
 
@@ -139,7 +139,7 @@ export const updateTaskDueDate = asyncHandler(async (req, res) => {
         });
 
         if (error) {
-            return res.status(400).json({ error: error.details[0].message });
+            return res.status(400).send({ error: error.details[0].message });
         }
 
         const id = value.taskId;
@@ -151,13 +151,13 @@ export const updateTaskDueDate = asyncHandler(async (req, res) => {
         );
 
         if (!updateTaskDate) {
-            return res.status(404).json("Task not found");
+            return res.status(404).send({ error: "Task not found" });
         }
 
         const updatedTask = await Task.findById(id);
         return res.status(200).json(updatedTask);
     } catch (error) {
-        return res.status(500).json(error.message);
+        return res.status(500).send({ error: error.message });
     }
 });
 
@@ -169,7 +169,7 @@ export const updateTaskPriority = asyncHandler(async (req, res) => {
         });
 
         if (error) {
-            return res.status(400).json({ error: error.details[0].message });
+            return res.status(400).send({ error: error.details[0].message });
         }
 
         const { taskId, priority } = value;
@@ -180,13 +180,13 @@ export const updateTaskPriority = asyncHandler(async (req, res) => {
         );
 
         if (!updatePriority) {
-            return res.status(400).json("Task not found.");
+            return res.status(400).send({ error: "Task not found." });
         }
 
         const updatedTask = await Task.findById(taskId);
         return res.status(200).json(updatedTask);
     } catch (error) {
-        return res.status(500).json(error.message);
+        return res.status(500).send({ error: error.message });
     }
 });
 
@@ -194,13 +194,13 @@ export const archiveTask = asyncHandler(async (req, res) => {
     try {
         const { error, value } = getTaskSchema.validate(req.params);
         if (error) {
-            return res.status(400).json({ error: error.details[0].message });
+            return res.status(400).send({ error: error.details[0].message });
         }
 
         const id = value.taskId;
         const task = await Task.findById(id);
         if (!task) {
-            return res.status(404).json("Task not found");
+            return res.status(404).send({ error: "Task not found" });
         }
 
         const taskToArchive = await Task.findOneAndUpdate(
@@ -210,7 +210,7 @@ export const archiveTask = asyncHandler(async (req, res) => {
 
         return res.status(200).json(taskToArchive);
     } catch (error) {
-        return res.status(500).json(error.message);
+        return res.status(500).send({ error: error.message });
     }
 });
 
@@ -218,8 +218,8 @@ export const purgeTasks = asyncHandler(async (req, res) => {
     try {
         await Task.deleteMany({ user: req.user._id });
 
-        return res.status(200).json("All tasks have been purged.");
+        return res.status(200);
     } catch (error) {
-        return res.status(500).json(error.message);
+        return res.status(500).send({ error: error.message });
     }
 });

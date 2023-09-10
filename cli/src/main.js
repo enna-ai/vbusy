@@ -24,25 +24,20 @@ fs.readFile("src/bee.txt", "utf8", (err, bee) => {
             console.error(error);
             return;
         }
-
-        // console.log(bee);
         // console.log(chalk.yellowBright.bold(data));
 
         isAuthenticated().then(async (authenticated) => {
             if (!authenticated) {
+                console.log(bee);
                 promptLogin();
             } else {
                 if (process.argv.length > 2) {
-                    setTimeout(() => {
-                        program.parse(process.argv);
-                    }, 200);
+                    program.parse(process.argv);
                 } else {
-                    promptMainMenu().then(async (choice) => {
-                        if (choice === "Log Out") {
-                            await handleLogout();
-                            return;
-                        }
-                    });
+                    handleLogin();
+                    setTimeout(() => {
+                        promptMainMenu();
+                    }, 500);
                 }
             }
         });

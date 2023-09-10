@@ -10,8 +10,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 
         const userExists = await User.findOne({ email });
         if (userExists) {
-            res.status(400);
-            throw new Error("User already exists.");
+            res.status(400).send({ error: "User already exists." });
         }
 
         const user = await User.create({ username, email, password });
@@ -23,8 +22,7 @@ export const registerUser = asyncHandler(async (req, res) => {
                 token: generateToken(user._id),
             });
         } else {
-            res.status(400);
-            throw new Error("Invalid user data.");
+            res.status(400).send({ error: "Invalid user data." });
         }
     } catch (error) {
         console.error(error);
@@ -44,8 +42,7 @@ export const loginUser = asyncHandler(async (req, res) => {
                 token: generateToken(user._id)
             });
         } else {
-            res.status(401);
-            throw new Error("Invalid email or password");
+            res.status(401).send({ error: "Invalid email or password" });
         }
     } catch (error) {
         console.error(error);
@@ -59,7 +56,7 @@ export const logoutUser = asyncHandler(async (req, res) => {
             expires: new Date(0),
         });
 
-        res.status(200).json({ message: "Logged out" });
+        res.status(200).json({ message: "Logged out." });
     } catch (error) {
         console.error(error);
     }
@@ -77,8 +74,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
                 tasks,
             });
         } else {
-            res.status(404);
-            throw new Error("User not found");
+            res.status(404).send({ error: "User not found." });
         }
     } catch (error) {
         console.error(error);

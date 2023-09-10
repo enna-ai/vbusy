@@ -1,5 +1,6 @@
 import { Command } from "commander";
 import keytar from "keytar";
+import moment from "moment";
 import { getAllTasks, promptUpdateChoice, promptDueDate, promptNewTask, promptPriorityChoice } from "../../helpers/index.js";
 import { TaskAPI } from "../../../../common/src/index.js";
 
@@ -16,7 +17,7 @@ const updateCommand = new Command()
             switch (updateChoice) {
                 case "task":
                     const taskName = await promptNewTask();
-                    
+
                     const updateTaskName = await TaskAPI.updateTask(selectedTask, taskName, token);
                     if (updateTaskName) {
                         console.log(`Successfully updated task name to '${taskName}'`);
@@ -35,13 +36,21 @@ const updateCommand = new Command()
                     }
                     break;
                 case "dueDate":
+                    const currentDate = Date.now();
                     const taskDueDate = await promptDueDate();
 
-                    const updateTaskDate = await TaskAPI.updateTaskDueDate(selectedTask, taskDueDate, token);
-                    if (updateTaskDate) {
-                        console.log(`Successfully edited tasks due date to ${taskDueDate ? taskDueDate : "no date"}`);
+                    const dueDateValue = moment.utc(taskDueDate);
+                    const daysBeforeDue = dueDateValue.diff(currentDate, "day");
+
+                    if (daysBeforeDue <= 0) {
+                        console.log("You can't set a due date past today!")
                     } else {
-                        console.log("An error occured trying to update task.");
+                        const updateTaskDate = await TaskAPI.updateTaskDueDate(selectedTask, taskDueDate, token);
+                        if (updateTaskDate) {
+                            console.log(`Successfully edited tasks due date to ${taskDueDate ? taskDueDate : "no date"}`);
+                        } else {
+                            console.log("An error occured trying to update task.");
+                        }
                     }
                     break;
                 default:

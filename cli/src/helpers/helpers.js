@@ -2,7 +2,8 @@ import keytar from "keytar";
 import clear from "clear";
 import { input, select } from "@inquirer/prompts";
 import inquirer from "inquirer";
-import day from "dayjs";
+import moment from "moment";
+import { handleLogout, handleLogin } from "./auth.js";
 import { emailRegex } from "./regex.js";
 import { isValidDate } from "./validate.js";
 import { TaskAPI, UserAPI } from "../../../common/src/index.js";
@@ -36,15 +37,20 @@ export const promptLogin = () => {
     ]).then(async (credentials) => {
         try {
             const { email, password } = credentials;
-            
+
             const response = await UserAPI.login(email, password);
-            const userId = response._id;
-            const token = response.token;
+            if (response && response._id && response.token) {
+                const userId = response._id;
+                const token = response.token;
 
-            await keytar.setPassword("users", "userId", userId);
-            await keytar.setPassword("tasks", "token", token);
+                await keytar.setPassword("users", "userId", userId);
+                await keytar.setPassword("tasks", "token", token);
 
-            promptMainMenu();
+                handleLogin();
+                setTimeout(() => {
+                    promptMainMenu();
+                }, 500);
+            }
         } catch (error) {
             console.error(error);
         }
@@ -54,16 +60,21 @@ export const promptLogin = () => {
 export const promptMainMenu = async () => {
     clear();
 
-    const { choice } = await inquirer.prompt({
-        type: "list",
-        name: "choice",
+    const choice = await select({
         message: "Command Navigation",
         choices: [
-            "Log Out",
+            {
+                name: "Log Out",
+                value: "logout",
+            }
         ],
     });
 
-    return choice;
+    switch (choice) {
+        case "logout":
+            handleLogout();
+            break;
+    }
 };
 
 export const getUserProfile = async () => {
@@ -74,7 +85,7 @@ export const getUserProfile = async () => {
 };
 
 export const formatDueDate = (date) => {
-    return day(date).format("ddd MMM DD");
+    return moment.utc(date).format("ddd MMM DD");
 };
 
 export const promptNewTask = async () => {

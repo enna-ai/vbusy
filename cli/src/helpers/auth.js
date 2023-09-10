@@ -1,27 +1,22 @@
 import keytar from "keytar";
-import { isAuthenticated, promptMainMenu, promptLogin } from "./helpers.js";
 import { UserAPI } from "../../../common/src/index.js";
 
 export const handleLogin = async () => {
-    const authenticated = await isAuthenticated();
-    if (authenticated) {
-        const token = await keytar.getPassword("tasks", "token");
-        const data = await UserAPI.getUserProfile(token);
+    const token = await keytar.getPassword("tasks", "token");
+    const data = await UserAPI.getUserProfile(token);
 
-        console.log(`🌱 Logged in as ${data.username}`);
-        promptMainMenu();
-    } else {
-        promptLogin();
-    }
+    console.log(`🌱 Logged in as ${data.username}`);
 };
 
 export const handleLogout = async () => {
     console.log("Logging out... Cya! 🐝");
 
-    setTimeout(async () => {
+    try {
         await UserAPI.logout();
         await keytar.deletePassword("tasks", "token");
+    } catch (error) {
+        console.error("Error during logout:", error);
+    }
 
-        process.exit(0);
-    }, 200);
+    process.exit(0);
 };

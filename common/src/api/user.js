@@ -22,7 +22,7 @@ class UserAPI {
 
             return response.data;
         } catch (error) {
-            console.error(error.message);
+            console.log(error.response.data.error);
         }
     }
 
