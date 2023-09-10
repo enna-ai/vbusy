@@ -2,9 +2,11 @@ import fs from "fs/promises";
 import path from "path";
 import { Command } from "commander";
 import keytar from "keytar";
-import { getAllTasks } from "../../helpers/helpers.js";
+import { getAllTasks, pathRegex } from "../../helpers/index.js";
 import { TaskAPI } from "../../../../common/src/index.js";
 
+// Usage: vbusy export -d /Users/name/Downloads
+// Select task to export after pressing enter key
 const exportCommand = new Command()
     .name("export")
     .description("Export and save a task into a json file")
@@ -20,7 +22,7 @@ const exportCommand = new Command()
             }
 
             const exportDir = options.directory || ".";
-            const fileName = path.join(exportDir, `${task.task.slice(0, 10).replace(/[^\w]/g, "")}.json`);
+            const fileName = path.join(exportDir, `${task.task.slice(0, 10).replace(pathRegex, "")}.json`);
             await fs.writeFile(fileName, JSON.stringify(task, null, 2));
 
             console.log(`Task exported to ${fileName}`);

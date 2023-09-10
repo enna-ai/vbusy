@@ -5,7 +5,6 @@ import { getTaskSchema, createTaskSchema, updateTaskSchema, completeTaskSchema, 
 
 export const createTask = asyncHandler(async (req, res) => {
     try {
-        console.log(req.user);
         const { error, value } = createTaskSchema.validate({
             task: req.body.task,
             priority: req.body.priority,

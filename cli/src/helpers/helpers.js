@@ -1,17 +1,15 @@
 import keytar from "keytar";
 import clear from "clear";
+import chalk from "chalk";
+import figlet from "figlet";
+import Table from "cli-table";
 import { input, select } from "@inquirer/prompts";
 import inquirer from "inquirer";
 import moment from "moment";
 import { handleLogout, handleLogin } from "./auth.js";
 import { emailRegex } from "./regex.js";
-import { isValidDate } from "./validate.js";
+import { isValidDate, isValidEmail } from "./validate.js";
 import { TaskAPI, UserAPI } from "../../../common/src/index.js";
-
-export const isAuthenticated = async () => {
-    const token = await keytar.getPassword("tasks", "token");
-    return !!token;
-};
 
 export const promptLogin = () => {
     inquirer.prompt([
@@ -19,13 +17,17 @@ export const promptLogin = () => {
             type: "input",
             name: "email",
             message: "Enter your email:",
-            validate: (value) => {
+            validate: async (value) => {
                 if (!value) {
                     return "Please provide an email!";
                 }
 
-                const validateEmail = emailRegex.test(value);
-                return validateEmail || "Please enter a valid email address!";
+                const validateEmail = await isValidEmail(value);
+                if (!validateEmail) {
+                    return "Please provide a valid email address!";
+                }
+
+                return validateEmail;
             }
         },
         {
@@ -62,17 +64,57 @@ export const promptMainMenu = async () => {
 
     const choice = await select({
         message: "Command Navigation",
+        pageSize: 3,
         choices: [
-            {
-                name: "Log Out",
-                value: "logout",
-            }
+            { name: "Info", value: "info" },
+            { name: "Cmds", value: "cmds" },
+            { name: "Settings", value: "settings" },
+            { name: "Log Out", value: "logout" },
         ],
     });
 
     switch (choice) {
         case "logout":
             handleLogout();
+            break;
+        case "info":
+            figlet.text("vbusy", (error, data) => {
+                if (error) {
+                    console.error(error);
+                    return;
+                }
+
+                console.log(chalk.yellow.bold(data));
+            });
+
+            console.log(`An efficient task manager: Your shortcut to 'V'ery easy task management.`);
+            break;
+        case "cmds":
+            console.log("✨ Commands List");
+            const commands = await keytar.getPassword("cmdList", "cmds");
+            const cmds = JSON.parse(commands);
+
+            const table = new Table({
+                head: [chalk.bgBlue.black(" Name "), chalk.bgBlue.black(" Description ")],
+                colWidths: [20, 50],
+                chars: {
+                    "top": "", "top-mid": "", "top-left": "", "top-right": "",
+                    "bottom": "", "bottom-mid": "", "bottom-left": "", "bottom-right": "",
+                    "left": "", "left-mid": "", "mid": "", "mid-mid": "",
+                    "right": "", "right-mid": "", "middle": " ",
+                },
+                style: { "padding-left": 0, "padding-right": 0, "compact": true },
+            });
+
+            for (const cmd of cmds) {
+                table.push([`${chalk.blue("•")} ${cmd.name}`, cmd.description]);
+            }
+
+            console.log(table.toString());
+
+            break;
+        case "settings":
+            console.log("settings page");
             break;
     }
 };
@@ -194,17 +236,4 @@ export const getAllTasks = async (action) => {
     });
 
     return selectTask;
-};
-
-export const createNewTask = async () => {
-    const token = await keytar.getPassword("tasks", "token");
-    const taskName = await promptNewTask();
-    const priorityChoice = await promptPriorityChoice();
-    const taskDueDate = await promptDueDate();
-
-    const newTask = await TaskAPI.createTask(taskName, priorityChoice, taskDueDate, token);
-    return {
-        data: newTask,
-        name: taskName,
-    };
 };

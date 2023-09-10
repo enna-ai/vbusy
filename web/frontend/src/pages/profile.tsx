@@ -24,6 +24,7 @@ const ProfilePage: React.FC = () => {
             <h1>Task List</h1>
             <Tasks />
             <button onClick={handleLogout}>Log Out</button>
+            <button>Settings</button>
         </React.Fragment>
     )
 };

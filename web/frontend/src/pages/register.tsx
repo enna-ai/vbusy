@@ -1,62 +1,58 @@
 "user client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+interface FormValues {
+    username: string;
+    email: string;
+    password: string;
+}
+
 const SignUpPage: React.FC = () => {
     const router = useRouter();
-    const [user, setUser] = useState({
+
+    const initialValues: FormValues = {
         username: "",
         email: "",
         password: "",
-    });
-    const [buttonDisable, setButtonDisable] = useState(false);
+    };
 
-    useEffect(() => {
-        if (user.email.length > 0 && user.password.length > 0 && user.username.length > 0) {
-            setButtonDisable(false);
-        } else {
-            setButtonDisable(true);
-        }
-    }, [user]);
-
-    const handleRegister = async () => {
+    const handleRegister = async (values: FormValues) => {
         try {
-            const response = await axios.post("/api/v1/users/register", user);
+            const response = await axios.post("http://localhost:4000/api/v1/users/register", values);
             console.log("Registered user!", response.data);
             localStorage.setItem("userInfo", JSON.stringify(response.data));
             router.push("/login");
         } catch (error) {
-            console.error("Error registering user", user);
+            console.error("Error registering user", error);
         }
     };
     
     return (
         <React.Fragment>
-            <input
-                type="text"
-                placeholder="Username"
-                value={user.username}
-                onChange={(e) => setUser({ ...user, username: e.target.value })}
-            />
-            <input
-                type="email"
-                placeholder="Email"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={user.password}
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
-            />
-            <button onClick={handleRegister}>{buttonDisable ? "Fill out form!" : "Sign Up"}</button>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={handleRegister}
+                validationSchema={Yup.object({
+                    username: Yup.string().required("Username is required"),
+                    email: Yup.string().required("Email address is required"),
+                    password: Yup.string().required("Password is required")
+                })}
+            >
+                <Form>
+                    <Field type="text" id="username" name="username" placeholder="Username" minLength={2} maxLength={16} />
+                    <Field type="email" id="email" name="email" placeholder="Email" />
+                    <Field type="password" id="password" name="password" placeholder="Password" minLength={8} maxLength={24} />
+                    <button type="submit">Sign Up</button>
+                </Form>
+            </Formik>
 
-            <p>Already have an account?</p>
-            <Link href="/login">Login</Link>
+            <p>Already have an account? <Link href="/login">Login</Link></p>
         </React.Fragment>
     )
 }

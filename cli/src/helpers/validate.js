@@ -1,4 +1,4 @@
-import { dateRegex } from "./regex.js";
+import { dateRegex, emailRegex } from "./regex.js";
 
 export const isValidDate = async (date) => {
     const dateInput = await date.match(dateRegex);
@@ -7,4 +7,13 @@ export const isValidDate = async (date) => {
     }
 
     return dateInput;
+};
+
+export const isValidEmail = async (input) => {
+    const emailInput = await input.match(emailRegex);
+    if (!emailInput) {
+        return false;
+    }
+
+    return emailInput;
 };

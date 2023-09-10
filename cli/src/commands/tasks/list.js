@@ -22,7 +22,7 @@ const listCommand = new Command()
             }
 
             const table = new Table({
-                head: [chalk.cyan("ID"), chalk.cyan("Completed"), chalk.cyan("Due"), chalk.cyan("Priority"), chalk.cyan("Task")],
+                head: [chalk.blue("ID"), chalk.blue("Completed"), chalk.blue("Due"), chalk.blue("Priority"), chalk.blue("Task")],
                 colWidths: [4, 10, 14, 8, 30],
                 chars: {
                     "top": "", "top-mid": "", "top-left": "", "top-right": "",
@@ -36,7 +36,7 @@ const listCommand = new Command()
             for (const task of tasks) {
                 const completed = task.completed ? chalk.green("[✔]") : "[ ]";
                 const dueDate = task.dueDate ? formatDueDate(task.dueDate) : " ";
-                const taskId = chalk.cyan(count++);
+                const taskId = chalk.blue(count++);
                 const taskName = task.archived ? chalk.gray(`[archived] ${task.task}`) : task.task;
 
                 const currentDate = new Date();
@@ -65,7 +65,7 @@ const listCommand = new Command()
                 
 
                 const priority = {
-                    low: chalk.cyan("low"),
+                    low: chalk.blue("low"),
                     medium: chalk.yellow("med"),
                     high: chalk.red("high"),
                 }[task.priority] || chalk.gray("N/A");
