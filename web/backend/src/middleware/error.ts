@@ -1,4 +1,6 @@
-export const notFound = (req: any, res: any, next: any) => {
+import { Request, Response, NextFunction } from "express";
+
+export const notFound = (req: Request, res: Response, next: NextFunction) => {
     const error = new Error(`404 Not Found - ${req.originalUrl}`);
     res.status(404);
 
@@ -6,7 +8,7 @@ export const notFound = (req: any, res: any, next: any) => {
     next(error);
 };
 
-export const castErrorHandler = (err: any, req: any, res: any) => {
+export const castErrorHandler = (err: any, req: Request, res: Response) => {
     let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
     let message = err.message;
 

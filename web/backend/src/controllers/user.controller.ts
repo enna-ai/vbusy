@@ -25,25 +25,24 @@ class UserController implements Controller {
 
     private registerUser = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            res.send({ message: "hello from users" });
-            // const { username, email, password } = req.body;
+            const { username, email, password } = req.body;
             
-            // const userExists = await this.userModel.findOne({ email });
-            // if (userExists) {
-            //     res.status(400).send({ error: "User already exists." });
-            // }
+            const userExists = await this.userModel.findOne({ email });
+            if (userExists) {
+                res.status(400).send({ error: "User already exists." });
+            }
     
-            // const user = await this.userModel.create({ username, email, password });
-            // if (user) {
-            //     res.status(201).json({
-            //         _id: user._id,
-            //         username: user.username,
-            //         email: user.email,
-            //         token: generateToken(user._id),
-            //     });
-            // } else {
-            //     res.status(400).send({ error: "Invalid user data." });
-            // }
+            const user = await this.userModel.create({ username, email, password });
+            if (user) {
+                res.status(201).json({
+                    _id: user._id,
+                    username: user.username,
+                    email: user.email,
+                    token: generateToken(user._id),
+                });
+            } else {
+                res.status(400).send({ error: "Invalid user data." });
+            }
         } catch (error) {
             console.error(error);
         }
