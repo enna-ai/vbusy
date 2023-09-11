@@ -17,8 +17,12 @@ const incompleteCommand = new Command()
                 return;
             }
 
-            await TaskAPI.completeTask(selectedTask, token);
-            console.log(`Successfully marked '${task.task}' as incomplete.`)
+            const incompleteTask = await TaskAPI.completeTask(selectedTask, token);
+            if (incompleteTask) {
+                console.log(`Successfully marked '${task.task}' as incomplete.`);
+            } else {
+                console.error("An error occured trying to mark task as incomplete.");
+            }
         } catch (error) {
             console.error(error.message);
         }

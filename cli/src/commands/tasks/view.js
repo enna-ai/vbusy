@@ -14,8 +14,8 @@ const viewCommand = new Command()
             const selectedTask = await getAllTasks("view");
             const tasks = await TaskAPI.getTask(selectedTask, token);
             const table = new Table({
-                head: [chalk.cyan("Completed"), chalk.cyan("Task"), chalk.cyan("Priority"), chalk.cyan("Due")],
-                colWidths: [10, 30, 8, 14],
+                head: [chalk.blue("Completed"), chalk.blue("Due"), chalk.blue("Priority"), chalk.blue("Task")],
+                colWidths: [10, 14, 14, 30],
                 chars: {
                     "top": "", "top-mid": "", "top-left": "", "top-right": "",
                     "bottom": "", "bottom-mid": "", "bottom-left": "", "bottom-right": "",
@@ -34,7 +34,7 @@ const viewCommand = new Command()
                 high: chalk.red("high"),
             }[tasks.priority] || chalk.gray("N/A");
 
-            table.push([completed, tasks.task, priority, dueDate]);
+            table.push([completed, dueDate, priority, tasks.task]);
 
             console.log(table.toString());
         } catch (error) {

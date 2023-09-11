@@ -1,8 +1,14 @@
-/* eslint-disable func-names */
-import { Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcryptjs";
 
-const User = new Schema({
+interface UserModel extends Document {
+    username: string;
+    email: string;
+    password: string;
+    matchPassword(password: string): Promise<boolean>;
+}
+
+const UserSchema = new Schema<UserModel>({
     username: { type: String, required: true, unique: true, trim: true, minlength: 2, maxlength: 18 },
     email: { type: String, required: true, unique: true, trim: true },
     password: { type: String, required: true, minlength: 8, maxlength: 18, trim: true },
@@ -10,11 +16,11 @@ const User = new Schema({
     timestamps: true,
 });
 
-User.methods.matchPassword = async function (password) {
+UserSchema.methods.matchPassword = async function (password: string): Promise<boolean> {
     return bcrypt.compare(password, this.password);
 };
 
-User.pre("save", async function (next) {
+UserSchema.pre("save", async function (next) {
     if (!this.isModified("password")) {
         next();
     }
@@ -24,4 +30,6 @@ User.pre("save", async function (next) {
     this.password = await bcrypt.hash(this.password, salt);
 });
 
-export default model("users", User);
+const User = model<UserModel>("users", UserSchema);
+
+export default User;

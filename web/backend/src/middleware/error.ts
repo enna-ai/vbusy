@@ -1,4 +1,4 @@
-export const notFound = (req, res, next) => {
+export const notFound = (req: any, res: any, next: any) => {
     const error = new Error(`404 Not Found - ${req.originalUrl}`);
     res.status(404);
 
@@ -6,9 +6,8 @@ export const notFound = (req, res, next) => {
     next(error);
 };
 
-export const castErrorHandler = (err, req, res) => {
+export const castErrorHandler = (err: any, req: any, res: any) => {
     let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-    // eslint-disable-next-line prefer-destructuring
     let message = err.message;
 
     if (err.name === "CastError" && err.kind === "ObjectId") {

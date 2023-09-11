@@ -15,7 +15,6 @@ const createCommand = new Command()
             const dueDate = await promptDueDate();
 
             const newTask = await TaskAPI.createTask(taskName, priorityChoice, dueDate, token);
-            console.log(newTask);
             if (newTask) {
                 console.log(`Successfully created new task '${newTask.task}'!`);
             } else {

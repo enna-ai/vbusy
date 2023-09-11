@@ -17,8 +17,12 @@ const completeCommand = new Command()
                 return;
             }
 
-            await TaskAPI.completeTask(selectedTask, token);
-            console.log(`Successfully marked '${task.task}' as completed.`)
+            const completedTask = await TaskAPI.completeTask(selectedTask, token);
+            if (completedTask) {
+                console.log(`Successfully marked '${task.task}' as completed.`);
+            } else {
+                console.log("An error occured trying to mark task as complete.");
+            }
         } catch (error) {
             console.error(error.message);
         }

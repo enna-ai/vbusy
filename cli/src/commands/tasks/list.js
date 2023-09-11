@@ -17,7 +17,7 @@ const listCommand = new Command()
             const tasks = await TaskAPI.getTasks(token);
 
             if (tasks.length === 0) {
-                console.log(":-( You haven't made any tasks.");
+                console.log("You haven't made any tasks. :~(");
                 return;
             }
 
@@ -48,7 +48,7 @@ const listCommand = new Command()
                     const daysUntilDue = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));                    // const daysUntilDue = dueDateValue.diff(currentDate, "days");
                 
                     if (daysUntilDue === 0) {
-                        if (task.completed) {
+                        if (!task.completed) {
                             dueDateMsg = chalk.red("Today");
                         } else {
                             dueDateMsg = chalk.yellow("Today");

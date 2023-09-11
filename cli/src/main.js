@@ -44,12 +44,4 @@ fs.readFile("src/bee.txt", "utf8", (err, bee) => {
             }
         }
     });
-
-    figlet.text("vbusy", (error, data) => {
-        if (error) {
-            console.error(error);
-            return;
-        }
-        // console.log(chalk.yellowBright.bold(data));
-    });
 });
