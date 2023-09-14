@@ -2,7 +2,6 @@ import fs from "fs";
 import keytar from "keytar";
 import { Command } from "commander";
 import { handleLogin, promptMainMenu, isAuthenticated, promptLogin } from "./helpers/index.js";
-import figlet from "figlet";
 import * as Commands from "./commands/index.js";
 
 const program = new Command();
