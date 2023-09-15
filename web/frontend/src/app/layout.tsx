@@ -1,12 +1,12 @@
-import "@/styles/globals.scss";
+import "@/styles/main.scss";
 import { Inter } from "next/font/google";
 import { Header } from "@/components/Header";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
+const metadata = {
   title: "v busy 🐝",
-  description: 'Task Manager',
+  description: "Task Manager",
 }
 
 export default function RootLayout({
@@ -18,7 +18,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Header />
-        {children}
+        <main>
+          {children}
+        </main>
       </body>
     </html>
   )

@@ -1,5 +1,4 @@
-"use client";
-
+import Layout from "@/app/layout";
 import React from "react";
 import Link from "next/link";
 import { toast, ToastContainer } from "react-toastify";
@@ -46,25 +45,27 @@ const SignInPage: React.FC = () => {
     };
 
     return (
-        <React.Fragment>
-            <Formik
-                initialValues={initialValues}
-                onSubmit={handleLogin}
-                validationSchema={Yup.object({
-                    email: Yup.string().required("Email address is required"),
-                    password: Yup.string().required("Password is required")
-                })}
-            >
-                <Form>
-                    <Field type="email" id="email" name="email" placeholder="Email" />
-                    <Field type="password" id="password" name="password" placeholder="Password" />
-                    <button type="submit">Login</button>
-                    <ToastContainer />
-                </Form>
-            </Formik>
+        <Layout>
+            <div>
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={handleLogin}
+                    validationSchema={Yup.object({
+                        email: Yup.string().required("Email address is required"),
+                        password: Yup.string().required("Password is required")
+                    })}
+                >
+                    <Form className="auth login">
+                        <Field type="email" id="email" name="email" placeholder="Email" />
+                        <Field type="password" id="password" name="password" placeholder="Password" />
+                        <button type="submit">Login</button>
+                        <ToastContainer />
+                    </Form>
+                </Formik>
 
-            <p>Don&apos;t have an account? <Link href="/register">Sign Up</Link></p>
-        </React.Fragment>
+                <p>Don&apos;t have an account? <Link href="/register">Sign Up</Link></p>
+            </div>
+        </Layout>
     )
 };
 

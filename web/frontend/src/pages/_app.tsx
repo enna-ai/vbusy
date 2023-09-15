@@ -1,4 +1,4 @@
-import "@/styles/globals.scss";
+import "@/styles/main.scss";
 import "react-toastify/ReactToastify.css";
 
 import { AppProps } from "next/app";

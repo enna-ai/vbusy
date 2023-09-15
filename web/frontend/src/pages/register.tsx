@@ -1,5 +1,4 @@
-"user client";
-
+import Layout from "@/app/layout";
 import React from "react";
 import Link from "next/link";
 import { Formik, Form, Field } from "formik";
@@ -34,7 +33,7 @@ const SignUpPage: React.FC = () => {
     };
     
     return (
-        <React.Fragment>
+        <Layout>
             <Formik
                 initialValues={initialValues}
                 onSubmit={handleRegister}
@@ -44,7 +43,7 @@ const SignUpPage: React.FC = () => {
                     password: Yup.string().required("Password is required")
                 })}
             >
-                <Form>
+                <Form className="auth register">
                     <Field type="text" id="username" name="username" placeholder="Username" minLength={2} maxLength={16} />
                     <Field type="email" id="email" name="email" placeholder="Email" />
                     <Field type="password" id="password" name="password" placeholder="Password" minLength={8} maxLength={24} />
@@ -53,7 +52,7 @@ const SignUpPage: React.FC = () => {
             </Formik>
 
             <p>Already have an account? <Link href="/login">Login</Link></p>
-        </React.Fragment>
+        </Layout>
     )
 }
 

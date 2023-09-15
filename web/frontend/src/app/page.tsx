@@ -3,7 +3,8 @@ import React from "react";
 export default function Home() {
   return (
     <>
-      Hello World from page.tsx
+      <h1>Vbusy</h1>
+      <p></p>
     </>
   )
 }

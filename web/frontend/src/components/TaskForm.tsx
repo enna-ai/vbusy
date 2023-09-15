@@ -50,7 +50,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ tasks }) => {
                     dueDate: Yup.date().nullable(),
                 })}
             >
-                <Form>
+                <Form className="task-form">
                     <Field id="task" name="task" placeholder="Add New Task" />
                     <Field as="select" id="priority" name="priority">
                         <option value="low">Low</option>

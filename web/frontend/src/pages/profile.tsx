@@ -1,5 +1,4 @@
-"user client";
-
+import Layout from "@/app/layout";
 import React from "react";
 import { useRouter } from "next/router";
 import { Tasks } from "@/components/Tasks";
@@ -20,12 +19,12 @@ const ProfilePage: React.FC = () => {
     };
 
     return (
-        <React.Fragment>
+        <Layout>
             <h1>Task List</h1>
             <Tasks />
             <button onClick={handleLogout}>Log Out</button>
             <button>Settings</button>
-        </React.Fragment>
+        </Layout>
     )
 };
 
