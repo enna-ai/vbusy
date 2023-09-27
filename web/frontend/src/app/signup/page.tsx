@@ -1,4 +1,5 @@
-import Layout from "@/app/layout";
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { Formik, Form, Field } from "formik";
@@ -33,7 +34,7 @@ const SignUpPage: React.FC = () => {
     };
     
     return (
-        <Layout>
+        <>
             <Formik
                 initialValues={initialValues}
                 onSubmit={handleRegister}
@@ -52,7 +53,7 @@ const SignUpPage: React.FC = () => {
             </Formik>
 
             <p>Already have an account? <Link href="/login">Login</Link></p>
-        </Layout>
+        </>
     )
 }
 

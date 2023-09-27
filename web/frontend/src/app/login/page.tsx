@@ -1,4 +1,5 @@
-import Layout from "@/app/layout";
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { toast, ToastContainer } from "react-toastify";
@@ -25,7 +26,7 @@ const SignInPage: React.FC = () => {
             const response = await axios.post("http://localhost:4000/api/v1/users/login", values);
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("userId", response.data._id);
-            router.push("/profile");
+            router.push("/");
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
                 toast.error(error.response.data.error, {
@@ -45,7 +46,7 @@ const SignInPage: React.FC = () => {
     };
 
     return (
-        <Layout>
+        <>
             <div>
                 <Formik
                     initialValues={initialValues}
@@ -65,7 +66,7 @@ const SignInPage: React.FC = () => {
 
                 <p>Don&apos;t have an account? <Link href="/register">Sign Up</Link></p>
             </div>
-        </Layout>
+        </>
     )
 };
 
