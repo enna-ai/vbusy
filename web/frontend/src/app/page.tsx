@@ -3,11 +3,10 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Tasks } from "@/components/Tasks";
+import withAuth from "@/components/withAuth";
 import axios from "axios";
 
-type Props = {};
-
-const page = (props: Props) => {
+const page = () => {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -15,6 +14,7 @@ const page = (props: Props) => {
       await axios.post("http://localhost:4000/api/v1/users/logout");
       console.log("Successfully logged out!");
       localStorage.removeItem("userInfo");
+      localStorage.removeItem("token");
       router.push("/login");
     } catch (error) {
       console.error("Error logging out user", error);
@@ -35,4 +35,4 @@ const page = (props: Props) => {
   )
 }
 
-export default page;
+export default withAuth(page);

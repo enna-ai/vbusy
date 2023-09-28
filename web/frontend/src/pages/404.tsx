@@ -11,7 +11,7 @@ const NotFound: React.FC = () => {
             <section className={styles.notFound}>
                 <Image src={Icon} alt="bee" height={100} width={100} />
                 <h1 className={styles.heading}>404 - Page Not Found</h1>
-                <p><a href="/">$cd home</a></p>
+                <p className={styles.content}><a href="/">$cd home</a></p>
             </section>
         </>
     )

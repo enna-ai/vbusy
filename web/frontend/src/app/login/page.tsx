@@ -28,7 +28,7 @@ const SignInPage: React.FC = () => {
             const response = await axios.post("http://localhost:4000/api/v1/users/login", values);
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("userId", response.data._id);
-            router.push("/");
+            router.push("/profile");
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
                 toast.error(error.response.data.error, {
