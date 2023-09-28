@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Tasks } from "@/components/Tasks";
 import withAuth from "@/components/withAuth";
 import axios from "axios";
+import styles from "@/styles/modules/profile.module.scss";
 
 const page = () => {
   const router = useRouter();

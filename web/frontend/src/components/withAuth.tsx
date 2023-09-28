@@ -8,10 +8,10 @@ import { ThreeDots } from "react-loader-spinner";
 const withAuth = (Component: React.FC) => {
     const Auth: React.FC = (props) => {
         const router = useRouter();
-        const { email } = useAuthContext();
+        const { user } = useAuthContext();
         const [isLoading, setIsLoading] = useState(true);
 
-        const isAuthenticated = email !== null;
+        const isAuthenticated = user !== null;
 
         useEffect(() => {
             if (!isAuthenticated) {

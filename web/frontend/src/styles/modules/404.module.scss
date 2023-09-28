@@ -1,10 +1,9 @@
 @import "../partials/variables";
+@import "../partials/mixins";
 
 .notFound {
-    display: flex;
+    @include flex-center;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     text-align: center;
     top: 0;
     bottom: 0;

@@ -6,14 +6,14 @@ type AuthProviderProps = {
     children: React.ReactNode;
 };
 
-type Email = {
+type User = {
     email: string;
     password: string;
 };
 
 interface AuthContextType {
-    email: Email | null;
-    setEmail: (email: Email | null) => void;
+    user: User | null;
+    setUser: (email: User | null) => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,10 +21,10 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const AuthProvider: React.FC<AuthProviderProps> = ({
     children,
 }: AuthProviderProps) => {
-    const [email, setEmail] = useState<Email | null>(null);
+    const [user, setUser] = useState<User | null>(null);
 
     return (
-        <AuthContext.Provider value={{ email, setEmail }}>
+        <AuthContext.Provider value={{ user, setUser }}>
             {children}
         </AuthContext.Provider>
     );

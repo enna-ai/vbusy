@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useAuthContext } from "@/context/AuthProvider";
 import { toast, ToastContainer } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -16,6 +17,8 @@ interface FormValues {
 }
 
 const SignInPage: React.FC = () => {
+    const { setUser } = useAuthContext();
+    
     const router = useRouter();
 
     const initialValues: FormValues = {
@@ -28,7 +31,8 @@ const SignInPage: React.FC = () => {
             const response = await axios.post("http://localhost:4000/api/v1/users/login", values);
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("userId", response.data._id);
-            router.push("/profile");
+            setUser(response.data);
+            router.push("/");
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
                 toast.error(error.response.data.error, {
