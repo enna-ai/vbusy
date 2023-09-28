@@ -51,10 +51,10 @@ const SignUpPage: React.FC = () => {
 
     return (
         <>
-            <div className="loginPageContainer">
-                <div className="loginContainer">
-                    <div className="loginWrap">
-                        <div className="loginImage">
+            <div className="authPageContainer">
+                <div className="authContainer">
+                    <div className="authWrap">
+                        <div className="authImage">
                             <Image
                                 src={BeeImage}
                                 alt="bee image"
@@ -62,8 +62,8 @@ const SignUpPage: React.FC = () => {
                                 height={250}
                             />
                         </div>
-                        <div className="loginFormContainer">
-                            <div className="loginForm">
+                        <div className="authFormContainer">
+                            <div className="authForm">
                                 <h1>Sign Up</h1>
                                 <p>Welcome to <span>Vbusy</span>! Please fill email and password to sign into your account.</p>
 
@@ -87,7 +87,7 @@ const SignUpPage: React.FC = () => {
                                     </Formik>
                                 </div>
 
-                                <p className="loginText">Already have an account? <Link href="/login">Login</Link></p>
+                                <p className="authText">Already have an account? <Link href="/login">Login</Link></p>
                             </div>
                         </div>
                     </div>

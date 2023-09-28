@@ -40,11 +40,11 @@ span {
     font-weight: 600;
 }
 
-.loginPageContainer {
+.authPageContainer {
     width: 100%;
     margin: 0 auto;
 
-    .loginContainer {
+    .authContainer {
         width: 100%;
         min-height: 100vh;
 
@@ -58,8 +58,8 @@ span {
         align-items: center;
         padding: 15px;
 
-        .loginWrap {
-            width: 900px;
+        .authWrap {
+            width: 960px;
             background: $mantle;
             border: 1px solid $base-lightest;
             border-radius: 10px;
@@ -73,18 +73,23 @@ span {
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            padding: 100px 130px 100px 95px;
+            padding: 150px 95px 150px 95px;
 
-            .loginImage {
-                max-width: 100%;
+            .authImage {
+                width: 250px;
+                height: 250px;
+
+                img {
+                    max-width: 100%;
+                    max-height: 100%;
+                }
             }
 
-            .loginForm {
-                width: 290px;
+            .authForm {
+                width: 350px;
 
                 h1 {
-                    font-size: 30px;
-
+                    font-size: clamp(20px, 3vw, 40px);
                     width: 100%;
                     display: block;
                     padding-bottom: 10px;
@@ -92,13 +97,14 @@ span {
 
                 p {
                     padding-bottom: 20px;
-                    font-size: 14px;
+                    font-size: clamp(14px, 3vw, 16px);
                 }
 
                 .formWrap {
                     position: relative;
                     width: 100%;
                     z-index: 1;
+                    margin-bottom: 10px;
 
                     .formInput {
                         display: flex;
@@ -127,20 +133,30 @@ span {
 
                             &::placeholder {
                                 color: $white-trans;
+                                font-size: clamp(12px, 3vw, 14px);
                             }
                         }
 
                         button {
-                            display: block;
                             width: 100%;
-                            background: $yellow;
                             height: 30px;
-                            color: $mantle;
-                            border: none;
-                            outline: none;
+                            font-size: clamp(12px, 3vw, 14px);
                             border-radius: 5px;
-                            transition: transform 0.2s ease-in-out;
+                            background: $yellow;
+                            outline: none;
+                            border: none;
+
+                            display: -webkit-box;
+                            display: -webkit-flex;
+                            display: -moz-box;
+                            display: -ms-flexbox;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            padding: 0 25px;
+
                             cursor: pointer;
+                            transition: all 0.2s;
 
                             &:hover {
                                 background: $yellow-light;
@@ -149,9 +165,40 @@ span {
                     }
                 }
 
-                .loginText {
+                .authText {
                     padding-top: 4px;
                 }
+            }
+
+            // t, r, b, l
+            @media (max-width: 992px) {
+                padding: 150px 90px 150px 90px;
+
+                .authImage {
+                    width: 200px;
+                    height: 200px;
+
+                    img {
+                        width: 85%;
+                        height: 85%;
+                    }
+                }
+            }
+
+            @media (max-width: 768px) {
+                padding: 100px 85px 100px 85px;
+
+                .authImage {
+                    display: none;
+                }
+
+                .authForm {
+                    width: 100%;
+                }
+            }
+
+            @media (max-width: 576px) {
+                padding: 100px 20px 100px 20px;
             }
         }
     }
