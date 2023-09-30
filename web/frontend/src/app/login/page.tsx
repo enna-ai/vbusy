@@ -3,7 +3,6 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useAuthContext } from "@/context/AuthProvider";
 import { toast, ToastContainer } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -16,9 +15,7 @@ interface FormValues {
     password: string;
 }
 
-const SignInPage: React.FC = () => {
-    const { setUser } = useAuthContext();
-    
+const SignInPage: React.FC = () => {    
     const router = useRouter();
 
     const initialValues: FormValues = {
@@ -29,9 +26,9 @@ const SignInPage: React.FC = () => {
     const handleLogin = async (values: FormValues) => {
         try {
             const response = await axios.post("http://localhost:4000/api/v1/users/login", values);
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("userId", response.data._id);
-            setUser(response.data);
+            const { token, username, email } = response.data;
+            localStorage.setItem("token", token);
+            localStorage.setItem("userInfo", JSON.stringify({ username, email }));
             router.push("/");
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
@@ -43,7 +40,7 @@ const SignInPage: React.FC = () => {
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    theme: "light",
+                    theme: "dark",
                 });
             } else {
                 console.error("Error during login:", error.response);

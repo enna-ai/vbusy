@@ -3,11 +3,13 @@ import { completeTaskSchema, createTaskSchema, getTaskSchema, updateTaskDueSchem
 import { Controller } from "../interfaces/controller";
 import Task from "../models/task.model";
 import protect from "../middleware/auth";
+import Log from "../utils/logActivity";
 
 class TaskController implements Controller {
     public path = "/api/v1/tasks";
     public router = Router();
     private taskModel = Task;
+    private logActivity = Log;
     
     constructor() {
         this.initializeRoutes();
@@ -48,6 +50,8 @@ class TaskController implements Controller {
             });
 
             const saveTask = await newTask.save();
+            
+            await this.logActivity(req.user._id, "Created a new task", task);
 
             return res.status(200).json(saveTask);
         } catch (error: any) {
@@ -93,6 +97,8 @@ class TaskController implements Controller {
             if (!task) {
                 return res.status(404).send({ error: "Task not found" });
             }
+
+            await this.logActivity(req.user._id, "Deleted a task");
     
             return res.status(200).json({ message: "Successfully deleted task!" });
         } catch (error: any) {
@@ -123,6 +129,9 @@ class TaskController implements Controller {
             }
     
             const updatedTask = await this.taskModel.findById(id);
+            
+            await this.logActivity(req.user._id, `Updated task`, body)
+            
             return res.status(200).json(updatedTask);
         } catch (error: any) {
             return res.status(500).send({ error: error.message });
@@ -149,6 +158,8 @@ class TaskController implements Controller {
                 { completed: !task.completed },
             );
     
+            await this.logActivity(req.user._id, `has been marked as ${!task.completed ? "completed" : "incomplete"}`, task.task)
+            
             return res.status(200).json(toggle);
         } catch (error: any) {
             return res.status(500).send({ error: error.message });
@@ -178,6 +189,10 @@ class TaskController implements Controller {
             }
     
             const updatedTask = await this.taskModel.findById(id);
+            const logMessage = dueDate ? `Updated due date to ${dueDate} for` : "Cleared due date for";
+
+            await this.logActivity(req.user._id, logMessage, updateTaskDate.task);
+
             return res.status(200).json(updatedTask);
         } catch (error: any) {
             return res.status(500).send({ error: error.message });
@@ -207,6 +222,9 @@ class TaskController implements Controller {
             }
     
             const updatedTask = await this.taskModel.findById(taskId);
+
+            await this.logActivity(req.user._id, `Updated priority level to ${priority} for`, updatePriority.task);
+
             return res.status(200).json(updatedTask);
         } catch (error: any) {
             return res.status(500).send({ error: error.message });
@@ -230,6 +248,8 @@ class TaskController implements Controller {
                 { _id: id },
                 { archived: !task.archived },
             );
+
+            await this.logActivity(req.user._id, `has been ${!task.archived ? "archived" : "unarchived"}`, task.task);
     
             return res.status(200).json(taskToArchive);
         } catch (error: any) {
@@ -240,7 +260,9 @@ class TaskController implements Controller {
     private purgeTasks = async (req: Request, res: Response, next: NextFunction) => {
         try {
             await this.taskModel.deleteMany({ user: req.user._id });
-    
+
+            await this.logActivity(req.user._id, "Purged all tasks!");
+
             return res.status(200).json({ message: "Successfully purged tasks!" });
         } catch (error: any) {
             return res.status(500).send({ error: error.message });

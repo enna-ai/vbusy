@@ -2,13 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthContext } from "@/context/AuthProvider";
 import { ThreeDots } from "react-loader-spinner";
 
 const withAuth = (Component: React.FC) => {
     const Auth: React.FC = (props) => {
         const router = useRouter();
-        const { user } = useAuthContext();
         const [isLoading, setIsLoading] = useState(true);
 
         useEffect(() => {
