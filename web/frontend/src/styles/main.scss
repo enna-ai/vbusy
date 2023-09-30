@@ -1,6 +1,3 @@
-// .completed {
-//     text-decoration: line-through;
-// }
 @import "partials/variables";
 @import "partials/mixins";
 
@@ -8,6 +5,21 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: $crust;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: $base;
+    border: 2px solid $crust;
+    border-radius: $radius;
 }
 
 html,
@@ -36,10 +48,14 @@ body {
         }
     }
 
-    span {
-        color: $yellow;
-        font-weight: 600;
+    .completed {
+            text-decoration: line-through;
     }
+
+    // span {
+    //     color: $yellow;
+    //     font-weight: 600;
+    // }
 }
 
 .authPageContainer {

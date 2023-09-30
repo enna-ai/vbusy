@@ -1,2 +1,346 @@
 @import "../partials/variables";
 @import "../partials/mixins";
+
+.main {
+    margin: 2em min(10%, 20%, 20%);
+
+    h1 {
+        margin-bottom: 10px;
+    }
+
+    p {
+        margin-bottom: 20px;
+        color: $white-light;
+    }
+}
+
+.taskForm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: $crust;
+    gap: 8px;
+
+    input {
+        @include no-borders;
+    }
+
+    .createForm,
+    .priorityForm {
+        margin: 0;
+        padding: 10px;
+    }
+
+    .createForm {
+        flex-grow: 1;
+        border-radius: $radius;
+        background: $base;
+        color: $white-trans;
+        caret-color: $white-trans;
+
+        &:focus {
+            background: $base-light;
+        }
+
+        &:active {
+            background: $base-light;
+        }
+
+        &::placeholder {
+            color: $white-trans;
+            padding-left: 2px;
+        }
+    }
+
+    .formOptions {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+
+        .dateForm {
+            background: $base;
+            border-radius: $radius;
+            transition: $transition;
+            padding: 8px;
+            cursor: pointer;
+
+            .dueDateIcon {
+                color: $yellow;
+            }
+
+            .inputDateForm {
+                display: none;
+            }
+
+            &:hover {
+                background: $yellow;
+
+                .dueDateIcon {
+                    color: $mantle;
+                }
+            }
+        }
+
+        .priorityForm {
+            @include no-borders;
+            background: $base;
+            color: $white-trans;
+            border-radius: $radius;
+        }
+
+        .formButton {
+            @include no-borders;
+            @include text-size(12, 14);
+            border-radius: $radius;
+            padding: 8px 10px;
+            background: $yellow;
+            color: $mantle;
+            cursor: pointer;
+        }
+    }
+}
+
+.filterTasks {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 20px;
+
+    button {
+        @include text-size(12, 15);
+        @include no-borders;
+        border-radius: $radius;
+        padding: 2px 6px;
+        margin-right: 4px;
+        background: transparent;
+        color: $white;
+        cursor: pointer;
+        transition: $transition;
+
+        .taskFilterText {
+            padding: 4px 6px;
+        }
+
+        .highlight {
+            background: $yellow;
+            color: $mantle;
+            border-radius: $radius;
+            padding: 2px 6px;
+            margin: 2px;
+        }
+
+        &:hover {
+            background: $base-light;
+
+            .highlight {
+                background: $base-light;
+                color: $yellow;
+            }
+        }
+    }
+
+    button.purgeTasks {
+        background: $red !important;
+        transition: $transition;
+        color: $mantle;
+
+        &:hover {
+            background: $yellow !important;
+            color: $mantle;
+
+            .highlight {
+                background: $yellow !important;
+            }
+        }
+    }
+
+    .taskFilterDivider {
+        border-left: 1px solid $base-light;
+        margin-right: 4px;
+        height: 24px;
+    }
+}
+
+.taskList {
+    list-style: none;
+    margin-top: 20px;
+    height: 100vh;
+}
+
+.taskItem {
+    margin-bottom: 20px;
+
+    .taskContentContainer {
+        @include flex-between;
+        background: $base-darkest;
+        border-radius: $radius;
+        padding: 15px;
+
+        .taskContent {
+            width: 100%;
+
+            .taskContentItem {
+                display: flex;
+                flex-direction: row;
+
+                .taskCheckbox {
+                    flex-shrink: 0;
+                    margin-right: 10px;
+
+                    input[type="checkbox"]:checked {
+                        accent-color: $yellow;
+                    }
+                }
+
+                .taskItemContent {
+                    flex-grow: 1;
+                    max-width: 500px;
+                    word-wrap: break-word;
+                }
+            }
+
+            .taskContentManage {
+                @include flex-between;
+                padding-top: 12px;
+
+                .taskContentInfo {
+                    display: flex;
+                    align-items: center;
+
+                    .taskDueDate {
+                        .taskDueDateContent {
+                            background: $base;
+                            border-radius: $radius;
+                            padding: 2px 6px;
+                            margin-right: 12px;
+                        }
+
+                        .calendarIcon {
+                            font-size: 14px;
+                        }
+                    }
+
+                    .taskPriority {
+                        display: flex;
+                        align-items: center;
+                        background: $base;
+                        border-radius: $radius;
+                        padding: 2px 6px;
+
+                        .priorityLevelDot {
+                            height: 8px;
+                            width: 8px;
+                            border-radius: 20%;
+                            margin-right: 4px;
+                            display: inline-block;
+                        }
+                    }
+                }
+
+                .taskButtons {
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+
+                    button {
+                        @include text-size(12, 14);
+                        @include no-borders;
+                        border-radius: $radius;
+                        padding: 6px 6px;
+                        width: 100%;
+                        background: transparent;
+                        cursor: pointer;
+
+                        &:hover {
+                            background: $base;
+                        }
+                    }
+                }
+
+                .icon {
+                    font-size: 1.2em;
+                    color: $yellow;
+                }
+            }
+        }
+    }
+
+    .taskEditContentContainer {
+        @include flex-between;
+        background: $base-darkest;
+        border-radius: $radius;
+        padding: 15px;
+        gap: 6px;
+
+        .editTaskForm,
+        .editPriorityForm {
+            margin: 0;
+            padding: 10px;
+        }
+
+        .taskEditContentItem {
+            flex-grow: 1;
+
+            input {
+                @include no-borders;
+                border-radius: $radius;
+                background: $base;
+                color: $white-trans;
+                caret-color: $white-trans;
+                width: 100%;
+            }
+        }
+
+        .taskEditButtons {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+
+            .editPriorityForm {
+                @include no-borders;
+                background: $base;
+                color: $white-trans;
+                border-radius: $radius;
+            }
+
+            .editDateForm {
+                background: $base;
+                border-radius: $radius;
+                transition: $transition;
+                padding: 8px;
+                cursor: pointer;
+
+                .dueDateIcon {
+                    color: $yellow;
+                }
+
+                .inputDateForm {
+                    display: none;
+                }
+
+                &:hover {
+                    background: $yellow;
+
+                    .dueDateIcon {
+                        color: $mantle;
+                    }
+                }
+            }
+
+            .confirmButton {
+                @include no-borders;
+                @include text-size(12, 14);
+                border-radius: $radius;
+                padding: 8px 10px;
+                background: $yellow;
+                color: $mantle;
+                cursor: pointer;
+            }
+        }
+    }
+}

@@ -4,6 +4,17 @@
     align-items: center;
 }
 
+@mixin flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
 @mixin text-size($min, $max) {
     font-size: clamp(#{$min}px, 3vw, #{$max}px);
 }

@@ -1,38 +1,27 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
 import { Tasks } from "@/components/Tasks";
+import { Header } from "@/components/Header";
 import withAuth from "@/components/withAuth";
-import axios from "axios";
+import { useAuthContext } from "@/context/AuthProvider";
+import moment from "moment";
 import styles from "@/styles/modules/profile.module.scss";
 
 const page = () => {
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    try {
-      await axios.post("http://localhost:4000/api/v1/users/logout");
-      console.log("Successfully logged out!");
-      localStorage.removeItem("userInfo");
-      localStorage.removeItem("token");
-      router.push("/login");
-    } catch (error) {
-      console.error("Error logging out user", error);
-    }
-  };
+  const { user } = useAuthContext();
 
   return (
-    <React.Fragment>
-      <main>
+    <>
+      <Header />
+      <main className={styles.main}>
         <div>
-          <h1>Task List</h1>
+          <h1>Welcome, {user ? user.username : ""} 🐝</h1>
+          <p>{moment().format("[Today,] ddd DD MMM YYYY")}</p>
           <Tasks />
-          <button onClick={handleLogout}>Log Out</button>
-          <button>Settings</button>
         </div>
       </main>
-    </React.Fragment>
+    </>
   )
 }
 

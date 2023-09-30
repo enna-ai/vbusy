@@ -1,15 +1,20 @@
 "use client";
 
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TaskAPI } from "../../../../common/src/index";
 import { Task } from "../interfaces/task";
+import { FaCalendar } from "react-icons/fa";
+import { TiPlus } from "react-icons/ti";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import styles from "@/styles/modules/profile.module.scss";
 
 interface FormValues {
     task: string;
     priority: string;
-    dueDate: string;
+    dueDate: Date | null;
 }
 
 interface TaskFormProps {
@@ -17,28 +22,42 @@ interface TaskFormProps {
 }
 
 export const TaskForm: React.FC<TaskFormProps> = ({ tasks }) => {
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const datepickerRef = useRef<DatePicker | null>(null);
+
     const initialValues: FormValues = {
         task: "",
         priority: "low",
-        dueDate: "",
+        dueDate: null,
     };
 
     const handleNewTask = async (values: FormValues) => {
         try {
             const token = localStorage.getItem("token");
-            const newTask = await TaskAPI.createTask(values.task, values.priority, values.dueDate, token);
+            const newTask = await TaskAPI.createTask(
+                values.task,
+                values.priority,
+                values.dueDate,
+                token
+            );
             tasks(newTask);
 
             values.task = "";
-            values.dueDate = "";
+            values.dueDate = null;
             values.priority = "";
         } catch (error) {
             console.error(error);
         }
     };
 
+    const toggleCalendar = () => {
+        if (datepickerRef.current) {
+            datepickerRef.current.setOpen(true);
+        }
+    };
+
     return (
-        <React.Fragment>
+        <>
             <Formik
                 initialValues={initialValues}
                 onSubmit={(values) => {
@@ -50,17 +69,31 @@ export const TaskForm: React.FC<TaskFormProps> = ({ tasks }) => {
                     dueDate: Yup.date().nullable(),
                 })}
             >
-                <Form className="task-form">
-                    <Field id="task" name="task" placeholder="Add New Task" />
-                    <Field as="select" id="priority" name="priority">
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                    </Field>
-                    <Field type="date" id="dueDate" name="dueDate" min={new Date().toISOString().split("T")[0]} />
-                    <button type="submit">+</button>
+                <Form className={styles.taskForm}>
+                    <Field className={styles.createForm} id="task" name="task" placeholder="Add New Task" />
+                    <div className={styles.formOptions}>
+                        <Field className={styles.priorityForm} as="select" id="priority" name="priority">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </Field>
+                        <label onClick={toggleCalendar} className={styles.dateForm}>
+                            <FaCalendar className={styles.dueDateIcon} />
+                            <DatePicker
+                                minDate={new Date(new Date().toISOString().split("T")[0])}
+                                selected={selectedDate}
+                                onChange={(date) => {
+                                    setSelectedDate(date);
+                                }}
+                                ref={(ref) => (datepickerRef.current = ref)}
+                                className={styles.inputDateForm}
+                            />
+                        </label>
+                        {/* <Field className={styles.dateForm} type="date" id="date" name="date" min={new Date().toISOString().split("T")[0]} /> */}
+                        <button className={styles.formButton} type="submit"><TiPlus /></button>
+                    </div>
                 </Form>
             </Formik>
-        </React.Fragment>
+        </>
     )
 };

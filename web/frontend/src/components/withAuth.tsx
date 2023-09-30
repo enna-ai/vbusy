@@ -11,15 +11,23 @@ const withAuth = (Component: React.FC) => {
         const { user } = useAuthContext();
         const [isLoading, setIsLoading] = useState(true);
 
-        const isAuthenticated = user !== null;
-
         useEffect(() => {
-            if (!isAuthenticated) {
-                router.push("/login");
-            } else {
-                setIsLoading(false);
-            }
-        }, [isAuthenticated, router]);
+            const checkAuthentication = async () => {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    router.push("/login");
+                } else {
+                    const isAuthenticated = true;
+                    if (!isAuthenticated) {
+                        router.push("/login");
+                    } else {
+                        setIsLoading(false);
+                    }
+                }
+            };
+
+            checkAuthentication();
+        }, [router]);
 
         return isLoading ? (
             <ThreeDots

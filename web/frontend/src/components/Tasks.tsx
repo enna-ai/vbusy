@@ -6,6 +6,7 @@ import { TaskItem } from "./TaskItem";
 import { Task } from "@/interfaces/task";
 import { FILTER_ALL, FILTER_ARCHIVED, FILTER_COMPLETED } from "@/utils/consts";
 import { UserAPI, TaskAPI } from "../../../../common/src/index";
+import styles from "@/styles/modules/profile.module.scss";
 
 export const Tasks: React.FC<{}> = () => {
     const [data, setData] = useState<Task[]>([]);
@@ -85,16 +86,20 @@ export const Tasks: React.FC<{}> = () => {
     }
 
     return (
-        <React.Fragment>
+        <>
             <TaskForm tasks={taskList} />
-            <div>
-                <button onClick={() => filterTasks("All")}>All {data.filter(task => !task.archived).length}</button>
-                <button onClick={() => filterTasks("Completed")}>Completed {data.filter(task => task.completed === true).length}</button>
-                <button onClick={() => filterTasks("Archived")}>Archived {data.filter(task => task.archived === true).length}</button>
-                <button onClick={purgeTasks}>Purge Tasks</button>
+            <div className={styles.filterTasks}>
+                <button onClick={() => filterTasks("All")}>
+                    <span className={styles.taskFilterText}>All</span> 
+                    <span className={styles.highlight}>{data.filter(task => !task.archived).length}</span> 
+                </button>
+                <span className={styles.taskFilterDivider}></span>
+                <button onClick={() => filterTasks("Completed")}>Completed <span className={styles.highlight}>{data.filter(task => task.completed === true).length}</span></button>
+                <button onClick={() => filterTasks("Archived")}>Archived <span className={styles.highlight}>{data.filter(task => task.archived === true).length}</span></button>
+                <button onClick={purgeTasks} className={styles.purgeTasks}>Purge All</button>
             </div>
 
-            <ul>
+            <ul className={styles.taskList}>
                 {
                     filter.map((task) => (
                         <TaskItem
@@ -106,6 +111,6 @@ export const Tasks: React.FC<{}> = () => {
                     ))
                 }
             </ul>
-        </React.Fragment>
+        </>
     )
 };
