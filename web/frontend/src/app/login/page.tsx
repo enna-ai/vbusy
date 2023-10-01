@@ -9,13 +9,15 @@ import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import BeeImage from "../../../assets/bee.png";
+import "@/styles/main.scss";
+import 'react-toastify/dist/ReactToastify.css';
 
 interface FormValues {
     email: string;
     password: string;
 }
 
-const SignInPage: React.FC = () => {    
+const SignInPage: React.FC = () => {
     const router = useRouter();
 
     const initialValues: FormValues = {
@@ -26,15 +28,15 @@ const SignInPage: React.FC = () => {
     const handleLogin = async (values: FormValues) => {
         try {
             const response = await axios.post("http://localhost:4000/api/v1/users/login", values);
-            const { token, username, email } = response.data;
+            const { token, username, email, _id } = response.data;
             localStorage.setItem("token", token);
-            localStorage.setItem("userInfo", JSON.stringify({ username, email }));
+            localStorage.setItem("userInfo", JSON.stringify({ username, email, _id }));
             router.push("/");
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
                 toast.error(error.response.data.error, {
                     position: "bottom-right",
-                    autoClose: 3000,
+                    autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -76,9 +78,9 @@ const SignInPage: React.FC = () => {
                                         })}
                                     >
                                         <Form className="formInput">
-                                            <Field type="email" id="email" name="email" placeholder="Email" />
-                                            <Field type="password" id="password" name="password" placeholder="Password" />
-                                            <button type="submit">Login</button>
+                                            <Field type="email" id="email" name="email" placeholder="Email" required />
+                                            <Field type="password" id="password" name="password" placeholder="Password" required />
+                                            <button className="button" type="submit">Login</button>
                                             <ToastContainer />
                                         </Form>
                                     </Formik>

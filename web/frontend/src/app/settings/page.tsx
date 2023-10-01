@@ -8,33 +8,53 @@ import * as Yup from "yup";
 import axios from "axios";
 import withAuth from "@/components/withAuth";
 import styles from "@/styles/modules/settings.module.scss";
+import 'react-toastify/dist/ReactToastify.css';
 
 interface FormValues {
-    email: string;
     username: string;
+    email: string;
+    password: string;
 }
 
 const SettingsPage: React.FC = () => {
-    const initialValues: FormValues = {
-        email: "",
-        username: "",
-    };
-
     const data = localStorage.getItem("userInfo");
     const userInfo = data ? JSON.parse(data) : {};
     const { username, email } = userInfo;
 
+    const initialValues: FormValues = {
+        username: username || "",
+        email: email || "",
+        password: "",
+    };
+
     const handleUpdate = async (values: FormValues) => {
         try {
-            const response = await axios.patch("http://localhost:4000/api/v1/user/settings", values);
-            const { username, email } = response.data;
-            localStorage.setItem("userInfo", JSON.stringify({ username, email }));
-            
+            const token = localStorage.getItem("token");
+
+            const response = await axios.patch(`http://localhost:4000/api/v1/users/settings`, values, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+    
+            const { username } = response.data;
+            localStorage.setItem("userInfo", JSON.stringify({ username }));
         } catch (error: any) {
-            if (error.response && error.response.status === 404) {
+            if (error.response && error.response.status === 401) {
                 toast.error(error.response.data.error, {
                     position: "bottom-right",
-                    autoClose: 3000,
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            } else if (error.response && error.response.status === 400) {
+                toast.error(error.response.data.error, {
+                    position: "bottom-right",
+                    autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
@@ -43,16 +63,35 @@ const SettingsPage: React.FC = () => {
                     theme: "dark",
                 });
             } else {
-                console.error("Error editing user:", error.response);
+                console.error("Error during update:", error.response);
             }
         }
-    };
+    };    
 
     return (
         <>
             <Header />
             <main className={styles.main}>
-                
+                <h2>Account Settings</h2>
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={handleUpdate}
+                    validationSchema={Yup.object({
+                        username: Yup.string().required("Username is required"),
+                        password: Yup.string().required("Password is required to change your username")
+                    })}
+                >
+                    <Form className={styles.settingsFormInput}>
+                        <p className={styles.fieldHeading}>Username</p>
+                        <Field className={styles.settingsUsername} name="username" placeholder={username} minLength={2} maxLength={16} required />
+                        <p className={styles.fieldHeading}>Email</p>
+                        <Field className={styles.settingsEmail} type="email" name="email" placeholder={email} disabled />
+                        <p className={styles.fieldHeading}>Password</p>
+                        <Field className={styles.settingsPassword} type="password" name="password" placeholder="Password" required />
+                        <button className={styles.settingsConfirm} type="submit">Save</button>
+                        <ToastContainer />
+                    </Form>
+                </Formik>
             </main>
         </>
     )

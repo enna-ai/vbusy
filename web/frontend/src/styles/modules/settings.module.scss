@@ -1,0 +1,70 @@
+@import "../partials/variables";
+@import "../partials/mixins";
+
+.main {
+    margin: 2em min(10%, 20%, 20%);
+
+    h2 {
+        @include text-size(20, 30);
+        width: 100%;
+        display: block;
+        padding-bottom: 20px;
+    }
+
+    .settingsFormInput {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        input {
+            @include no-borders;
+            display: block;
+            width: 100%;
+            padding-left: 10px;
+            height: 40px;
+            border-radius: $radius;
+            background: $base;
+            caret-color: $white-trans;
+            color: $white-light;
+
+            &:focus {
+                background-color: $base-light;
+            }
+
+            &:active {
+                background-color: $base-light;
+            }
+
+            &::placeholder {
+                @include text-size(12, 14);
+                color: $white-trans;
+            }
+        }
+
+        .fieldHeading {
+            @include text-size(12, 16);
+            font-weight: 500;
+        }
+
+        .settingsEmail {
+            cursor: not-allowed;
+            color: $white-trans;
+        }
+
+        .settingsConfirm {
+            @include text-size(12, 14);
+            @include no-borders;
+            height: 30px;
+            border-radius: $radius;
+            background: $yellow;
+            padding: 0 25px;
+
+            cursor: pointer;
+            transition: $transition;
+
+            &:hover {
+                background: $yellow-light;
+            }
+        }
+    }
+}

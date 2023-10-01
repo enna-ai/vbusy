@@ -20,7 +20,7 @@ class UserController implements Controller {
         this.router.post(`${this.path}/login`, this.loginUser);
         this.router.post(`${this.path}/logout`, this.logoutUser);
         this.router.get(`${this.path}/profile`, protect, this.getUserProfile);
-        this.router.patch(`${this.path}/:userId/settings`, protect, this.updateUserProfile);
+        this.router.patch(`${this.path}/settings`, protect, this.updateUserProfile);
         this.router.delete(`${this.path}/:userId`, protect, this.deleteUser);
     }
 
@@ -103,35 +103,31 @@ class UserController implements Controller {
 
     private updateUserProfile = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const userId = req.params.userId;
-            const user = await this.userModel.findById(userId);
-            if (!user) {
-                return res.status(404).send({ error: "User not found." });
+            const { email, username, password } = req.body;
+            if (!password) {
+                return res.status(400).send({ error: "Password is required to change your username." });
             }
-
-            if (req.body.username && req.body.username !== user.username) {
-                const usernameExists = await this.userModel.findOne({ username: req.body.username });
-                if (usernameExists) {
+            const user = await this.userModel.findOne({ email });
+            if (user && await user.matchPassword(password)) {
+                const exists = await this.userModel.findOne({ username });
+                if (exists) {
                     return res.status(400).send({ error: "Username already exists!" });
                 }
 
                 user.username = req.body.username;
-            }
-
-            if (req.body.password && req.body.password !== user.password) {
                 user.password = req.body.password;
+                const updatedUser = await user.save();
+
+                res.json({
+                    _id: updatedUser._id,
+                    username: updatedUser.username,
+                });
+            } else {
+                res.status(401).send({ error: "Invalid password" });
             }
-
-            const updatedUser = await user.save();
-
-            res.json({
-                _id: updatedUser._id,
-                username: updatedUser.username,
-                email: updatedUser.email,
-                password: updatedUser.password,
-            });
         } catch (error) {
             console.error(error);
+            res.status(500).send({ error: "Internal server error" });
         }
     }
 

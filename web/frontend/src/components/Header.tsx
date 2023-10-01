@@ -15,7 +15,6 @@ export const Header: React.FC = () => {
     const handleLogout = async () => {
         try {
             await axios.post("http://localhost:4000/api/v1/users/logout");
-            console.log("Successfully logged out!");
             localStorage.removeItem("userInfo");
             localStorage.removeItem("token");
             router.push("/login");

@@ -9,6 +9,8 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import BeeImage from "../../../assets/bee.png";
+import "@/styles/main.scss";
+import 'react-toastify/dist/ReactToastify.css';
 
 interface FormValues {
     username: string;
@@ -76,10 +78,10 @@ const SignUpPage: React.FC = () => {
                                         })}
                                     >
                                         <Form className="formInput">
-                                            <Field type="text" id="username" name="username" placeholder="Username" minLength={2} maxLength={16} />
-                                            <Field type="email" id="email" name="email" placeholder="Email" />
-                                            <Field type="password" id="password" name="password" placeholder="Password" minLength={8} maxLength={24} />
-                                            <button type="submit">Sign Up</button>
+                                            <Field type="text" id="username" name="username" placeholder="Username" minLength={2} maxLength={16} required />
+                                            <Field type="email" id="email" name="email" placeholder="Email" required />
+                                            <Field type="password" id="password" name="password" placeholder="Password" minLength={8} maxLength={24} required />
+                                            <button className="button" type="submit">Sign Up</button>
                                             <ToastContainer />
                                         </Form>
                                     </Formik>
