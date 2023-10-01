@@ -37,7 +37,7 @@ export const Header: React.FC = () => {
                     </Link>
                 </div>
                 <div className={styles.links}>
-                    <Link href="/history"><RiHistoryLine className={styles.icon} /></Link>                    
+                    <Link href="/activity"><RiHistoryLine className={styles.icon} /></Link>                    
                     <Link href="/settings"><BiUser className={styles.icon} /></Link>
                     <button onClick={handleLogout}><FiLogOut className={styles.icon} /></button>
                 </div>

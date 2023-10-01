@@ -1,8 +1,9 @@
 import Activity from "../models/activity.model";
 
-const logActivity = async (userId: string, description: string, task?: string): Promise<void> => {
+const logActivity = async (userId: string, action: string, description: string, task?: string): Promise<void> => {
     try {
         const newActivity = {
+            action,
             description,
             timestamp: new Date(),
             task,

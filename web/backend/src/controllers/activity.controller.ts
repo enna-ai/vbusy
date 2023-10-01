@@ -13,12 +13,14 @@ class ActivityController implements Controller {
     }
 
     private initializeRoutes() {
-        this.router.get(`${this.path}`, protect, this.getRecentActivity);
+        this.router.get(`${this.path}/:userId`, protect, this.getRecentActivity);
     }
 
     private getRecentActivity = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const activities = await this.activityModel.find({ user: req.user._id });
+            const userId = req.params.userId;
+
+            const activities = await this.activityModel.find({ user: userId });
             return res.status(200).json(activities);
         } catch (error: any) {
             return res.status(500).send({ error: error.message });

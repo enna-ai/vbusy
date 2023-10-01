@@ -51,7 +51,7 @@ class TaskController implements Controller {
 
             const saveTask = await newTask.save();
             
-            await this.logActivity(req.user._id, "Created a new task", task);
+            await this.logActivity(req.user._id, "create", "Created a new task", task);
 
             return res.status(200).json(saveTask);
         } catch (error: any) {
@@ -98,7 +98,7 @@ class TaskController implements Controller {
                 return res.status(404).send({ error: "Task not found" });
             }
 
-            await this.logActivity(req.user._id, "Deleted a task");
+            await this.logActivity(req.user._id, "delete", "Deleted a task");
     
             return res.status(200).json({ message: "Successfully deleted task!" });
         } catch (error: any) {
@@ -130,7 +130,7 @@ class TaskController implements Controller {
     
             const updatedTask = await this.taskModel.findById(id);
             
-            await this.logActivity(req.user._id, `Updated task`, body)
+            await this.logActivity(req.user._id, "update", "Updated a task", body)
             
             return res.status(200).json(updatedTask);
         } catch (error: any) {
@@ -158,7 +158,7 @@ class TaskController implements Controller {
                 { completed: !task.completed },
             );
     
-            await this.logActivity(req.user._id, `has been marked as ${!task.completed ? "completed" : "incomplete"}`, task.task)
+            await this.logActivity(req.user._id, "update", `Marked task as ${!task.completed ? "completed" : "incomplete"}`, task.task)
             
             return res.status(200).json(toggle);
         } catch (error: any) {
@@ -191,7 +191,7 @@ class TaskController implements Controller {
             const updatedTask = await this.taskModel.findById(id);
             const logMessage = dueDate ? `Updated due date to ${dueDate} for` : "Cleared due date for";
 
-            await this.logActivity(req.user._id, logMessage, updateTaskDate.task);
+            await this.logActivity(req.user._id, "update", logMessage, updateTaskDate.task);
 
             return res.status(200).json(updatedTask);
         } catch (error: any) {
@@ -223,7 +223,7 @@ class TaskController implements Controller {
     
             const updatedTask = await this.taskModel.findById(taskId);
 
-            await this.logActivity(req.user._id, `Updated priority level to ${priority} for`, updatePriority.task);
+            await this.logActivity(req.user._id, "update", `Updated priority level to ${priority} for`, updatePriority.task);
 
             return res.status(200).json(updatedTask);
         } catch (error: any) {
@@ -249,7 +249,7 @@ class TaskController implements Controller {
                 { archived: !task.archived },
             );
 
-            await this.logActivity(req.user._id, `has been ${!task.archived ? "archived" : "unarchived"}`, task.task);
+            await this.logActivity(req.user._id, "archive", `has been ${!task.archived ? "archived" : "unarchived"}`, task.task);
     
             return res.status(200).json(taskToArchive);
         } catch (error: any) {
@@ -261,7 +261,7 @@ class TaskController implements Controller {
         try {
             await this.taskModel.deleteMany({ user: req.user._id });
 
-            await this.logActivity(req.user._id, "Purged all tasks!");
+            await this.logActivity(req.user._id, "purge", "Purged all tasks!");
 
             return res.status(200).json({ message: "Successfully purged tasks!" });
         } catch (error: any) {
