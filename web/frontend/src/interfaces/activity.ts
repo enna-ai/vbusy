@@ -1,4 +1,5 @@
-interface RecentActivities {
+export interface RecentActivities {
+    activity: "delete" | "create" | "update" | "purge" | "archive";
     task?: string;
     description: string;
     timestamp: Date;

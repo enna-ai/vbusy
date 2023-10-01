@@ -3,7 +3,7 @@
 
 .main {
     margin: 2em min(10%, 20%, 20%);
-    height: 100vh;
+    min-height: 100vh;
 
     .heading {
         @include text-size(20, 30);
@@ -19,16 +19,44 @@
         gap: 10px;
 
         .activityItemContainer {
-            background: red;
+            background: $base-darkest;
             border-radius: $radius;
             padding: 15px;
 
             .activityItem {
-                
-            }
+                display: flex;
+                flex-direction: row;
+                align-items: center;
 
-            .activityTimestamp {
+                .activityIcon {
+                    margin: 20px;
+                    padding: 6px;
+                    border-radius: $radius;
 
+                    .icon {
+                        font-size: 1.5em;
+                        color: $mantle;
+                    }
+                }
+
+                .activityContent {
+                    display: flex;
+                    flex-direction: column;
+
+                    .activityDescription {
+
+                        .highlight {
+                            color: $yellow;
+                            font-weight: 600;
+                        }
+                    }
+
+                    .activityTimestamp {
+                        font-style: italic;
+                        padding-top: 10px;
+                        color: $base-lightest;
+                    }
+                }
             }
         }
     }
