@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { BiUser } from "react-icons/bi";
 import { FiLogOut } from "react-icons/fi";
+import { RiHistoryLine } from "react-icons/ri";
 import BeeImage from "../../assets/bee.png";
 import styles from "@/styles/modules/header.module.scss";
 
@@ -28,15 +29,16 @@ export const Header: React.FC = () => {
             <nav className={styles.nav}>
                 <div>
                     <Link href="/">
-                    <Image
-                        src={BeeImage}
-                        alt="Bee icon"
-                        height={30}
-                        width={30}
-                    />
+                        <Image
+                            src={BeeImage}
+                            alt="Bee icon"
+                            height={30}
+                            width={30}
+                        />
                     </Link>
                 </div>
                 <div className={styles.links}>
+                    <Link href="/history"><RiHistoryLine className={styles.icon} /></Link>                    
                     <Link href="/settings"><BiUser className={styles.icon} /></Link>
                     <button onClick={handleLogout}><FiLogOut className={styles.icon} /></button>
                 </div>
