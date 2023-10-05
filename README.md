@@ -3,7 +3,10 @@
     <img src="https://hotemoji.com/images/dl/l/bee-emoji-by-twitter.png" width="150">
   </p>
   <h1>vbusy</h1>
-  <p align="center"><a href="https://github.com/enna-ai/vbusy-ext">chrome extension</a>
+  <p align="center">
+    <a href="https://github.com/enna-ai/vbusy-ext">chrome extension</a>
+    +
+    <a href="http://github.com/enna-ai/vbusy-widget">widget</a>
     <br>
     A versatile task management system with web and CLI interfaces
   </p>
