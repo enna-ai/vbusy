@@ -1,10 +1,9 @@
 import React, { useState, useRef } from "react";
 import { BsFillTrash3Fill, BsPencilFill, BsFillArchiveFill } from "react-icons/bs";
 import { FaCalendarTimes, FaCalendar } from "react-icons/fa";
-import { TiTick } from "react-icons/ti";
+import { TiTick, TiTimes } from "react-icons/ti";
 import { Task } from "../interfaces/task";
 import { TaskAPI } from "../../../../common/src/index";
-import { format } from 'date-fns';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "@/styles/modules/profile.module.scss";
@@ -23,6 +22,10 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
     const [taskPriority, setTaskPriority] = useState(task.priority);
     const [taskDate, setTaskDate] = useState<Date | null>(task.dueDate ? new Date(task.dueDate) : null);
     const datepickerRef = useRef<DatePicker | null>(null);
+
+    const handleCancelEdit = async () => {
+        setIsEditing(false);
+    };
 
     const handleDelete = async () => {
         try {
@@ -149,6 +152,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
                                 />
                             </label>
                             <button className={styles.confirmButton} onClick={handleUpdate}><TiTick /></button>
+                            <button className={styles.cancelButton} onClick={handleCancelEdit}><TiTimes /></button>
                         </div>
                     </div>
                 ) : (

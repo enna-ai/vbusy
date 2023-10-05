@@ -331,7 +331,7 @@
                 }
             }
 
-            .confirmButton {
+            .confirmButton, .cancelButton {
                 @include no-borders;
                 @include text-size(12, 14);
                 border-radius: $radius;

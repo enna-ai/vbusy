@@ -70,7 +70,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ tasks }) => {
                 })}
             >
                 <Form className={styles.taskForm}>
-                    <Field className={styles.createForm} id="task" name="task" placeholder="Add New Task" />
+                    <Field className={styles.createForm} id="task" name="task" placeholder="Add New Task" required />
                     <div className={styles.formOptions}>
                         <Field className={styles.priorityForm} as="select" id="priority" name="priority">
                             <option value="low">Low</option>

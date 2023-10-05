@@ -6,6 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { BsStarFill } from "react-icons/bs";
 import withAuth from "@/components/withAuth";
 import styles from "@/styles/modules/settings.module.scss";
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,7 +36,7 @@ const SettingsPage: React.FC = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-    
+
             const { username } = response.data;
             localStorage.setItem("userInfo", JSON.stringify({ username }));
         } catch (error: any) {
@@ -72,7 +73,12 @@ const SettingsPage: React.FC = () => {
             <Header />
             <main className={styles.main}>
                 <h2>Account Settings</h2>
-                <span className={styles.userId}>user ID: {_id}</span>
+                <div className={styles.userIdWrapper}>
+                    <BsStarFill className={styles.icon} />
+                    <div>
+                        User ID: <span className={styles.userId}>{_id}</span>
+                    </div>
+                </div>
                 <Formik
                     initialValues={initialValues}
                     onSubmit={handleUpdate}

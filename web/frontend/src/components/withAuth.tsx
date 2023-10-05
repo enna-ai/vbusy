@@ -32,7 +32,7 @@ const withAuth = (Component: React.FC) => {
                 height="80"
                 width="80"
                 radius="9"
-                color="#fce2ae"
+                color="#f5e48b"
                 ariaLabel="three-dots-loading"
                 wrapperStyle={{
                     display: "flex",
