@@ -63,6 +63,14 @@
 
                 .icon {
                     color: $mantle;
+
+                    &:active {
+                        color: $mantle;
+                    }
+
+                    &:focus {
+                        color: $mantle;
+                    }
                 }
             }
         }

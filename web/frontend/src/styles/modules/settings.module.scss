@@ -8,13 +8,26 @@
         @include text-size(20, 30);
         width: 100%;
         display: block;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
+    }
+
+    .userId {
+        font-size: 14px;
+        font-style: italic;
+        background-color: $base-darkest;
+        color: $base-darkest;
+
+        &:hover {
+            background-color: transparent;
+            color: $white;
+        }
     }
 
     .settingsFormInput {
         display: flex;
         flex-direction: column;
         gap: 12px;
+        padding-top: 20px;
 
         input {
             @include no-borders;

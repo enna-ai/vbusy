@@ -85,9 +85,8 @@ export const promptMainMenu = async () => {
                 }
 
                 console.log(chalk.yellow.bold(data));
+                console.log(`An efficient task manager: Your shortcut to 'V'ery easy task management.`);
             });
-
-            console.log(`An efficient task manager: Your shortcut to 'V'ery easy task management.`);
             break;
         case "cmds":
             console.log("✨ Commands List");
@@ -95,7 +94,7 @@ export const promptMainMenu = async () => {
             const cmds = JSON.parse(commands);
 
             const table = new Table({
-                head: [chalk.bgBlue.black(" Name "), chalk.bgBlue.black(" Description ")],
+                head: [chalk.bgYellow.black(" Name "), chalk.bgYellow.black(" Description ")],
                 colWidths: [20, 50],
                 chars: {
                     "top": "", "top-mid": "", "top-left": "", "top-right": "",

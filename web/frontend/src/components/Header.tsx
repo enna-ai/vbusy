@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { BiUser } from "react-icons/bi";
+import { BiUser, BiSolidWidget } from "react-icons/bi";
 import { FiLogOut } from "react-icons/fi";
 import { RiHistoryLine } from "react-icons/ri";
 import BeeImage from "../../assets/bee.png";
@@ -37,7 +37,9 @@ export const Header: React.FC = () => {
                     </Link>
                 </div>
                 <div className={styles.links}>
-                    <Link href="/activity"><RiHistoryLine className={styles.icon} /></Link>                    
+                    {/* link to vbusy widget site */}
+                    <Link href=""><BiSolidWidget className={styles.icon} /></Link>
+                    <Link href="/activity"><RiHistoryLine className={styles.icon} /></Link>
                     <Link href="/settings"><BiUser className={styles.icon} /></Link>
                     <button onClick={handleLogout}><FiLogOut className={styles.icon} /></button>
                 </div>

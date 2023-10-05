@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import BeeImage from "../../../assets/bee.png";
-import "@/styles/main.scss";
+import styles from "../../styles/modules/auth.module.scss";
 import 'react-toastify/dist/ReactToastify.css';
 
 interface FormValues {
@@ -52,10 +52,10 @@ const SignInPage: React.FC = () => {
 
     return (
         <>
-            <div className="authPageContainer">
-                <div className="authContainer">
-                    <div className="authWrap">
-                        <div className="authImage">
+            <div className={styles.authPageContainer}>
+                <div className={styles.authContainer}>
+                    <div className={styles.authWrap}>
+                        <div className={styles.authImage}>
                             <Image
                                 src={BeeImage}
                                 alt="bee image"
@@ -63,12 +63,12 @@ const SignInPage: React.FC = () => {
                                 height={250}
                             />
                         </div>
-                        <div className="authFormContainer">
-                            <div className="authForm">
+                        <div className={styles.authFormContainer}>
+                            <div className={styles.authForm}>
                                 <h1>Login</h1>
                                 <p>Welcome to <span>Vbusy</span>! Please fill email and password to sign into your account.</p>
 
-                                <div className="formWrap">
+                                <div className={styles.formWrap}>
                                     <Formik
                                         initialValues={initialValues}
                                         onSubmit={handleLogin}
@@ -77,16 +77,16 @@ const SignInPage: React.FC = () => {
                                             password: Yup.string().required("Password is required")
                                         })}
                                     >
-                                        <Form className="formInput">
+                                        <Form className={styles.formInput}>
                                             <Field type="email" id="email" name="email" placeholder="Email" required />
                                             <Field type="password" id="password" name="password" placeholder="Password" required />
-                                            <button className="button" type="submit">Login</button>
+                                            <button className={styles.button} type="submit">Login</button>
                                             <ToastContainer />
                                         </Form>
                                     </Formik>
                                 </div>
 
-                                <p className="authText">Don&apos;t have an account? <Link href="/signup">Sign Up</Link></p>
+                                <p className={styles.authText}>Don&apos;t have an account? <Link href="/signup">Sign Up</Link></p>
                             </div>
                         </div>
                     </div>

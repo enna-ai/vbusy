@@ -17,9 +17,10 @@ interface FormValues {
 }
 
 const SettingsPage: React.FC = () => {
+    const token = localStorage.getItem("token");
     const data = localStorage.getItem("userInfo");
     const userInfo = data ? JSON.parse(data) : {};
-    const { username, email } = userInfo;
+    const { username, email, _id } = userInfo;
 
     const initialValues: FormValues = {
         username: username || "",
@@ -29,8 +30,6 @@ const SettingsPage: React.FC = () => {
 
     const handleUpdate = async (values: FormValues) => {
         try {
-            const token = localStorage.getItem("token");
-
             const response = await axios.patch(`http://localhost:4000/api/v1/users/settings`, values, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -66,13 +65,14 @@ const SettingsPage: React.FC = () => {
                 console.error("Error during update:", error.response);
             }
         }
-    };    
+    };
 
     return (
         <>
             <Header />
             <main className={styles.main}>
                 <h2>Account Settings</h2>
+                <span className={styles.userId}>user ID: {_id}</span>
                 <Formik
                     initialValues={initialValues}
                     onSubmit={handleUpdate}
