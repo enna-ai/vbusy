@@ -3,7 +3,7 @@ import path from "path";
 import { Command } from "commander";
 import keytar from "keytar";
 import { getAllTasks, pathRegex } from "../../helpers/index.js";
-import { TaskAPI } from "../../../../common/src/index.js";
+import { TaskAPI } from "../../api/index.js";
 
 // Usage: vbusy export -d /Users/name/Downloads
 // Select task to export after pressing enter key

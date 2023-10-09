@@ -3,10 +3,10 @@
 import React, { useState, useRef } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { TaskAPI } from "../../../../common/src/index";
 import { Task } from "../interfaces/task";
 import { FaCalendar } from "react-icons/fa";
 import { TiPlus } from "react-icons/ti";
+import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "@/styles/modules/profile.module.scss";
@@ -34,12 +34,18 @@ export const TaskForm: React.FC<TaskFormProps> = ({ tasks }) => {
     const handleNewTask = async (values: FormValues) => {
         try {
             const token = localStorage.getItem("token");
-            const newTask = await TaskAPI.createTask(
-                values.task,
-                values.priority,
-                values.dueDate,
-                token
-            );
+            
+            const response = await axios.post("http://localhost:4000/api/v1/tasks", {
+                task: values.task,
+                priority: values.priority,
+                dueDate: values.dueDate,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const newTask = response.data;
             tasks(newTask);
 
             values.task = "";

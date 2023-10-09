@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import keytar from "keytar";
 import { getAllTasks } from "../../helpers/helpers.js";
-import { TaskAPI } from "../../../../common/src/index.js";
+import { TaskAPI } from "../../api/index.js";
 
 const incompleteCommand = new Command()
     .name("incomplete")

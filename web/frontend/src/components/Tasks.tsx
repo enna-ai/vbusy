@@ -5,21 +5,27 @@ import { TaskForm } from "./TaskForm";
 import { TaskItem } from "./TaskItem";
 import { Task } from "@/interfaces/task";
 import { FILTER_ALL, FILTER_ARCHIVED, FILTER_COMPLETED } from "@/utils/consts";
-import { UserAPI, TaskAPI } from "../../../../common/src/index";
+import axios from "axios";
 import styles from "@/styles/modules/profile.module.scss";
 
 export const Tasks: React.FC<{}> = () => {
     const [data, setData] = useState<Task[]>([]);
     const [filter, setFilter] = useState<Task[]>(data);
 
+    const token = localStorage.getItem("token");
+
     const fetchData = async () => {
         try {
-            const token = localStorage.getItem("token");
+            const response = await axios.get("http://localhost:4000/api/v1/tasks", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
 
-            const { tasks: profileTasks } = await UserAPI.getUserProfile(token);
-            const filteredTasks = profileTasks.filter((task: any) => !task.archived);
+            const tasks = response.data;
+            const filteredTasks = tasks.filter((task: any) => !task.archive);
 
-            setData(profileTasks);
+            setData(tasks);
             setFilter(filteredTasks);
         } catch (error) {
             console.error("Error fetching user profile", error);
@@ -74,10 +80,21 @@ export const Tasks: React.FC<{}> = () => {
     const purgeTasks = async () => {
         try {
             const userId = localStorage.getItem("userId");
-            const token = localStorage.getItem("token");
-            await TaskAPI.purgeTasks(userId, token);
 
-            const updatedTaskList = await TaskAPI.getTasks(token);
+            await axios.delete(`http://localhost:4000/api/v1/tasks/${userId}/purge`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const response = await axios.get("http://localhost:4000/api/v1/tasks", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            const updatedTaskList = response.data;
+
             setData(updatedTaskList);
             fetchData();
         } catch (error) {
@@ -90,8 +107,8 @@ export const Tasks: React.FC<{}> = () => {
             <TaskForm tasks={taskList} />
             <div className={styles.filterTasks}>
                 <button onClick={() => filterTasks("All")}>
-                    <span className={styles.taskFilterText}>All</span> 
-                    <span className={styles.highlight}>{data.filter(task => !task.archived).length}</span> 
+                    <span className={styles.taskFilterText}>All</span>
+                    <span className={styles.highlight}>{data.filter(task => !task.archived).length}</span>
                 </button>
                 <span className={styles.taskFilterDivider}></span>
                 <button onClick={() => filterTasks("Completed")}>Completed <span className={styles.highlight}>{data.filter(task => task.completed === true).length}</span></button>

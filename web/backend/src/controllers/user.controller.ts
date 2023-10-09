@@ -16,12 +16,17 @@ class UserController implements Controller {
     }
 
     private initializeRoutes() {
+        this.router.get(`${this.path}`, this.getHello);
         this.router.post(`${this.path}/register`, this.registerUser);
         this.router.post(`${this.path}/login`, this.loginUser);
         this.router.post(`${this.path}/logout`, this.logoutUser);
         this.router.get(`${this.path}/profile`, protect, this.getUserProfile);
         this.router.patch(`${this.path}/settings`, protect, this.updateUserProfile);
         this.router.delete(`${this.path}/:userId`, protect, this.deleteUser);
+    }
+
+    private getHello = async (req: Request, res: Response, next: NextFunction) => {
+        res.status(200).send({ msg: "Hello World!" });
     }
 
     private registerUser = async (req: Request, res: Response, next: NextFunction) => {

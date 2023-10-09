@@ -3,7 +3,7 @@ import { BsFillTrash3Fill, BsPencilFill, BsFillArchiveFill } from "react-icons/b
 import { FaCalendarTimes, FaCalendar } from "react-icons/fa";
 import { TiTick, TiTimes } from "react-icons/ti";
 import { Task } from "../interfaces/task";
-import { TaskAPI } from "../../../../common/src/index";
+import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "@/styles/modules/profile.module.scss";
@@ -23,14 +23,19 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
     const [taskDate, setTaskDate] = useState<Date | null>(task.dueDate ? new Date(task.dueDate) : null);
     const datepickerRef = useRef<DatePicker | null>(null);
 
+    const token = localStorage.getItem("token");
+
     const handleCancelEdit = async () => {
         setIsEditing(false);
     };
 
     const handleDelete = async () => {
         try {
-            const token = localStorage.getItem("token");
-            await TaskAPI.deleteTask(task._id, token);
+            await axios.delete(`http://localhost:4000/api/v1/tasks/${task._id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
             onDelete(task._id);
         } catch (error) {
             console.error(error);
@@ -42,29 +47,41 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
             const formattedDueDate = taskDate ? new Date(taskDate).toISOString().split('T')[0] : null;
 
             if (task.priority !== taskPriority) {
-                const token = localStorage.getItem('token');
-                const updatedPriority = await TaskAPI.updateTaskPriority(
-                    task._id,
-                    taskPriority,
-                    token
-                );
+                const response = await axios.put(`http://localhost:4000/api/v1/tasks/${task._id}/priority`, {
+                    priority: taskPriority,
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
+
+                const updatedPriority = response.data;
                 setTaskPriority(updatedPriority.priority);
             }
 
             if (task.dueDate !== formattedDueDate) {
-                const token = localStorage.getItem('token');
-                const updatedDueDate = await TaskAPI.updateTaskDueDate(
-                    task._id,
-                    formattedDueDate,
-                    token
-                );
+                const response = await axios.put(`http://localhost:4000/api/v1/tasks/${task._id}/due`, {
+                    dueDate: formattedDueDate,
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
+
+                const updatedDueDate = response.data;
                 setTaskDate(updatedDueDate.dueDate ? new Date(updatedDueDate.dueDate) : null);
             }
 
-            const token = localStorage.getItem('token');
-            const updatedTask = await TaskAPI.updateTask(task._id, edit, token);
-            setEdit(updatedTask.task);
+            const updateResponse = await axios.patch(`http://localhost:4000/api/v1/tasks/${task._id}`, {
+                edit,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
 
+            const updatedTask = updateResponse.data;
+            setEdit(updatedTask.task);
             setIsEditing(false);
             onUpdate(updatedTask);
         } catch (error) {
@@ -74,11 +91,16 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
 
     const handleCompleted = async () => {
         try {
-            const token = localStorage.getItem("token");
             const completedTask = !completed;
             setCompleted(completedTask);
 
-            await TaskAPI.completeTask(task._id, token);
+            await axios({
+                method: "put",
+                url: `http://localhost:4000/api/v1/tasks/${task._id}/complete`,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
 
             onUpdate({ ...task, completed: completedTask });
         } catch (error) {
@@ -88,13 +110,18 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
 
     const handleArchive = async () => {
         try {
-            const token = localStorage.getItem("token");
             const archivedTask = !archived;
 
             onUpdate({ ...task, archived: archivedTask });
             setArchived(archivedTask);
 
-            await TaskAPI.archiveTask(task._id, token);
+            await axios({
+                method: "put",
+                url: `http://localhost:4000/api/v1/tasks/${task._id}/archive`,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
         } catch (error) {
             console.error(error);
         }

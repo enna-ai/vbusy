@@ -3,7 +3,7 @@ import chalk from "chalk";
 import Table from "cli-table";
 import keytar from "keytar";
 import { getAllTasks, formatDueDate } from "../../helpers/helpers.js";
-import { TaskAPI } from "../../../../common/src/index.js";
+import { TaskAPI } from "../../api/index.js";
 
 const viewCommand = new Command()
     .name("view")

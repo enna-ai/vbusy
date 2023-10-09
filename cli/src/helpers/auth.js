@@ -1,5 +1,5 @@
 import keytar from "keytar";
-import { UserAPI } from "../../../common/src/index.js";
+import { UserAPI } from "../api/index.js";
 
 export const isAuthenticated = async () => {
     const token = await keytar.getPassword("tasks", "token");

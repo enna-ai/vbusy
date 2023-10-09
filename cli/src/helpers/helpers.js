@@ -8,7 +8,7 @@ import inquirer from "inquirer";
 import moment from "moment";
 import { handleLogout, handleLogin } from "./auth.js";
 import { isValidDate, isValidEmail } from "./validate.js";
-import { TaskAPI, UserAPI } from "../../../common/src/index.js";
+import { TaskAPI, UserAPI } from "../api/index.js";
 
 export const promptLogin = () => {
     inquirer.prompt([

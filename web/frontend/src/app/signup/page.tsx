@@ -29,7 +29,7 @@ const SignUpPage: React.FC = () => {
 
     const handleRegister = async (values: FormValues) => {
         try {
-            await axios.post("http://localhost:4000/api/v1/users/register", values);
+            await axios.post("http://localhost:4000/v1/users/register", values);
             router.push("/login");
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
