@@ -6,6 +6,7 @@ import axios from "axios";
 import { BiUser, BiSolidWidget } from "react-icons/bi";
 import { FiLogOut } from "react-icons/fi";
 import { RiHistoryLine } from "react-icons/ri";
+import { API_BASE_URL, ENDPOINTS } from "@/utils/consts";
 import BeeImage from "../../assets/bee.png";
 import styles from "@/styles/modules/header.module.scss";
 
@@ -14,7 +15,7 @@ export const Header: React.FC = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post("http://localhost:4000/api/v1/users/logout");
+            await axios.post(`${API_BASE_URL}${ENDPOINTS.AuthLogout}`);
             localStorage.removeItem("userInfo");
             localStorage.removeItem("token");
             router.push("/login");

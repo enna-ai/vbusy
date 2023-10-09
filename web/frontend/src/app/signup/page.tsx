@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import BeeImage from "../../../assets/bee.png";
+import { API_BASE_URL, ENDPOINTS } from "@/utils/consts";
 import styles from "../../styles/modules/auth.module.scss";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -29,7 +30,7 @@ const SignUpPage: React.FC = () => {
 
     const handleRegister = async (values: FormValues) => {
         try {
-            await axios.post("http://localhost:4000/v1/users/register", values);
+            await axios.post(`${API_BASE_URL}${ENDPOINTS.AuthRegister}`, values);
             router.push("/login");
         } catch (error: any) {
             if (error.response && error.response.status === 401) {

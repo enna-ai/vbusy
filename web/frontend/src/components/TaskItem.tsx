@@ -4,6 +4,7 @@ import { FaCalendarTimes, FaCalendar } from "react-icons/fa";
 import { TiTick, TiTimes } from "react-icons/ti";
 import { Task } from "../interfaces/task";
 import axios from "axios";
+import { API_BASE_URL, ENDPOINTS } from "@/utils/consts";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "@/styles/modules/profile.module.scss";
@@ -31,7 +32,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:4000/api/v1/tasks/${task._id}`, {
+            await axios.delete(`${API_BASE_URL}${ENDPOINTS.Task}/${task._id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
@@ -47,7 +48,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
             const formattedDueDate = taskDate ? new Date(taskDate).toISOString().split('T')[0] : null;
 
             if (task.priority !== taskPriority) {
-                const response = await axios.put(`http://localhost:4000/api/v1/tasks/${task._id}/priority`, {
+                const response = await axios.put(`${API_BASE_URL}${ENDPOINTS.Task}/${task._id}/priority`, {
                     priority: taskPriority,
                 }, {
                     headers: {
@@ -60,7 +61,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
             }
 
             if (task.dueDate !== formattedDueDate) {
-                const response = await axios.put(`http://localhost:4000/api/v1/tasks/${task._id}/due`, {
+                const response = await axios.put(`${API_BASE_URL}${ENDPOINTS.Task}/${task._id}/due`, {
                     dueDate: formattedDueDate,
                 }, {
                     headers: {
@@ -72,7 +73,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
                 setTaskDate(updatedDueDate.dueDate ? new Date(updatedDueDate.dueDate) : null);
             }
 
-            const updateResponse = await axios.patch(`http://localhost:4000/api/v1/tasks/${task._id}`, {
+            const updateResponse = await axios.patch(`${API_BASE_URL}${ENDPOINTS.Task}/${task._id}`, {
                 edit,
             }, {
                 headers: {
@@ -96,7 +97,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
 
             await axios({
                 method: "put",
-                url: `http://localhost:4000/api/v1/tasks/${task._id}/complete`,
+                url: `${API_BASE_URL}${ENDPOINTS.Task}/${task._id}/complete`,
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
@@ -117,7 +118,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
 
             await axios({
                 method: "put",
-                url: `http://localhost:4000/api/v1/tasks/${task._id}/archive`,
+                url: `${API_BASE_URL}${ENDPOINTS.Task}/${task._id}/archive`,
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }

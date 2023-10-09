@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import BeeImage from "../../../assets/bee.png";
+import { API_BASE_URL, ENDPOINTS } from "../../utils/consts";
 import styles from "../../styles/modules/auth.module.scss";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -27,7 +28,7 @@ const SignInPage: React.FC = () => {
 
     const handleLogin = async (values: FormValues) => {
         try {
-            const response = await axios.post("http://localhost:4000/api/v1/users/login", values);
+            const response = await axios.post(`${API_BASE_URL}${ENDPOINTS.AuthLogin}`, values);
             const { token, username, email, _id } = response.data;
             localStorage.setItem("token", token);
             localStorage.setItem("userInfo", JSON.stringify({ username, email, _id }));

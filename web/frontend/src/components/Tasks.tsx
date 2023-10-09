@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { TaskForm } from "./TaskForm";
 import { TaskItem } from "./TaskItem";
 import { Task } from "@/interfaces/task";
-import { FILTER_ALL, FILTER_ARCHIVED, FILTER_COMPLETED } from "@/utils/consts";
+import { FILTER_ALL, FILTER_ARCHIVED, FILTER_COMPLETED, API_BASE_URL, ENDPOINTS } from "@/utils/consts";
 import axios from "axios";
 import styles from "@/styles/modules/profile.module.scss";
 
@@ -16,7 +16,7 @@ export const Tasks: React.FC<{}> = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:4000/api/v1/tasks", {
+            const response = await axios.get(`${API_BASE_URL}${ENDPOINTS.Task}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
@@ -81,13 +81,13 @@ export const Tasks: React.FC<{}> = () => {
         try {
             const userId = localStorage.getItem("userId");
 
-            await axios.delete(`http://localhost:4000/api/v1/tasks/${userId}/purge`, {
+            await axios.delete(`${API_BASE_URL}${ENDPOINTS.Task}/${userId}/purge`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             });
 
-            const response = await axios.get("http://localhost:4000/api/v1/tasks", {
+            const response = await axios.get("${API_BASE_URL}${ENDPOINTS.Task}", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }

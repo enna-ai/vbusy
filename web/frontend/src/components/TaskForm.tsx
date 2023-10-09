@@ -7,6 +7,7 @@ import { Task } from "../interfaces/task";
 import { FaCalendar } from "react-icons/fa";
 import { TiPlus } from "react-icons/ti";
 import axios from "axios";
+import { API_BASE_URL, ENDPOINTS } from "@/utils/consts";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "@/styles/modules/profile.module.scss";
@@ -35,7 +36,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ tasks }) => {
         try {
             const token = localStorage.getItem("token");
             
-            const response = await axios.post("http://localhost:4000/api/v1/tasks", {
+            const response = await axios.post(`${API_BASE_URL}${ENDPOINTS.Task}`, {
                 task: values.task,
                 priority: values.priority,
                 dueDate: values.dueDate,

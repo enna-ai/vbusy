@@ -7,6 +7,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { BsStarFill } from "react-icons/bs";
+import { API_BASE_URL, ENDPOINTS } from "@/utils/consts";
 import withAuth from "@/components/withAuth";
 import styles from "@/styles/modules/settings.module.scss";
 import 'react-toastify/dist/ReactToastify.css';
@@ -31,7 +32,7 @@ const SettingsPage: React.FC = () => {
 
     const handleUpdate = async (values: FormValues) => {
         try {
-            const response = await axios.patch(`http://localhost:4000/api/v1/users/settings`, values, {
+            const response = await axios.patch(`${API_BASE_URL}${ENDPOINTS.UserSettings}`, values, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import ActivityItem from "@/components/ActivityItem";
 import { Activity } from "@/interfaces/activity";
+import { API_BASE_URL, ENDPOINTS } from "@/utils/consts";
 import axios from "axios";
-import moment from "moment";
 import withAuth from "@/components/withAuth";
 import styles from "@/styles/modules/activity.module.scss";
 
@@ -18,7 +18,7 @@ const ActivityPage: React.FC = () => {
             const data = localStorage.getItem("userInfo");
             const userInfo = data ? JSON.parse(data) : {};
 
-            const response = await axios.get(`http://localhost:4000/api/v1/activity/${userInfo._id}`, {
+            const response = await axios.get(`${API_BASE_URL}${ENDPOINTS.Activity}/${userInfo._id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
