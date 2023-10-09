@@ -73,12 +73,6 @@ const SettingsPage: React.FC = () => {
             <Header />
             <main className={styles.main}>
                 <h2>Account Settings</h2>
-                <div className={styles.userIdWrapper}>
-                    <BsStarFill className={styles.icon} />
-                    <div>
-                        User ID: <span className={styles.userId}>{_id}</span>
-                    </div>
-                </div>
                 <Formik
                     initialValues={initialValues}
                     onSubmit={handleUpdate}
@@ -98,6 +92,12 @@ const SettingsPage: React.FC = () => {
                         <ToastContainer />
                     </Form>
                 </Formik>
+                <div className={styles.userIdWrapper}>
+                    <BsStarFill className={styles.icon} />
+                    <div>
+                        User ID: <span className={styles.userId}>{_id}</span>
+                    </div>
+                </div>
             </main>
         </>
     )

@@ -16,7 +16,8 @@ const ActivityItem: React.FC<RecentActivities> = ({ activity, description, task,
         const days = Math.floor(hours / 24);
       
         if (days >= 7) {
-          return timestamp.toLocaleDateString();
+          const options = { year: "numeric", month: "short", day: "numeric" };
+          return time.toLocaleDateString(undefined, options);
         } else if (days > 0) {
           return `${days} day${days > 1 ? 's' : ''} ago`;
         } else if (hours > 0) {

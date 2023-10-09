@@ -2,7 +2,7 @@ import { Schema, model, Document, Types } from "mongoose";
 
 interface RecentActivity {
     task?: string;
-    action: string;
+    activity: string;
     description: string;
     timestamp: Date;
 }
@@ -17,7 +17,7 @@ const ActivitySchema = new Schema<ActivityModel>({
     activities: [
         {
             task: { type: String, default: null },
-            action: { type: String, default: "Update"},
+            activity: { type: String, default: "Update"},
             description: { type: String },
             timestamp: { type: Date, default: Date.now },
         },

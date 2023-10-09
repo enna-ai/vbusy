@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/react": "^2.1.13",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@types/react-datepicker": "^4.15.1",
@@ -19,6 +20,7 @@
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "formik": "^2.4.3",
+    "framer-motion": "^10.16.4",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
