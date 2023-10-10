@@ -38,8 +38,7 @@ export const Header: React.FC = () => {
                     </Link>
                 </div>
                 <div className={styles.links}>
-                    {/* link to vbusy widget site */}
-                    <Link href=""><BiSolidWidget className={styles.icon} /></Link>
+                    <Link href="https://vbusy-widget.vercel.app/"><BiSolidWidget className={styles.icon} /></Link>
                     <Link href="/activity"><RiHistoryLine className={styles.icon} /></Link>
                     <Link href="/settings"><BiUser className={styles.icon} /></Link>
                     <button onClick={handleLogout}><FiLogOut className={styles.icon} /></button>

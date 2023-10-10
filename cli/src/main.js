@@ -1,3 +1,4 @@
+import "dotenv/config";
 import fs from "fs";
 import keytar from "keytar";
 import { Command } from "commander";
