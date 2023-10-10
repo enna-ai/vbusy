@@ -26,10 +26,6 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
 
     const token = localStorage.getItem("token");
 
-    const handleCancelEdit = async () => {
-        setIsEditing(false);
-    };
-
     const handleDelete = async () => {
         try {
             await axios.delete(`${API_BASE_URL}${ENDPOINTS.Task}/${task._id}`, {
@@ -47,7 +43,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
         try {
             const formattedDueDate = taskDate ? new Date(taskDate).toISOString().split('T')[0] : null;
 
-            if (task.priority !== taskPriority) {
+            const updatePriority = async () => {
                 const response = await axios.put(`${API_BASE_URL}${ENDPOINTS.Task}/${task._id}/priority`, {
                     priority: taskPriority,
                 }, {
@@ -58,9 +54,9 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
 
                 const updatedPriority = response.data;
                 setTaskPriority(updatedPriority.priority);
-            }
+            };
 
-            if (task.dueDate !== formattedDueDate) {
+            const updateDueDate = async () => {
                 const response = await axios.put(`${API_BASE_URL}${ENDPOINTS.Task}/${task._id}/due`, {
                     dueDate: formattedDueDate,
                 }, {
@@ -71,23 +67,42 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
 
                 const updatedDueDate = response.data;
                 setTaskDate(updatedDueDate.dueDate ? new Date(updatedDueDate.dueDate) : null);
+            };
+
+            const updateTaskContent = async () => {
+                const response = await axios.patch(`${API_BASE_URL}${ENDPOINTS.Task}/${task._id}`, {
+                    task: edit,
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
+
+                const updatedTask = response.data;
+                setEdit(updatedTask.task);
+            };
+
+            if (task.priority !== taskPriority) {
+                await updatePriority();
             }
 
-            const updateResponse = await axios.patch(`${API_BASE_URL}${ENDPOINTS.Task}/${task._id}`, {
-                edit,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            });
+            if (task.dueDate !== formattedDueDate) {
+                await updateDueDate();
+            }
 
-            const updatedTask = updateResponse.data;
-            setEdit(updatedTask.task);
+            if (task.task !== edit) {
+                await updateTaskContent();
+            }
+
             setIsEditing(false);
-            onUpdate(updatedTask);
+            onUpdate(task);
         } catch (error) {
             console.error(error);
         }
+    };
+
+    const handleCancelEdit = async () => {
+        setIsEditing(false);
     };
 
     const handleCompleted = async () => {
@@ -169,7 +184,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onUpdate }) 
                             <label onClick={toggleCalendar} className={styles.editDateForm}>
                                 <FaCalendar className={styles.dueDateIcon} />
                                 <DatePicker
-                                    minDate={new Date(new Date().toISOString().split("T")[0])}
+                                    minDate={new Date()}
                                     selected={taskDate}
                                     dateFormat="yyyy-MM-dd"
                                     onChange={(date) => {

@@ -39,7 +39,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ tasks }) => {
             const response = await axios.post(`${API_BASE_URL}${ENDPOINTS.Task}`, {
                 task: values.task,
                 priority: values.priority,
-                dueDate: values.dueDate,
+                dueDate: selectedDate,
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -87,16 +87,17 @@ export const TaskForm: React.FC<TaskFormProps> = ({ tasks }) => {
                         <label onClick={toggleCalendar} className={styles.dateForm}>
                             <FaCalendar className={styles.dueDateIcon} />
                             <DatePicker
-                                minDate={new Date(new Date().toISOString().split("T")[0])}
+                                minDate={new Date()}
                                 selected={selectedDate}
+                                dateFormat="yyyy-MM-dd"
                                 onChange={(date) => {
                                     setSelectedDate(date);
                                 }}
                                 ref={(ref) => (datepickerRef.current = ref)}
                                 className={styles.inputDateForm}
+                                onBlur={toggleCalendar}
                             />
                         </label>
-                        {/* <Field className={styles.dateForm} type="date" id="date" name="date" min={new Date().toISOString().split("T")[0]} /> */}
                         <button className={styles.formButton} type="submit"><TiPlus /></button>
                     </div>
                 </Form>
