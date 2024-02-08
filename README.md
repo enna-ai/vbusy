@@ -1,107 +1,81 @@
-<div align="center">
-  <p>
-    <img src="https://hotemoji.com/images/dl/l/bee-emoji-by-twitter.png" width="150">
-  </p>
-  <h1>vbusy</h1>
-  <p align="center">
-    <a href="https://github.com/enna-ai/vbusy-ext">chrome extension</a>
-    •
-    <a href="http://github.com/enna-ai/vbusy-widget">widget</a>
-    <br>
-    A versatile task management system with web and CLI interfaces
-  </p>
-</div>
+# Turborepo starter
 
-# Web
-<table>
-  <tr>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/5AB0wKv.png">
-        <figcaption>Login/Register Page</figcaption>
-      </figure>
-    </td>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/kSJB13Q.png">
-        <figcaption>Task Dashboard</figcaption>
-      </figure>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/Cqd9aZw.png">
-        <figcaption>Recent Activity</figcaption>
-      </figure>
-    </td>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/akpevHv.png">
-        <figcaption>Editing a task</figcaption>
-      </figure>
-    </td>
-  </tr>
-</table>
+This is an official starter Turborepo.
 
-## CLI
-<table>
-  <tr>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/CJqm82Z.png">
-        <figcaption>Logging into Vbusy account</figcaption>
-      </figure>
-    </td>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/KdzDjK3.png">
-        <figcaption>Dashboard and Commands List</figcaption>
-      </figure>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/KCzOj8A.png">
-        <figcaption>Task List Command</figcaption>
-      </figure>
-    </td>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/mh36iJF.png">
-        <figcaption>Logging out of Vbusy account</figcaption>
-      </figure>
-    </td>
-  </tr>
-</table>
+## Using this example
 
-# CLI Commands
-```
-Usage: vb <command>
+Run the following command:
 
-Commands
-  archive      Archive a task
-  complete     Mark a task as incomplete
-  create       Create a new task
-  delete       Delete a task
-  export       Export a task into a json file
-  incomplete   Mark a task as incomplete
-  list         Get all tasks
-  purge        Delete all tasks
-  unarchive    Unarchive a task
-  update       Edit a task and its properties
-  view         Preview a task
-```
-> usage examples for exporting a task
 ```sh
-vb export -d /Users/User/Downloads
-? Select a task to export: task
+npx create-turbo@latest
 ```
 
-# To Do
-- [ ] Add account delete functionality
-- [ ] Button to download tasks (web)
-- [ ] Add subtasks feature
-- [ ] Pagination to _Recent Activity_ and _Tasks Dashboard_
-- [ ] CLI flags and aliases
+## What's inside?
+
+This Turborepo includes the following packages/apps:
+
+### Apps and Packages
+
+- `docs`: a [Next.js](https://nextjs.org/) app
+- `web`: another [Next.js](https://nextjs.org/) app
+- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
+- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+
+### Utilities
+
+This Turborepo has some additional tools already setup for you:
+
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
+
+### Build
+
+To build all apps and packages, run the following command:
+
+```
+cd my-turborepo
+pnpm build
+```
+
+### Develop
+
+To develop all apps and packages, run the following command:
+
+```
+cd my-turborepo
+pnpm dev
+```
+
+### Remote Caching
+
+Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+
+By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+
+```
+cd my-turborepo
+npx turbo login
+```
+
+This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+
+Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+
+```
+npx turbo link
+```
+
+## Useful Links
+
+Learn more about the power of Turborepo:
+
+- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
+- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
+- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
+- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
+- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
+- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
