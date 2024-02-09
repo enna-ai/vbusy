@@ -1,0 +1,54 @@
+@import "partials/variables";
+@import "partials/mixins";
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: $crust;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: $base;
+    border: 2px solid $crust;
+    border-radius: $radius;
+}
+
+html,
+body {
+    min-height: 100%;
+    color: $white;
+    background: $crust;
+    font-family: 'Inter', sans-serif;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        line-height: 1.1;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    a {
+        color: $yellow;
+
+        &:hover {
+            color: $peach;
+        }
+    }
+
+    .completed {
+            text-decoration: line-through;
+    }
+}

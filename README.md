@@ -1,6 +1,6 @@
 <div align="center">
   <p>
-    <img src="https://hotemoji.com/images/dl/l/bee-emoji-by-twitter.png" width="150">
+    <img src="https://hotemoji.com/images/dl/l/bee-emoji-by-twitter.png" alt="bee" width="150">
   </p>
   <h1>vbusy</h1>
   <p align="center">
@@ -13,17 +13,18 @@
 </div>
 
 # Web
+
 <table>
   <tr>
     <td>
       <figure>
-        <img src="https://i.imgur.com/5AB0wKv.png">
+        <img src="https://i.imgur.com/5AB0wKv.png" alt="Login UI">
         <figcaption>Login/Register Page</figcaption>
       </figure>
     </td>
     <td>
       <figure>
-        <img src="https://i.imgur.com/kSJB13Q.png">
+        <img src="https://i.imgur.com/kSJB13Q.png" alt="Task Display UI">
         <figcaption>Task Dashboard</figcaption>
       </figure>
     </td>
@@ -31,13 +32,13 @@
   <tr>
     <td>
       <figure>
-        <img src="https://i.imgur.com/Cqd9aZw.png">
+        <img src="https://i.imgur.com/Cqd9aZw.png" alt="Recent Activity UI">
         <figcaption>Recent Activity</figcaption>
       </figure>
     </td>
     <td>
       <figure>
-        <img src="https://i.imgur.com/akpevHv.png">
+        <img src="https://i.imgur.com/akpevHv.png" alt="Editing a task UI">
         <figcaption>Editing a task</figcaption>
       </figure>
     </td>
@@ -45,17 +46,18 @@
 </table>
 
 ## CLI
+
 <table>
   <tr>
     <td>
       <figure>
-        <img src="https://i.imgur.com/CJqm82Z.png">
+        <img src="https://i.imgur.com/CJqm82Z.png" alt="Logging in to account CLI">
         <figcaption>Logging into Vbusy account</figcaption>
       </figure>
     </td>
     <td>
       <figure>
-        <img src="https://i.imgur.com/KdzDjK3.png">
+        <img src="https://i.imgur.com/KdzDjK3.png" alt="CLI Commands">
         <figcaption>Dashboard and Commands List</figcaption>
       </figure>
     </td>
@@ -63,13 +65,13 @@
   <tr>
     <td>
       <figure>
-        <img src="https://i.imgur.com/KCzOj8A.png">
+        <img src="https://i.imgur.com/KCzOj8A.png" alt="CLI Task List">
         <figcaption>Task List Command</figcaption>
       </figure>
     </td>
     <td>
       <figure>
-        <img src="https://i.imgur.com/mh36iJF.png">
+        <img src="https://i.imgur.com/mh36iJF.png" alt="CLI Logging Out">
         <figcaption>Logging out of Vbusy account</figcaption>
       </figure>
     </td>
@@ -77,7 +79,8 @@
 </table>
 
 # CLI Commands
-```
+
+```sh
 Usage: vb <command>
 
 Commands
@@ -93,13 +96,16 @@ Commands
   update       Edit a task and its properties
   view         Preview a task
 ```
+
 > usage examples for exporting a task
+
 ```sh
 vb export -d /Users/User/Downloads
 ? Select a task to export: task
 ```
 
 # To Do
+
 - [ ] Add account delete functionality
 - [ ] Button to download tasks (web)
 - [ ] Add subtasks feature

@@ -1,0 +1,39 @@
+@import "partials/variables";
+
+::-webkit-scrollbar {
+    width: 13px;
+    height: 100%;
+}
+
+::-webkit-scrollbar-track {
+    background: $beige;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $beige-darkest;
+    border: 3px solid $beige;
+    border-radius: 10px;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+    font-family: 'Inter', sans-serif;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        line-height: 1.1;
+        font-weight: 600;
+        margin: 0;
+    }
+}
