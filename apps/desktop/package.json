@@ -1,0 +1,23 @@
+{
+  "name": "desktop",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "start": "electron ./dist/main.js",
+    "dev": "electron ./dist/main.js",
+    "lint": "eslint . --max-warnings 0"
+  },
+  "dependencies": {
+    "@repo/ui": "workspace:*",
+    "dotenv": "^16.4.1",
+    "electron": "^28.2.2"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

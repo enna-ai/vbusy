@@ -1,0 +1,83 @@
+@import "../partials/variables";
+@import "../partials/mixins";
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    background: $base-darkest;
+    border-bottom: 1.5px solid $base-lightest;
+
+    .links {
+        @include flex-center;
+        gap: 12px;
+
+        a {
+            @include text-size(12, 14);
+            border-radius: $radius;
+            padding: 6px 10px;
+            width: 100%;
+            background: $mantle;
+
+            &:focus {
+                background: $yellow-light;
+                color: $mantle;
+            }
+
+            &:active {
+                background: $yellow-light;
+                color: $mantle;
+            }
+
+            &:hover {
+                background: $yellow;
+                color: $mantle;
+
+                .icon {
+                    color: $mantle;
+
+                    &:active {
+                        color: $mantle;
+                    }
+
+                    &:focus {
+                        color: $mantle;
+                    }
+                }
+            }
+        }
+
+        button {
+            @include text-size(12, 14);
+            @include no-borders;
+            border-radius: $radius;
+            padding: 6px 10px;
+            width: 100%;
+            background: $mantle;
+            cursor: pointer;
+
+            &:hover {
+                background: $yellow;
+
+                .icon {
+                    color: $mantle;
+
+                    &:active {
+                        color: $mantle;
+                    }
+
+                    &:focus {
+                        color: $mantle;
+                    }
+                }
+            }
+        }
+    }
+
+    .icon {
+        font-size: 1.2em;
+        color: $yellow;
+    }
+}
