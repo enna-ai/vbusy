@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import keytar from "keytar";
 import { confirm } from "@inquirer/prompts";
-import { getAllTasks } from "../../helpers/helpers.js";
+import { getAllTasks } from "../../utils/helpers.js";
 import { TaskAPI } from "../../api/index.js";
 
 const deleteCommand = new Command()

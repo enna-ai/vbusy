@@ -2,7 +2,7 @@ export const FILTER_ALL = "All";
 export const FILTER_COMPLETED = "Completed";
 export const FILTER_ARCHIVED = "Archived";
 
-export const API_BASE_URL = process.env.NEXT_API_BASE_URL || "http://localhost:8080/";
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080/";
 
 export enum ENDPOINTS {
     AuthLogin = "api/v1/users/login",

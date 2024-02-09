@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { getUserTasks } from "../../helpers/helpers.js";
+import { getUserTasks } from "../../utils/helpers.js";
 
 const listCommand = new Command()
     .name("list")

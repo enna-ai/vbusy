@@ -2,7 +2,7 @@ import "dotenv/config";
 import fs from "fs";
 import keytar from "keytar";
 import { Command } from "commander";
-import { handleLogin, promptMainMenu, isAuthenticated, promptLogin } from "./helpers/index.js";
+import { handleLogin, promptMainMenu, isAuthenticated, promptLogin } from "./utils/index.js";
 import * as Commands from "./commands/index.js";
 
 const program = new Command();
