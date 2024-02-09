@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import keytar from "keytar";
 import moment from "moment";
-import { getAllTasks, promptUpdateChoice, promptDueDate, promptNewTask, promptPriorityChoice } from "../../helpers/index.js";
+import { getAllTasks, promptUpdateChoice, promptDueDate, promptNewTask, promptPriorityChoice } from "../../utils/index.js";
 import { TaskAPI } from "../../api/index.js";
 
 const updateCommand = new Command()

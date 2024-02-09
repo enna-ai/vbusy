@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import { Command } from "commander";
 import keytar from "keytar";
-import { getAllTasks, pathRegex } from "../../helpers/index.js";
+import { getAllTasks, pathRegex } from "../../utils/index.js";
 import { TaskAPI } from "../../api/index.js";
 
 // Usage: vbusy export -d /Users/name/Downloads

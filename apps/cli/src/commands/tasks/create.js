@@ -1,6 +1,6 @@
 import { Command } from "commander";
 import keytar from "keytar";
-import { promptNewTask, promptPriorityChoice, promptDueDate } from "../../helpers/index.js";
+import { promptNewTask, promptPriorityChoice, promptDueDate } from "../../utils/index.js";
 import { TaskAPI } from "../../api/index.js";
 
 const createCommand = new Command()
