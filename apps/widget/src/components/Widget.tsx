@@ -1,24 +1,10 @@
-import React from 'react';
+import React from "react";
+import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
-import { Task } from "../interface/task";
-import moment from "moment";
+import { WidgetProps } from "../interface/task";
 import BeeImage from "../../public/bee.png";
 import styles from "../styles/modules/widget.module.scss";
-
-interface WidgetProps {
-    userId: string | null;
-    borderRadius: boolean;
-    headerColor: string | null;
-    bodyColor: string | null;
-    textColor: string | null;
-    accentColor: string | null,
-    dueDates: boolean;
-    priorityLevels: boolean;
-    hideCompleted: boolean;
-    userData: Task[];
-    errorMsg: string | null;
-}
 
 // eslint-disable-next-line no-unused-vars
 const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, bodyColor, textColor, accentColor, dueDates, priorityLevels, hideCompleted, userData, errorMsg }) => {
