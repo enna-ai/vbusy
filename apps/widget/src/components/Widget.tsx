@@ -47,7 +47,7 @@ const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, body
                                                     {priorityLevels &&
                                                         <span className={styles.priorityLevelDot} style={{ background: priorityColors[item.priority] }}></span>
                                                     }
-                                                    <p className={`${item.completed ? styles.completed : ""}`}>{item.task}</p>
+                                                    <p className={`${item.completed ? styles.completed : ""} ${styles.widgetHeading}`}>{item.task}</p>
                                                 </li>
                                                 {dueDates &&
                                                     <p style={{ color: moment(item.dueDate).isBefore(moment()) ? '#ed8796' : 'inherit' }}>

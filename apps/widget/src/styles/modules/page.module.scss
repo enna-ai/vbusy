@@ -1,159 +1,163 @@
 @import "../partials/variables";
 
 .main {
-    padding: 2em min(10%, 20%, 20%);
-    background: $beige;
-    color: $darkred;
+  padding: 2em min(10%, 20%, 20%);
+  background: $beige;
+  color: $darkred;
 
-    .heading {
-        padding-bottom: 10px;
-        font-size: clamp(35px, 3vw, 60px);
+  .heading {
+    padding-bottom: 10px;
+    font-size: clamp(35px, 3vw, 60px);
+  }
+
+  .p {
+    padding-bottom: 15px;
+  }
+
+  .settings {
+    .settingsHeading {
+      font-size: clamp(25px, 2vw, 45px);
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
 
-    .p {
-        padding-bottom: 15px;
-    }
+    .options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
 
-    .settings {
-        .settingsHeading {
-            font-size: clamp(25px, 2vw, 45px);
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
+      .inputTextLabel {
+        padding-bottom: 6px;
+        font-weight: 600;
+      }
 
-        .options {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-
-            .inputTextLabel {
-                padding-bottom: 6px;
-                font-weight: 600;
-            }
-
-            .checkbox {
-                display: flex;
-
-                .inputCheckboxLabel {
-                    padding-left: 6px;
-                }
-
-                input[type="checkbox"]:checked {
-                    accent-color: $darkred;
-                }
-            }
-
-            input {
-                border: none;
-                padding: 8px;
-                border-radius: $radius;
-                background-color: $palegreen;
-                caret-color: $darkred;
-                color: $darkred;
-
-                &:focus {
-                    background-color: $palegreen-light;
-                    outline-color: darkred;
-                    outline-style: solid;
-                    outline-width: 1px;
-                }
-
-                &:active {
-                    background-color: $palegreen-light;
-                    outline-color: darkred;
-                    outline-style: solid;
-                    outline-width: 1px;
-                }
-
-                &::placeholder {
-                    background-color: $palegreen-light;
-                }
-            }
-
-            @media (max-width: 876px) {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    }
-
-    .preview {
-        padding-top: 20px;
-        padding-bottom: 20px;
-
-        .previewHeading {
-            font-size: clamp(25px, 2vw, 45px);
-        }
-
-        .previewDesc {
-            padding-top: 5px;
-            padding-bottom: 15px;
-        }
-    }
-
-    .iframeCode {
-        .iframeCodeHeader {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-
-            .codeIcon {
-                font-size: clamp(25px, 2vw, 45px);
-            }
-
-            .iframeCodeHeading {
-                padding-left: 5px;
-                font-size: clamp(25px, 2vw, 45px);
-            }
-        }
-
-        .iframeCodeDesc {
-            padding-top: 5px;
-            padding-bottom: 15px;
-        }
-
-        .pre {
-            max-width: 80vw;
-            padding: 0.5em;
-            background: $beige-light;
-            position: relative;
-            margin-bottom: 10px;
-            border-radius: $radius;
-
-            .code {
-                display: inline-block;
-                overflow-wrap: anywhere;
-                white-space: pre-wrap;
-            }
-        }
-
-        .copyBtn {
-            all: unset;
-            position: absolute;
-            padding: 6px;
-            top: 4px;
-            right: 4px;
-            border-radius: $radius;
-            cursor: pointer;
-
-            .copyBtnIcon {
-                font-size: 18px;
-            }
-
-            &:hover {
-                background: $beige-dark;
-            }
-        }
-    }
-
-    footer {
+      .checkbox {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: auto;
-        padding-top: 2em;
 
-        a {
-            color: $darkred;
+        .inputCheckboxLabel {
+          padding-left: 6px;
         }
+
+        input[type="checkbox"] {
+          outline: none;
+        }
+
+        input[type="checkbox"]:checked {
+          accent-color: $darkred;
+        }
+      }
+
+      input {
+        border: none;
+        padding: 8px;
+        border-radius: $radius;
+        background-color: $palegreen;
+        caret-color: $darkred;
+        color: $darkred;
+
+        &:focus {
+          background-color: $palegreen-light;
+          outline-color: darkred;
+          outline-style: solid;
+          outline-width: 1px;
+        }
+
+        &:active {
+          background-color: $palegreen-light;
+          outline-color: darkred;
+          outline-style: solid;
+          outline-width: 1px;
+        }
+
+        &::placeholder {
+          background-color: $palegreen-light;
+        }
+      }
+
+      @media (max-width: 876px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
+  }
+
+  .preview {
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .previewHeading {
+      font-size: clamp(25px, 2vw, 45px);
+    }
+
+    .previewDesc {
+      padding-top: 5px;
+      padding-bottom: 15px;
+    }
+  }
+
+  .iframeCode {
+    .iframeCodeHeader {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .codeIcon {
+        font-size: clamp(25px, 2vw, 45px);
+      }
+
+      .iframeCodeHeading {
+        padding-left: 5px;
+        font-size: clamp(25px, 2vw, 45px);
+      }
+    }
+
+    .iframeCodeDesc {
+      padding-top: 5px;
+      padding-bottom: 15px;
+    }
+
+    .pre {
+      max-width: 80vw;
+      padding: 0.5em;
+      background: $beige-light;
+      position: relative;
+      margin-bottom: 10px;
+      border-radius: $radius;
+
+      .code {
+        display: inline-block;
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+      }
+    }
+
+    .copyBtn {
+      all: unset;
+      position: absolute;
+      padding: 6px;
+      top: 4px;
+      right: 4px;
+      border-radius: $radius;
+      cursor: pointer;
+
+      .copyBtnIcon {
+        font-size: 18px;
+      }
+
+      &:hover {
+        background: $beige-dark;
+      }
+    }
+  }
+
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    padding-top: 2em;
+
+    a {
+      color: $darkred;
+    }
+  }
 }
