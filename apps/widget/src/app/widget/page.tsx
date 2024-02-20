@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Widget from "../../components/Widget";
-import { Task } from "../../interface/task";
+import { Task } from "../../interfaces/task";
 import { API_BASE_URL } from "../../utils/consts";
 import axios from "axios";
 

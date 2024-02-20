@@ -5,7 +5,7 @@ import Input from "../components/Input";
 import Footer from "../components/Footer";
 import { InputConfig } from "../utils/input";
 import { CLIENT_BASE_URL } from "../utils/consts";
-import { State } from "../interface/state";
+import { State } from "../interfaces/state";
 import { BiCopy, BiCodeAlt, BiCheck } from "react-icons/bi";
 import styles from "../styles/modules/page.module.scss";
 

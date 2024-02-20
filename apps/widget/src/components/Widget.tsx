@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
-import { WidgetProps } from "../interface/task";
+import { WidgetProps } from "../interfaces/task";
 import BeeImage from "../../public/bee.png";
 import styles from "../styles/modules/widget.module.scss";
 
