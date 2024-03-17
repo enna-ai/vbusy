@@ -39,10 +39,6 @@ export const Modal: React.FC<{ onCloseModal: () => void}> = ({ onCloseModal }) =
       });
 
       onCloseModal();
-
-      values.bio = "";
-      values.pronouns = "";
-      values.profilePhoto = "";
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
         toast.error(error.response.data.error, {
