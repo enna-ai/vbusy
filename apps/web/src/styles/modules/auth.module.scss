@@ -71,10 +71,7 @@
                             caret-color: $white-trans;
                             color: $white-trans;
 
-                            &:focus {
-                                background-color: $base-light;
-                            }
-
+                            &:focus,
                             &:active {
                                 background-color: $base-light;
                             }

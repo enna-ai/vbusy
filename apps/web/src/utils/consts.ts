@@ -10,6 +10,7 @@ export enum ENDPOINTS {
     AuthRegister = "api/v1/users/register",
     UserSettings = "api/v1/users/settings",
     UserProfile = "api/v1/users/profile",
+    Onboarding = "api/v1/users/onboarding",
     User = "api/v1/users",
     Task = "api/v1/tasks",
     Activity = "api/v1/activity"

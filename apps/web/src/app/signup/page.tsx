@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import BeeImage from "../../../public/bee.png";
 import { API_BASE_URL, ENDPOINTS } from "../../utils/consts";
 import styles from "../../styles/modules/auth.module.scss";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 interface FormValues {
     username: string;
@@ -30,8 +30,11 @@ const SignUpPage: React.FC = () => {
 
     const handleRegister = async (values: FormValues) => {
         try {
-            await axios.post(`${API_BASE_URL}${ENDPOINTS.AuthRegister}`, values);
-            router.push("/login");
+            const data = await axios.post(`${API_BASE_URL}${ENDPOINTS.AuthRegister}`, values);
+            router.push("/");
+            console.log("Data", data);
+            localStorage.setItem("token", data.data.token);
+            localStorage.setItem("userInfo", JSON.stringify(data));
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
                 toast.error(error.response.data.error, {
@@ -45,7 +48,7 @@ const SignUpPage: React.FC = () => {
                     theme: "dark",
                 });
             } else {
-                console.error("Error during signup:", error.response);
+                console.error("Error during signup:", error);
             }
         }
     };
