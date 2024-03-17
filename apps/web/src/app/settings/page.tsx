@@ -16,18 +16,22 @@ interface FormValues {
     username: string;
     email: string;
     password: string;
+    bio: string;
+    pronouns: string;
 }
 
 const SettingsPage: React.FC = () => {
     const token = localStorage.getItem("token");
     const data = localStorage.getItem("userInfo");
     const userInfo = data ? JSON.parse(data) : {};
-    const { username, email, _id } = userInfo;
+    const { username, email, _id, bio, pronouns } = userInfo;
 
     const initialValues: FormValues = {
         username: username || "",
         email: email || "",
         password: "",
+        bio: bio || "",
+        pronouns: pronouns || "",
     };
 
     const handleUpdate = async (values: FormValues) => {
@@ -83,11 +87,15 @@ const SettingsPage: React.FC = () => {
                     })}
                 >
                     <Form className={styles.settingsFormInput}>
-                        <p className={styles.fieldHeading}>Username</p>
+                        <label className={styles.fieldHeading}>Username</label>
                         <Field className={styles.settingsUsername} name="username" placeholder={username} minLength={2} maxLength={16} required />
-                        <p className={styles.fieldHeading}>Email</p>
+                        <label className={styles.fieldHeading}>Pronouns</label>
+                        <Field className={styles.settingsPronouns} name="pronouns" placeholder={pronouns} maxLength={30} />
+                        <label className={styles.settingsBio}>Bio</label>
+                        <Field className={styles.fieldBio} as="textarea" name="bio" placeholder={bio} maxLength={150} />
+                        <label className={styles.fieldHeading}>Email</label>
                         <Field className={styles.settingsEmail} type="email" name="email" placeholder={email} disabled />
-                        <p className={styles.fieldHeading}>Password</p>
+                        <label className={styles.fieldHeading}>Password</label>
                         <Field className={styles.settingsPassword} type="password" name="password" placeholder="Password" required />
                         <button className={styles.settingsConfirm} type="submit">Save</button>
                         <ToastContainer />

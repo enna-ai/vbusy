@@ -31,10 +31,10 @@ const SignUpPage: React.FC = () => {
     const handleRegister = async (values: FormValues) => {
         try {
             const data = await axios.post(`${API_BASE_URL}${ENDPOINTS.AuthRegister}`, values);
-            router.push("/");
-            console.log("Data", data);
+            const { username, email, _id, bio, pronouns } = data.data;
+            router.push("/login");
             localStorage.setItem("token", data.data.token);
-            localStorage.setItem("userInfo", JSON.stringify(data));
+            localStorage.setItem("userInfo", JSON.stringify({ username, email, _id, bio, pronouns }));
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
                 toast.error(error.response.data.error, {

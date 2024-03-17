@@ -29,9 +29,9 @@ const SignInPage: React.FC = () => {
     const handleLogin = async (values: FormValues) => {
         try {
             const response = await axios.post(`${API_BASE_URL}${ENDPOINTS.AuthLogin}`, values);
-            const { token, username, email, _id } = response.data;
+            const { token, username, email, _id, bio, pronouns, onboarded } = response.data;
             localStorage.setItem("token", token);
-            localStorage.setItem("userInfo", JSON.stringify({ username, email, _id }));
+            localStorage.setItem("userInfo", JSON.stringify({ username, email, _id, bio, pronouns, onboarded }));
             router.push("/");
         } catch (error: any) {
             if (error.response && error.response.status === 401) {

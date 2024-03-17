@@ -22,7 +22,7 @@ const page = () => {
     const storedUser = data ? JSON.parse(data) : {};
     setUserInfo(storedUser);
 
-    if (!storedUser.onboarded) {
+    if (storedUser.onboarded === false) {
       setShowModal(true);
     }
   }, []);

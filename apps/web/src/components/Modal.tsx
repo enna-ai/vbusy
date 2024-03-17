@@ -52,7 +52,7 @@ export const Modal: React.FC<{ onCloseModal: () => void}> = ({ onCloseModal }) =
           theme: "dark",
         });
       } else {
-        console.error("Error during onboarding:", error.response);
+        console.error("Error during onboarding:", error);
       }
     }
   };
