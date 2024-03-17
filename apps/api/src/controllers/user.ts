@@ -48,6 +48,7 @@ class UserController implements Controller {
           username: user.username,
           email: user.email,
           token: generateToken(user._id),
+          onboarded: user.onboarded,
         });
       } else {
         res.status(400).send({ error: "Invalid user data." });
@@ -100,7 +101,10 @@ class UserController implements Controller {
           _id: user._id,
           username: user.username,
           email: user.email,
-          token: generateToken(user._id)
+          token: generateToken(user._id),
+          bio: user.bio,
+          pronouns: user.pronouns,
+          onboarded: user.onboarded,
         });
       } else {
         res.status(401).send({ error: "Invalid email or password" });

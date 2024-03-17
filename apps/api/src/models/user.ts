@@ -16,9 +16,9 @@ const UserSchema = new Schema<UserModel>({
     username: { type: String, unique: true, trim: true, minlength: 2, maxlength: 18 },
     email: { type: String, unique: true, trim: true },
     password: { type: String, minlength: 8, maxlength: 18, trim: true },
-    pronouns: { type: String, required: false },
-    bio: { type: String, required: false, maxLength: 150 },
-    profilePhoto: { type: String, required: false },
+    pronouns: { type: String, default: null },
+    bio: { type: String, default: null, maxLength: 150 },
+    profilePhoto: { type: String, default: null },
     onboarded: { type: Boolean, default: false },
 }, {
     timestamps: true,
