@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction, Router } from "express";
 import { completeTaskSchema, createTaskSchema, getTaskSchema, updateTaskDueSchema, updateTaskPrioritySchema, updateTaskSchema } from "../validators/task.js";
 import { Controller } from "../interfaces/controller.js";
 import Task from "../models/task.js";
+import Label from "../models/label.js";
 import protect from "../middleware/auth.js";
 import Log from "../utils/logActivity.js";
 
@@ -9,6 +10,7 @@ class TaskController implements Controller {
     public path = "/api/v1/tasks";
     public router: express.Router = Router();
     private taskModel = Task;
+    private labelModel = Label;
     private logActivity = Log;
 
     constructor() {
@@ -26,6 +28,7 @@ class TaskController implements Controller {
         this.router.put(`${this.path}/:taskId/archive`, protect, this.archiveTask);
         this.router.put(`${this.path}/:taskId/due`, protect, this.updateTaskDueDate);
         this.router.put(`${this.path}/:taskId/priority`, protect, this.updateTaskPriority);
+        this.router.put(`${this.path}/:taskId/label`, protect, this.updateTaskLabel);
     }
 
     private createTask = async (req: Request, res: Response, next: NextFunction) => {
@@ -33,6 +36,7 @@ class TaskController implements Controller {
             const { error, value } = createTaskSchema.validate({
                 task: req.body.task,
                 priority: req.body.priority,
+                description: req.body.descrition,
             });
 
             if (error) {
@@ -40,12 +44,13 @@ class TaskController implements Controller {
             }
 
             const date = req.body.dueDate;
-            const { task, priority } = value;
+            const { task, priority, description } = value;
 
             const newTask = new this.taskModel({
                 user: req.user._id,
                 task,
                 priority,
+                description,
                 dueDate: date || null,
             });
 
@@ -108,29 +113,27 @@ class TaskController implements Controller {
 
     private updateTask = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { error, value } = updateTaskSchema.validate({
-                taskId: req.params.taskId,
-                task: req.body.task,
-            });
+            const { taskId } = req.params;
+            const { task, description } = req.body;
+
+            const { error } = updateTaskSchema.validate({ taskId, task, description });
             if (error) {
                 return res.status(400).send({ error: error.message });
             }
 
-            const id = value.taskId;
-            const body = value.task;
-
-            const editTask = await this.taskModel.findOneAndUpdate(
-                { _id: id },
-                { task: body },
-            );
-
-            if (!editTask) {
-                return res.status(404).send({ error: "Task not found" });
+            const taskExists = await this.taskModel.findById(taskId);
+            if (!taskExists) {
+              return res.status(404).send({ error: "Task not found" });
             }
 
-            const updatedTask = await this.taskModel.findById(id);
+            const updateFields: any = { task };
+            if (description !== undefined) {
+              updateFields.description = description;
+            }
 
-            await this.logActivity(req.user._id, "update", "Updated a task", body)
+            const updatedTask = await this.taskModel.findByIdAndUpdate(taskId, updateFields, { new: true });
+
+            await this.logActivity(req.user._id, "update", "Updated a task", task);
 
             return res.status(200).json(updatedTask);
         } catch (error: any) {
@@ -229,6 +232,39 @@ class TaskController implements Controller {
         } catch (error: any) {
             return res.status(500).send({ error: error.message });
         }
+    }
+
+    private updateTaskLabel = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const taskId = req.params.taskId;
+        const labelId = req.body.labelId;
+
+        const updatedLabel = await this.taskModel.findOneAndUpdate(
+          { _id: taskId },
+          {
+            $addToSet: {
+              labels: labelId,
+            }
+          },
+          {
+            new: true,
+          }
+        );
+
+        if (!updatedLabel) {
+          return res.status(404).send({ error: "Task not found" });
+        }
+
+        const logMessage = updatedLabel.labels.includes(labelId)
+        ? `Added label ${labelId} to task`
+        : `Removed label ${labelId} from task`;
+
+        await this.logActivity(req.user._id, "update", logMessage, updatedLabel.task);
+
+        return res.status(200).json(updatedLabel);
+      } catch (error: any) {
+        return res.status(500).send({ error: error.message });
+      }
     }
 
     private archiveTask = async (req: Request, res: Response, next: NextFunction) => {

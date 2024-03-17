@@ -7,6 +7,8 @@ interface TaskModel extends Document {
     archived: boolean;
     priority: "high" | "medium" | "low";
     dueDate: Date | null;
+    description: string;
+    labels: string[];
 }
 
 const TaskSchema = new Schema<TaskModel>({
@@ -16,6 +18,10 @@ const TaskSchema = new Schema<TaskModel>({
     archived: { type: Boolean, default: false },
     priority: { type: String, enum: ["high", "medium", "low"], default: "low" },
     dueDate: { type: Date, default: null },
+    description: { type: String, default: null },
+    labels: { type: [String], default: null },
+}, {
+  timestamps: true,
 });
 
 const Task = model<TaskModel>("tasks", TaskSchema);

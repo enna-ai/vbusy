@@ -3,6 +3,7 @@ import Joi from "joi";
 export const createTaskSchema = Joi.object({
     task: Joi.string().required(),
     priority: Joi.string().valid("low", "medium", "high"),
+    description: Joi.string(),
 });
 
 export const getTaskSchema = Joi.object({
@@ -12,6 +13,7 @@ export const getTaskSchema = Joi.object({
 export const updateTaskSchema = Joi.object({
     taskId: Joi.string().required(),
     task: Joi.string().required(),
+    description: Joi.string(),
 });
 
 export const completeTaskSchema = Joi.object({

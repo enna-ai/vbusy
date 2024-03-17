@@ -5,13 +5,21 @@ interface UserModel extends Document {
     username: string;
     email: string;
     password: string;
+    pronouns?: string;
+    bio?: string;
+    profilePhoto?: string;
+    onboarded: boolean;
     matchPassword(password: string): Promise<boolean>;
 }
 
 const UserSchema = new Schema<UserModel>({
-    username: { type: String, required: true, unique: true, trim: true, minlength: 2, maxlength: 18 },
-    email: { type: String, required: true, unique: true, trim: true },
-    password: { type: String, required: true, minlength: 8, maxlength: 18, trim: true },
+    username: { type: String, unique: true, trim: true, minlength: 2, maxlength: 18 },
+    email: { type: String, unique: true, trim: true },
+    password: { type: String, minlength: 8, maxlength: 18, trim: true },
+    pronouns: { type: String, required: false },
+    bio: { type: String, required: false, maxLength: 150 },
+    profilePhoto: { type: String, required: false },
+    onboarded: { type: Boolean, default: false },
 }, {
     timestamps: true,
 });
