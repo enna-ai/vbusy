@@ -38,6 +38,8 @@ export const Modal: React.FC<{ onCloseModal: () => void}> = ({ onCloseModal }) =
         }
       });
 
+      localStorage.setItem("userInfo", JSON.stringify({ ...userInfo, bio: values.bio, pronouns: values.pronouns, onboarded: true }));
+
       onCloseModal();
     } catch (error: any) {
       if (error.response && error.response.status === 401) {

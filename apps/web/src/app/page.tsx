@@ -22,13 +22,12 @@ const page = () => {
     const storedUser = data ? JSON.parse(data) : {};
     setUserInfo(storedUser);
 
-    if (storedUser.onboarded === false) {
+    if (!storedUser.onboarded) {
       setShowModal(true);
     }
   }, []);
 
   const handleCloseModal = () => {
-    localStorage.setItem("userInfo", JSON.stringify({ ...userInfo, onboarded: true }));
     setShowModal(false);
   };
 
