@@ -19,7 +19,7 @@ class UserController implements Controller {
 
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.getHello);
-    this.router.get(`${this.path}/profile`, protect, this.getUserProfile);
+    this.router.get(`${this.path}/profile/:userId`, protect, this.getUserProfile);
     this.router.post(`${this.path}/register`, this.registerUser);
     this.router.post(`${this.path}/login`, this.loginUser);
     this.router.post(`${this.path}/logout`, this.logoutUser);
@@ -131,7 +131,7 @@ class UserController implements Controller {
 
   private getUserProfile = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = await this.userModel.findById(req.user._id);
+      const user = await this.userModel.findById(req.params.userId);
       if (user) {
         const tasks = await this.taskModel.find({ user: user._id });
         const labels = await this.labelModel.find({ user: user._id });
@@ -139,6 +139,9 @@ class UserController implements Controller {
           _id: user._id,
           username: user.username,
           email: user.email,
+          bio: user.bio,
+          pronouns: user.pronouns,
+          profilePhoto: user.profilePhoto,
           tasks,
           labels,
         });
