@@ -36,12 +36,12 @@ const WidgetPage: React.FC = () => {
           return;
         }
 
-        const response = await axios.get(`${API_BASE_URL}/api/v1/vbusy/${userId}`);
+        const response = await axios.get(`${API_BASE_URL}/api/v1/vbusy/tasks/${userId}`);
         const data = await response.data;
         const filteredData = data.filter((item: Task) => !item.archived);
+        console.log("Data", filteredData);
 
         setUserData(filteredData);
-        console.log("data", filteredData);
       } catch (error) {
         setError("Invalid User ID");
       }

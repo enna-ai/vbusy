@@ -1,112 +1,109 @@
 @import "../partials/variables";
 
 .main {
-  padding: 2em min(10%, 20%, 20%);
-  background: $beige;
-  color: $darkred;
-
   .heading {
-    padding-bottom: 10px;
     font-size: clamp(35px, 3vw, 60px);
+    padding-bottom: 5px;
   }
 
-  .p {
-    padding-bottom: 15px;
-  }
+  .sections {
+    display: flex;
+    justify-content: space-between;
 
-  .settings {
-    .settingsHeading {
-      font-size: clamp(25px, 2vw, 45px);
-      padding-top: 10px;
-      padding-bottom: 10px;
+    .preview {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .previewHeading {
+        font-size: clamp(25px, 2vw, 45px);
+      }
+
+      .previewDesc {
+        padding-top: 5px;
+        padding-bottom: 15px;
+      }
     }
 
-    .options {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-
-      .inputTextLabel {
-        padding-bottom: 6px;
-        font-weight: 600;
+    .settings {
+      .settingsHeading {
+        font-size: clamp(25px, 2vw, 45px);
+        padding: 10px 0 10px 0;
       }
 
-      .checkbox {
-        display: flex;
-
-        .inputCheckboxLabel {
-          padding-left: 6px;
-        }
-
-        input[type="checkbox"] {
-          outline: none;
-        }
-
-        input[type="checkbox"]:checked {
-          accent-color: $darkred;
-        }
-      }
-
-      input {
-        border: none;
-        padding: 8px;
-        border-radius: $radius;
-        background-color: $palegreen;
-        caret-color: $darkred;
-        color: $darkred;
-
-        &:focus {
-          background-color: $palegreen-light;
-          outline-color: darkred;
-          outline-style: solid;
-          outline-width: 1px;
-        }
-
-        &:active {
-          background-color: $palegreen-light;
-          outline-color: darkred;
-          outline-style: solid;
-          outline-width: 1px;
-        }
-
-        &::placeholder {
-          background-color: $palegreen-light;
-        }
-      }
-
-      @media (max-width: 876px) {
+      .options {
+        display: grid;
         grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+
+        .inputTextLabel {
+          padding-bottom: 6px;
+          font-weight: 600;
+        }
+
+        .checkbox {
+          display: flex;
+
+          .inputCheckboxLabel {
+            padding-left: 6px;
+          }
+
+          input[type="checkbox"] {
+            outline: none;
+          }
+
+          input[type="checkbox"]:checked {
+            accent-color: $yellow;
+          }
+        }
+
+        input {
+          border: none;
+          padding: 8px;
+          border-radius: $radius;
+          background-color: $base;
+          caret-color: $white;
+          color: $white;
+
+          &:focus,
+          &:active {
+            background-color: $base-light;
+            outline-color: $white-trans;
+            outline-style: solid;
+            outline-width: 1px;
+          }
+
+          &::placeholder {
+            background-color: $white-trans;
+          }
+        }
+
+        @media (max-width: 876px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
     }
-  }
 
-  .preview {
-    padding-top: 20px;
-    padding-bottom: 20px;
-
-    .previewHeading {
-      font-size: clamp(25px, 2vw, 45px);
-    }
-
-    .previewDesc {
-      padding-top: 5px;
-      padding-bottom: 15px;
+    @media (max-width: 876px) {
+      flex-direction: column;
     }
   }
 
   .iframeCode {
+    padding-bottom: 15px;
+
     .iframeCodeHeader {
       display: flex;
       flex-direction: row;
       align-items: center;
 
       .codeIcon {
-        font-size: clamp(25px, 2vw, 45px);
+        font-size: clamp(25pw, 2vw, 45px);
       }
 
       .iframeCodeHeading {
         padding-left: 5px;
-        font-size: clamp(25px, 2vw, 45px);
+        font-size: clamp(25pw, 2vw, 45px);
       }
     }
 
@@ -118,7 +115,7 @@
     .pre {
       max-width: 80vw;
       padding: 0.5em;
-      background: $beige-light;
+      background: $base;
       position: relative;
       margin-bottom: 10px;
       border-radius: $radius;
@@ -144,20 +141,8 @@
       }
 
       &:hover {
-        background: $beige-dark;
+        background: $base-lightest;
       }
-    }
-  }
-
-  footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: auto;
-    padding-top: 2em;
-
-    a {
-      color: $darkred;
     }
   }
 }

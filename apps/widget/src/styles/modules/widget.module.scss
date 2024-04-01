@@ -1,74 +1,73 @@
 @import "../partials/variables";
 
 .widgetWrapper {
-    width: 340px;
-    height: 190px;
-    padding: 20px;
-    background-image: linear-gradient(0deg, $mantle 72%, $crust 72%);
+  width: 340px;
+  height: 190px;
+  padding: 10px 20px 0 20px;
 
-    .widgetContainer {
-        .widgetHeader {
+  .widgetContainer {
+    .widgetHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .widgetHeading {
+        font-size: 20px;
+        font-weight: 600;
+
+        .taskCount {
+          font-weight: 400;
+        }
+      }
+    }
+
+    .widgetBody {
+      .invalidBody {
+        padding-top: 10px;
+        color: $red;
+      }
+
+      .taskBody {
+        padding-top: 10px;
+        list-style: none;
+
+        .taskContent {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .taskItem {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            padding-top: 5px;
+            padding-bottom: 6px;
+            // color: $white-lightest;
+            font-size: 15px;
 
-            .widgetHeading {
-                font-size: 20px;
-                font-weight: 600;
-
-                .taskCount {
-                    font-weight: 400;
-                }
+            .completed {
+              text-decoration: line-through;
             }
+
+            .priorityLevelDot {
+              height: 8px;
+              width: 8px;
+              border-radius: 20%;
+              margin-right: 6px;
+              display: inline-block;
+            }
+          }
         }
 
-        .widgetBody {
-            .invalidBody {
-                padding-top: 10px;
-                color: $red;
-            }
-
-            .taskBody {
-                padding-top: 10px;
-                list-style: none;
-
-                .taskContent {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-
-                    .taskItem {
-                        display: flex;
-                        align-items: center;
-                        padding-top: 5px;
-                        padding-bottom: 6px;
-                        // color: $white-lightest;
-                        font-size: 15px;
-
-                        .completed {
-                            text-decoration: line-through;
-                        }
-
-                        .priorityLevelDot {
-                            height: 8px;
-                            width: 8px;
-                            border-radius: 20%;
-                            margin-right: 6px;
-                            display: inline-block;
-                        }
-                    }
-                }
-
-                hr {
-                    border: 1px solid $white-faint;
-                }
-
-                .remainingTasks {
-                    font-size: 15px;
-                    font-style: italic;
-                    color: $white-trans;
-                }
-            }
+        hr {
+          border: 1px solid $white-faint;
         }
+
+        .remainingTasks {
+          font-size: 15px;
+          font-style: italic;
+          color: $white-trans;
+        }
+      }
     }
+  }
 }

@@ -1,39 +1,62 @@
 @import "partials/variables";
 
 ::-webkit-scrollbar {
-    width: 13px;
-    height: 100%;
+  width: 13px;
+  height: 100%;
 }
 
 ::-webkit-scrollbar-track {
-    background: $beige;
+  background-color: $crust;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: $beige-darkest;
-    border: 3px solid $beige;
-    border-radius: 10px;
+  background-color: $base;
+  border: 3px solid $crust;
+  border-radius: 10px;
 }
 
 * {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html,
-body {
-    min-height: 100%;
-    font-family: 'Inter', sans-serif;
+html {
+  overflow-y: auto;
+  height: -webkit-fill-available;
+  height: stretch;
+  height: fill-available;
+  font-family: Intern system-ui, sans-serif;
+  scroll-behavior: smooth;
+  background-color: $yellow;
+}
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        line-height: 1.1;
-        font-weight: 600;
-        margin: 0;
-    }
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  min-height: stretch;
+  min-height: fill-available;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0.3px;
+  background-color: $crust;
+  color: $white;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.6;
+    font-weight: 600;
+  }
+
+  section {
+    margin: 1em min(10%, 20%, 20%);
+  }
 }
