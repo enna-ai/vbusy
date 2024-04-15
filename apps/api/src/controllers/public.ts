@@ -34,7 +34,11 @@ class VbusyController implements Controller {
         const userId = req.params.userId;
 
         const profile = await this.userModel.find({ _id: userId });
-        return res.status(200).json(profile);
+        const tasks = await this.taskModel.find({ _id: userId });
+        return res.status(200).json({
+          profile,
+          tasks,
+        });
       } catch (error) {
         return res.status(500).send({ error: "Internal server error" });
       }
