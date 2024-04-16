@@ -13,7 +13,7 @@ interface User {
   onboarded: boolean;
 }
 
-const page = () => {
+const Page = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<User | null>(null);
 
@@ -51,4 +51,4 @@ const page = () => {
   )
 }
 
-export default withAuth(page);
+export default withAuth(Page);

@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { toast, ToastContainer } from "react-toastify";
 import * as Yup from "yup";
-import BeeImage from "../../../public/bee.png";
 import { API_BASE_URL, ENDPOINTS } from "../../utils/consts";
 import styles from "../../styles/modules/auth.module.scss";
 import 'react-toastify/dist/ReactToastify.css';
@@ -58,7 +57,7 @@ const SignInPage: React.FC = () => {
                     <div className={styles.authWrap}>
                         <div className={styles.authImage}>
                             <Image
-                                src={BeeImage}
+                                src="/bee.png"
                                 alt="bee image"
                                 width={250}
                                 height={250}

@@ -8,7 +8,6 @@ import { FiLogOut } from "react-icons/fi";
 import { RiHistoryLine } from "react-icons/ri";
 import { API_BASE_URL, ENDPOINTS } from "../utils/consts";
 import styles from "../styles/modules/header.module.scss";
-import BeeImage from "../../public/bee.png";
 
 export const Header: React.FC = () => {
     const router = useRouter();
@@ -30,7 +29,7 @@ export const Header: React.FC = () => {
                 <div>
                     <Link href="/">
                         <Image
-                            src={BeeImage}
+                            src="/bee.png"
                             alt="Bee icon"
                             height={30}
                             width={30}

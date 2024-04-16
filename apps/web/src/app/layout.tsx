@@ -5,14 +5,45 @@ import "../styles/main.scss";
 const inter = Inter({ subsets: ["latin"] });
 
 export const viewport: Viewport = {
-  themeColor: "#F5E48B"
+  themeColor: "#181926"
 };
 
-export const metadata: Metadata = {
-  title: "v busy 🐝",
-  description: "Task Manager",
-  icons: "favicon.ico",
-}
+const meta = {
+  title: "Vbusy",
+  description: "A versatile task manager web app",
+  icon: "favicon.png",
+  banner: "/banner.png",
+  url: "https://vbusy.vercel.app",
+};
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: meta.title,
+    description: meta.description,
+    keywords: ["Task Manager", "Productivity", "Vbusy"],
+    creator: "enna-ai",
+    authors: [{ name: "enna-ai", url: "https://github.com/enna-ai/vbusy" }],
+    publisher: "enna-ai",
+    icons: { icon: meta.icon },
+    metadataBase: new URL(meta.url),
+    openGraph: {
+      url: meta.url,
+      title: meta.title,
+      description: meta.description,
+      images: [meta.banner],
+      type: "website",
+      siteName: meta.title,
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "Vbusy",
+      creator: "enna-ai",
+      title: meta.title,
+      description: meta.description,
+      images: [meta.banner],
+    },
+  };
+};
 
 export default function RootLayout({
   children,

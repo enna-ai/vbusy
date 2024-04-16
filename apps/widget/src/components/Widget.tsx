@@ -3,7 +3,6 @@ import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import { WidgetProps } from "../interfaces/task";
-import BeeImage from "../../public/bee.png";
 import styles from "../styles/modules/widget.module.scss";
 
 // eslint-disable-next-line no-unused-vars
@@ -31,7 +30,7 @@ const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, body
           <div className={styles.widgetHeader}>
             <h2 className={styles.widgetHeading}>My Tasks <span className={styles.taskCount} style={{ color: accentColor ?? "#f5e48b" }}>{userData.length}</span></h2>
             <Link href="https://vbusy.vercel.app/login" target="_blank" rel="noopener noreferrer">
-              <Image className={styles.widgetIcon} src={BeeImage} alt="Vbusy Widget Icon" width={40} height={40} />
+              <Image className={styles.widgetIcon} src="/bee.png" alt="Vbusy Widget Icon" width={40} height={40} />
             </Link>
           </div>
           <div className={styles.widgetBody}>
