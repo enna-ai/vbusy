@@ -55,7 +55,12 @@
 git clone
 ```
 
-2. run the startup script
+2. install turbo globally
+```sh
+npm install -g @turbo/cli
+```
+
+4. run the startup script
 
 ```sh
 chmod +x start.sh
@@ -63,4 +68,13 @@ chmod +x start.sh
 ./start.sh
 ```
 
-3. fill out the `.env` values for each app
+4. fill out the `.env` values for each app
+
+5. run the development server
+
+> [!NOTE]
+> this runs the web app and api
+
+```sh
+turbo dev --filter api --filter web
+```
