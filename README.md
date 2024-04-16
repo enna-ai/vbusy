@@ -1,113 +1,66 @@
 <div align="center">
+  <img src="https://i.imgur.com/AVqWl72.png" alt="bee" width="80"  style="margin-bottom: 15px;">
+  <h1 align="center">vbusy</h1>
   <p>
-    <img src="https://hotemoji.com/images/dl/l/bee-emoji-by-twitter.png" alt="bee" width="150">
+    <a href="https://github.com/enna-ai/vbusy/tree/main/apps/extension">chrome extension</a>
+     ·
+    <a href="https://github.com/enna-ai/vbusy/tree/main/apps/widget">widget</a>
+     ·
+    <a href="https://github.com/enna-ai/vbusy/tree/main/apps/cli">cli
+    </a>
   </p>
-  <h1>vbusy</h1>
-  <p align="center">
-    <a href="https://github.com/enna-ai/vbusy-ext">chrome extension</a>
-    •
-    <a href="http://github.com/enna-ai/vbusy-widget">widget</a>
-    <br>
-    A versatile task management system with web and CLI interfaces
-  </p>
+  <p>A versatile task management system with web and CLI interfaces</p>
 </div>
 
-# Web
+&nbsp;
+
+## At a glance
 
 <table>
   <tr>
     <td>
       <figure>
-        <img src="https://i.imgur.com/5AB0wKv.png" alt="Login UI">
-        <figcaption>Login/Register Page</figcaption>
+        <img src="https://i.imgur.com/5AB0wKv.png" alt="login screen">
+        <figcaption>Login Screen</figcaption>
       </figure>
     </td>
     <td>
       <figure>
-        <img src="https://i.imgur.com/kSJB13Q.png" alt="Task Display UI">
-        <figcaption>Task Dashboard</figcaption>
+        <img src="https://i.imgur.com/bfFb6fi.png" alt="onboarding">
+        <figcaption>Onboarding</figcaption>
       </figure>
     </td>
   </tr>
   <tr>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/Cqd9aZw.png" alt="Recent Activity UI">
-        <figcaption>Recent Activity</figcaption>
-      </figure>
-    </td>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/akpevHv.png" alt="Editing a task UI">
-        <figcaption>Editing a task</figcaption>
+      <td>
+        <figure>
+          <img src="https://i.imgur.com/kSJB13Q.png" alt="Task Dashboard">
+          <figcaption>Task Dashboard</figcaption>
+        </figure>
+      </td>
+      <td>
+        <figure>
+          <img src="https://i.imgur.com/Cqd9aZw.png" alt="tasks history">
+        <figcaption>Tash History</figcaption>
       </figure>
     </td>
   </tr>
 </table>
 
-## CLI
+## Installation
 
-<table>
-  <tr>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/CJqm82Z.png" alt="Logging in to account CLI">
-        <figcaption>Logging into Vbusy account</figcaption>
-      </figure>
-    </td>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/KdzDjK3.png" alt="CLI Commands">
-        <figcaption>Dashboard and Commands List</figcaption>
-      </figure>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/KCzOj8A.png" alt="CLI Task List">
-        <figcaption>Task List Command</figcaption>
-      </figure>
-    </td>
-    <td>
-      <figure>
-        <img src="https://i.imgur.com/mh36iJF.png" alt="CLI Logging Out">
-        <figcaption>Logging out of Vbusy account</figcaption>
-      </figure>
-    </td>
-  </tr>
-</table>
-
-# CLI Commands
+1. clone repo
 
 ```sh
-Usage: vb <command>
-
-Commands
-  archive      Archive a task
-  complete     Mark a task as incomplete
-  create       Create a new task
-  delete       Delete a task
-  export       Export a task into a json file
-  incomplete   Mark a task as incomplete
-  list         Get all tasks
-  purge        Delete all tasks
-  unarchive    Unarchive a task
-  update       Edit a task and its properties
-  view         Preview a task
+git clone
 ```
 
-> usage examples for exporting a task
+2. run the startup script
 
 ```sh
-vb export -d /Users/User/Downloads
-? Select a task to export: task
+chmod +x start.sh
+
+./start.sh
 ```
 
-# To Do
-
-- [ ] Add account delete functionality
-- [ ] Button to download tasks (web)
-- [ ] Add subtasks feature
-- [ ] Pagination to _Recent Activity_ and _Tasks Dashboard_
-- [ ] CLI flags and aliases
+3. fill out the `.env` values for each app
