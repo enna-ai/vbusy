@@ -1,29 +1,22 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import "../styles/main.scss";
+import { meta } from "$utils/consts";
+import "$styles/main.scss";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const viewport: Viewport = {
-  themeColor: "#181926"
-};
-
-const meta = {
-  title: "Vbusy",
-  description: "A versatile task manager web app",
-  icon: "favicon.png",
-  banner: "/banner.png",
-  url: "https://vbusy.vercel.app",
+  themeColor: meta.color,
 };
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: meta.title,
     description: meta.description,
-    keywords: ["Task Manager", "Productivity", "Vbusy"],
-    creator: "enna-ai",
+    keywords: meta.keywords,
+    creator: meta.creator,
     authors: [{ name: "enna-ai", url: "https://github.com/enna-ai/vbusy" }],
-    publisher: "enna-ai",
+    publisher: meta.creator,
     icons: { icon: meta.icon },
     metadataBase: new URL(meta.url),
     openGraph: {
@@ -37,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       site: "Vbusy",
-      creator: "enna-ai",
+      creator: meta.creator,
       title: meta.title,
       description: meta.description,
       images: [meta.banner],

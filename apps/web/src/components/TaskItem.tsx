@@ -4,9 +4,9 @@ import DatePicker from "react-datepicker";
 import { BsFillTrash3Fill, BsPencilFill, BsFillArchiveFill } from "react-icons/bs";
 import { FaCalendarTimes, FaCalendar } from "react-icons/fa";
 import { TiTick, TiTimes } from "react-icons/ti";
-import { Task } from "../interfaces/task";
-import { API_BASE_URL, ENDPOINTS } from "../utils/consts";
-import styles from "../styles/modules/profile.module.scss";
+import { Task } from "$interfaces/task";
+import { API_BASE_URL, ENDPOINTS } from "$utils/consts";
+import styles from "$styles/modules/profile.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
 
 interface TaskItemProps {

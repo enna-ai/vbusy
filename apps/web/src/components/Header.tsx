@@ -6,8 +6,8 @@ import axios from "axios";
 import { BiUser, BiSolidWidget } from "react-icons/bi";
 import { FiLogOut } from "react-icons/fi";
 import { RiHistoryLine } from "react-icons/ri";
-import { API_BASE_URL, ENDPOINTS } from "../utils/consts";
-import styles from "../styles/modules/header.module.scss";
+import { API_BASE_URL, ENDPOINTS } from "$utils/consts";
+import styles from "$styles/modules/header.module.scss";
 
 export const Header: React.FC = () => {
     const router = useRouter();

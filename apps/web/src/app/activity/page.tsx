@@ -2,12 +2,12 @@
 
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import ActivityItem from "../../components/ActivityItem";
-import { Header } from "../../components/Header";
-import withAuth from "../../components/withAuth";
-import { Activity } from "../../interfaces/activity";
-import { API_BASE_URL, ENDPOINTS } from "../../utils/consts";
-import styles from "../../styles/modules/activity.module.scss";
+import ActivityItem from "$components/ActivityItem";
+import { Header } from "$components/Header";
+import withAuth from "$components/withAuth";
+import { Activity } from "$interfaces/activity";
+import { API_BASE_URL, ENDPOINTS } from "$utils/consts";
+import styles from "$styles/modules/activity.module.scss";
 
 const ActivityPage: React.FC = () => {
     const [data, setData] = useState<Activity[]>([]);

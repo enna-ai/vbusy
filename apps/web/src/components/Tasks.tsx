@@ -4,9 +4,9 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { TaskForm } from "./TaskForm";
 import { TaskItem } from "./TaskItem";
-import { Task } from "../interfaces/task";
-import { FILTER_ALL, FILTER_ARCHIVED, FILTER_COMPLETED, API_BASE_URL, ENDPOINTS } from "../utils/consts";
-import styles from "../styles/modules/profile.module.scss";
+import { Task } from "$interfaces/task";
+import { FILTER_ALL, FILTER_ARCHIVED, FILTER_COMPLETED, API_BASE_URL, ENDPOINTS } from "$utils/consts";
+import styles from "$styles/modules/profile.module.scss";
 
 export const Tasks: React.FC<{}> = () => {
     const [data, setData] = useState<Task[]>([]);

@@ -1,13 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import Input from "../components/Input";
-// import Footer from "../components/Footer";
-import { InputConfig } from "../utils/input";
-import { CLIENT_BASE_URL } from "../utils/consts";
-import { State } from "../interfaces/state";
+import Input from "$components/Input";
+import { InputConfig, CLIENT_BASE_URL } from "$utils";
+import { State } from "$interfaces/state";
 import { BiCopy, BiCodeAlt, BiCheck } from "react-icons/bi";
-import styles from "../styles/modules/page.module.scss";
+import styles from "$styles/modules/page.module.scss";
 
 const initialState: State = {
   isCopied: false,

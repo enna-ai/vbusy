@@ -3,13 +3,13 @@
 import React, { useState, useRef } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { Task } from "../interfaces/task";
+import { Task } from "$interfaces/task";
 import { FaCalendar } from "react-icons/fa";
 import { TiPlus } from "react-icons/ti";
 import axios from "axios";
 import DatePicker from "react-datepicker";
-import { API_BASE_URL, ENDPOINTS } from "../utils/consts";
-import styles from "../styles/modules/profile.module.scss";
+import { API_BASE_URL, ENDPOINTS } from "$utils/consts";
+import styles from "$styles/modules/profile.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
 
 interface FormValues {

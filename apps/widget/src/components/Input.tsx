@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { InputConfig } from "../utils/input";
-import styles from "../styles/modules/page.module.scss";
+import { InputConfig } from "$utils/input";
+import styles from "$styles/modules/page.module.scss";
 
 interface InputProps {
     inputValues: any;

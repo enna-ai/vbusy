@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
-import styles from "../styles/modules/404.module.scss";
+import styles from "$styles/modules/404.module.scss";
 
 const NotFound: React.FC = () => {
     return (

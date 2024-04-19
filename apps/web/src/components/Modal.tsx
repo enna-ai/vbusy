@@ -5,8 +5,8 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { toast, ToastContainer } from "react-toastify";
-import { API_BASE_URL, ENDPOINTS } from "../utils/consts";
-import styles from "../styles/modules/onboarding.module.scss";
+import { API_BASE_URL, ENDPOINTS } from "$utils/consts";
+import styles from "$styles/modules/onboarding.module.scss";
 import "react-toastify/ReactToastify.css";
 
 interface FormValues {

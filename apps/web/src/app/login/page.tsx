@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { toast, ToastContainer } from "react-toastify";
 import * as Yup from "yup";
-import { API_BASE_URL, ENDPOINTS } from "../../utils/consts";
-import styles from "../../styles/modules/auth.module.scss";
+import { API_BASE_URL, ENDPOINTS } from "$utils/consts";
+import styles from "$styles/modules/auth.module.scss";
 import 'react-toastify/dist/ReactToastify.css';
 
 interface FormValues {

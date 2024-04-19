@@ -2,11 +2,11 @@
 
 import moment from "moment";
 import React, { useState, useEffect } from "react";
-import { Header } from "../components/Header";
-import { Modal } from "../components/Modal";
-import { Tasks } from "../components/Tasks";
-import withAuth from "../components/withAuth";
-import styles from "../styles/modules/profile.module.scss";
+import { Header } from "$components/Header";
+import { Modal } from "$components/Modal";
+import { Tasks } from "$components/Tasks";
+import withAuth from "$components/withAuth";
+import styles from "$styles/modules/profile.module.scss";
 
 interface User {
   username: string;

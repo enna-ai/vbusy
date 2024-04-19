@@ -2,26 +2,15 @@ import React from "react";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
-import { WidgetProps } from "../interfaces/task";
-import styles from "../styles/modules/widget.module.scss";
+import { WidgetProps } from "$interfaces/task";
+import { priorityColors, formatDueDate } from "$utils";
+import styles from "$styles/modules/widget.module.scss";
 
 // eslint-disable-next-line no-unused-vars
 const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, bodyColor, textColor, accentColor, dueDates, priorityLevels, hideCompleted, userData, errorMsg }) => {
 
-  const formatDueDate = (date: string) => {
-    if (date) {
-      return moment(date).format("MMM Do YYYY");
-    }
-  };
-
   const filteredTasks = hideCompleted ? userData.filter(item => !item.completed) : userData;
   const remainingTasksCount = filteredTasks.length > 3 ? filteredTasks.length - 3 : 0;
-
-  const priorityColors = {
-    low: "#a6da95",
-    medium: "#f5a97f",
-    high: "#ed8796",
-  } as any;
 
   return (
     <div className={styles.main}>

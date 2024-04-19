@@ -2,14 +2,14 @@
 
 import axios from "axios";
 import { Formik, Form, Field } from "formik";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BsStarFill } from "react-icons/bs";
 import { toast, ToastContainer } from "react-toastify";
 import * as Yup from "yup";
-import { Header } from "../../components/Header";
-import withAuth from "../../components/withAuth";
-import { API_BASE_URL, ENDPOINTS } from "../../utils/consts";
-import styles from "../../styles/modules/settings.module.scss";
+import { Header } from "$components/Header";
+import withAuth from "$components/withAuth";
+import { API_BASE_URL, ENDPOINTS } from "$utils/consts";
+import styles from "$styles/modules/settings.module.scss";
 import 'react-toastify/dist/ReactToastify.css';
 
 interface FormValues {
