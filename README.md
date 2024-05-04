@@ -41,7 +41,7 @@
       <td>
         <figure>
           <img src="https://i.imgur.com/Cqd9aZw.png" alt="tasks history">
-        <figcaption>Tash History</figcaption>
+        <figcaption>Task History</figcaption>
       </figure>
     </td>
   </tr>
@@ -60,12 +60,12 @@ git clone
 npm install -g @turbo/cli
 ```
 
-4. run the startup script
+4. run the setup script
 
 ```sh
-chmod +x start.sh
+chmod +x setup.sh
 
-./start.sh
+./setup.sh
 ```
 
 4. fill out the `.env` values for each app
