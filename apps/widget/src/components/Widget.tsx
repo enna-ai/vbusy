@@ -1,8 +1,8 @@
-import React from "react";
+import type React from "react";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
-import { WidgetProps } from "$interfaces/task";
+import type { WidgetProps } from "$interfaces/task";
 import { priorityColors, formatDueDate } from "$utils";
 import styles from "$styles/modules/widget.module.scss";
 
@@ -14,7 +14,12 @@ const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, body
 
   return (
     <div className={styles.main}>
-      <div className={styles.widgetWrapper} style={{ borderRadius: borderRadius ? "25px" : "0px", backgroundImage: `linear-gradient(0deg, ${bodyColor} 72%, ${headerColor} 72%)`, color: textColor ?? "#eaefff" }}>
+      <div className={styles.widgetWrapper}
+        style={{
+          borderRadius: `${borderRadius}px`,
+          backgroundImage: `linear-gradient(0deg, ${bodyColor} 72%, ${headerColor} 72%)`,
+          color: textColor ?? "#eaefff"
+        }}>
         <div className={styles.widgetContainer}>
           <div className={styles.widgetHeader}>
             <h2 className={styles.widgetHeading}>My Tasks <span className={styles.taskCount} style={{ color: accentColor ?? "#f5e48b" }}>{userData.length}</span></h2>
@@ -39,7 +44,7 @@ const Widget: React.FC<WidgetProps> = ({ userId, borderRadius, headerColor, body
                               <div className={styles.taskContent}>
                                 <li className={styles.taskItem} key={index}>
                                   {priorityLevels &&
-                                    <span className={styles.priorityLevelDot} style={{ background: priorityColors[item.priority] }}></span>
+                                    <span className={styles.priorityLevelDot} style={{ background: priorityColors[item.priority] }} />
                                   }
                                   <p className={`${item.completed ? styles.completed : ""} ${styles.widgetHeading}`}>{item.task}</p>
                                 </li>

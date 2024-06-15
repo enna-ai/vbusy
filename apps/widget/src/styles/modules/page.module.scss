@@ -2,90 +2,76 @@
 
 .main {
   .heading {
-    font-size: clamp(35px, 3vw, 60px);
-    padding-bottom: 5px;
+    font-size: clamp(25px, 3vw, 40px);
   }
 
-  .sections {
-    display: flex;
-    justify-content: space-between;
+  .settings {
+    .settingsHeading {
+      font-size: clamp(25px, 2vw, 45px);
+    }
 
-    .preview {
-      display: flex;
-      flex-direction: column;
+    .options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
       gap: 15px;
 
-      .previewHeading {
-        font-size: clamp(25px, 2vw, 45px);
+      .inputTextLabel {
+        padding-bottom: 6px;
+        font-weight: 600;
       }
 
-      .previewDesc {
-        padding-top: 5px;
-        padding-bottom: 15px;
-      }
-    }
-
-    .settings {
-      .settingsHeading {
-        font-size: clamp(25px, 2vw, 45px);
-        padding: 10px 0 10px 0;
-      }
-
-      .options {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+      .checkbox {
+        display: flex;
         gap: 10px;
 
-        .inputTextLabel {
-          padding-bottom: 6px;
-          font-weight: 600;
+        input[type="checkbox"] {
+          outline: none;
         }
 
-        .checkbox {
-          display: flex;
-
-          .inputCheckboxLabel {
-            padding-left: 6px;
-          }
-
-          input[type="checkbox"] {
-            outline: none;
-          }
-
-          input[type="checkbox"]:checked {
-            accent-color: $yellow;
-          }
-        }
-
-        input {
-          border: none;
-          padding: 8px;
-          border-radius: $radius;
-          background-color: $base;
-          caret-color: $white;
-          color: $white;
-
-          &:focus,
-          &:active {
-            background-color: $base-light;
-            outline-color: $white-trans;
-            outline-style: solid;
-            outline-width: 1px;
-          }
-
-          &::placeholder {
-            background-color: $white-trans;
-          }
-        }
-
-        @media (max-width: 876px) {
-          grid-template-columns: repeat(2, 1fr);
+        input[type="checkbox"]:checked {
+          accent-color: $accent;
         }
       }
-    }
 
-    @media (max-width: 876px) {
-      flex-direction: column;
+      input[type="range"] {
+        outline: none;
+        accent-color: $accent;
+        padding: 0;
+        margin: 0;
+
+        &:focus,
+        &:active {
+          outline: none !important;
+        }
+      }
+
+      input {
+        border: none;
+        padding: 8px;
+        border-radius: $radius;
+        background-color: $bg-alt;
+        caret-color: $text-trans;
+        color: $text-trans;
+
+        &:focus,
+        &:active {
+          outline-color: $text;
+          outline-style: solid;
+          outline-width: 1px;
+        }
+      }
+
+      @media (max-width: 876px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+
+  .widgetPreview {
+    margin-bottom: 20px;
+
+    .previewHeading {
+      font-size: clamp(25px, 2vw, 45px);
     }
   }
 
@@ -97,12 +83,7 @@
       flex-direction: row;
       align-items: center;
 
-      .codeIcon {
-        font-size: clamp(25pw, 2vw, 45px);
-      }
-
       .iframeCodeHeading {
-        padding-left: 5px;
         font-size: clamp(25pw, 2vw, 45px);
       }
     }
@@ -115,7 +96,7 @@
     .pre {
       max-width: 80vw;
       padding: 0.5em;
-      background: $base;
+      background: $bg-alt;
       position: relative;
       margin-bottom: 10px;
       border-radius: $radius;
@@ -141,7 +122,7 @@
       }
 
       &:hover {
-        background: $base-lightest;
+        background: $bg;
       }
     }
   }

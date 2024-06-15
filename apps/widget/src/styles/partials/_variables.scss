@@ -11,6 +11,13 @@ $green: #a6da95;
 $sapphire: #7dc4e4;
 $mauve: #cba6f7;
 
+$bg: #FCECEB;
+$bg-alt: #F9D5D0;
+$accent: #F3A4A0;
+$accent-light: #F7D8D5;
+$text: #B84927;
+$text-trans: #b8492787;
+
 $surface0: #363a4f;
 $base2: #24273a;
 $base: #292c43;
@@ -29,4 +36,4 @@ $white-trans: #eaefff4a;
 $white-faint: #eaefff10;
 
 $radius: 5px;
-$transition: all 0.2s;
+$transition: all 0.2s ease-in-out;

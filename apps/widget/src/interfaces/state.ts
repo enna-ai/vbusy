@@ -1,7 +1,7 @@
 export interface State {
   isCopied: boolean;
   userId: string;
-  radius: boolean;
+  radius: string;
   headerColor: string;
   bodyColor: string;
   textColor: string;

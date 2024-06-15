@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Widget from "$components/Widget";
-import { Task } from "$interfaces/task";
+import type { Task } from "$interfaces/task";
 import { API_BASE_URL } from "$utils/consts";
 import axios from "axios";
 
@@ -39,7 +40,6 @@ const WidgetPage: React.FC = () => {
         const response = await axios.get(`${API_BASE_URL}/api/v1/vbusy/tasks/${userId}`);
         const data = await response.data;
         const filteredData = data.filter((item: Task) => !item.archived);
-        console.log("Data", filteredData);
 
         setUserData(filteredData);
       } catch (error) {

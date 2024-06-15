@@ -8,11 +8,11 @@ export const meta = {
   description: "A task manager web widget builder",
   icon: "/favicon.ico",
   url: "https://vbusy-widget.vercel.app",
-  color: "#181926",
+  color: "#F3A4A0",
   creator: "enna-ai",
 };
 
-export const formatDueDate = (date: string) => moment(date).format("MMM Do YYYY");
+export const formatDueDate = (date: string) => moment(date).isValid() ? moment(date).format("MMM Do YYYY") : "";
 
 export const priorityColors = {
   low: "#a6da95",

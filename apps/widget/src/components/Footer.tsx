@@ -1,6 +1,6 @@
-import React from "react";
-import { PiGithubLogoBold, PiHashStraightBold } from "react-icons/pi";
+import type React from "react";
 import Link from "next/link";
+import { PiGithubLogoFill, PiGlobeHemisphereWestFill } from "react-icons/pi";
 
 const Footer: React.FC = () => {
   return (
@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <PiGithubLogoBold style={{ fontSize: "22" }} />
+          <PiGithubLogoFill style={{ fontSize: "22" }} />
         </Link>
         <Link
           href="https://vbusy.vercel.app"
@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <PiHashStraightBold style={{ fontSize: "22", transform: "rotate(70deg)" }} />
+          <PiGlobeHemisphereWestFill style={{ fontSize: "22" }} />
         </Link>
       </div>
     </footer>

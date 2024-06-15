@@ -26,8 +26,10 @@ export const InputConfig = [
   },
   {
       label: "Border Radius",
-      type: "checkbox",
+      type: "range",
       state: "radius",
+      min: 1,
+      max: 25,
   },
   {
       label: "Show Due Dates",

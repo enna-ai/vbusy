@@ -6,12 +6,12 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: $crust;
+  background-color: $bg;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: $base;
-  border: 3px solid $crust;
+  background-color: $accent;
+  border: 3px solid $bg;
   border-radius: 10px;
 }
 
@@ -28,7 +28,7 @@ html {
   height: fill-available;
   font-family: Intern system-ui, sans-serif;
   scroll-behavior: smooth;
-  background-color: $yellow;
+  background-color: $bg-alt;
 }
 
 body {
@@ -40,11 +40,14 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+
   margin: 0;
   padding: 0;
   letter-spacing: 0.3px;
-  background-color: $crust;
-  color: $white;
+  font-size: 15px;
+
+  background-color: $bg;
+  color: $text;
 
   h1,
   h2,
@@ -57,6 +60,27 @@ body {
   }
 
   section {
-    margin: 1em min(10%, 20%, 20%);
+    margin: 2em min(10%, 20%, 20%);
+  }
+}
+
+footer {
+  margin: 1em min(10%, 20%, 20%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .icons {
+    display: flex;
+    gap: 10px;
+
+    a {
+      color: $text;
+      transition: $transition;
+
+      &:hover {
+        color: $accent;
+      }
+    }
   }
 }
