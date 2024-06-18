@@ -60,7 +60,7 @@ git clone
 npm install -g @turbo/cli
 ```
 
-4. run the setup script
+3. run the setup script
 
 ```sh
 chmod +x setup.sh
@@ -72,9 +72,9 @@ chmod +x setup.sh
 
 5. run the development server
 
-> [!NOTE]
-> this runs the web app and api
-
 ```sh
 turbo dev --filter api --filter web
 ```
+
+> [!NOTE]
+> this runs the web app and api
