@@ -10,12 +10,6 @@ cd apps/api && (
   echo "📦 (api): Dependencies installed."
 )
 
-cd ../cli && (
-  pnpm install --silent
-  cp -n .env.example .env || true
-  echo "📦 (cli): Dependencies installed."
-)
-
 cd ../desktop && (
   pnpm install --silent
   cp -n .env.example .env || true
@@ -26,12 +20,6 @@ cd ../web && (
   pnpm install --silent
   cp -n .env.example .env.local || true
   echo "📦 (web): Dependencies installed."
-)
-
-cd ../widget && (
-  pnpm install --silent
-  cp -n .env.example .env.local || true
-  echo "📦 (widget): Dependencies installed."
 )
 
 echo "Setup complete! ✨🐝"
